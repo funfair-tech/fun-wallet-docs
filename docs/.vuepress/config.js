@@ -1,4 +1,5 @@
 module.exports = (_ctx) => ({
+  base: '/fun-wallet-docs/',
   dest: 'docs/dist',
 
   locales: {
