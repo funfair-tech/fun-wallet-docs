@@ -27,7 +27,7 @@ self.addEventListener('message', (event) => {
 self.__precacheManifest = [
   {
     "url": "404.html",
-    "revision": "97db4d6b3e6be86c5472734903ad5050"
+    "revision": "1593e978c376beb2a2e27a29e0f2fbb5"
   },
   {
     "url": "assets/css/0.styles.8202249f.css",
@@ -38,43 +38,43 @@ self.__precacheManifest = [
     "revision": "83621669651b9a3d4bf64d1a670ad856"
   },
   {
-    "url": "assets/js/10.81e3c6ba.js",
-    "revision": "abbf2bd19e63459a82d0c09c44e70530"
+    "url": "assets/js/10.afe6169e.js",
+    "revision": "6b3249675f14b649da8ce27fcaee27ba"
   },
   {
-    "url": "assets/js/11.c07b3369.js",
-    "revision": "34308473a1935bf3e7c6a0c7c8680b63"
+    "url": "assets/js/11.5118828d.js",
+    "revision": "378ac7323cbfab8c3514be8e9bd5ebc5"
   },
   {
-    "url": "assets/js/12.c8f75d4b.js",
-    "revision": "64f1292942172f4eb3389c9763f31582"
+    "url": "assets/js/12.53d82ca4.js",
+    "revision": "82bb393d2a64fec6aea746afd7b06e34"
   },
   {
-    "url": "assets/js/13.34acc030.js",
-    "revision": "c1785cd66727bb1cb9b4223d4a5dd089"
+    "url": "assets/js/13.7b6a230a.js",
+    "revision": "1508c19ed0ed176367d7b4c48b63162a"
   },
   {
-    "url": "assets/js/14.16863443.js",
-    "revision": "08adf67feda68216ae893abd1058c412"
+    "url": "assets/js/14.0b46fca0.js",
+    "revision": "27e843a3542cb9dd9b74bb96c438899b"
   },
   {
-    "url": "assets/js/15.c8e9bfac.js",
-    "revision": "2816f0910ad8b309d29cdacac775c4b4"
+    "url": "assets/js/15.6e937a12.js",
+    "revision": "1521fc99a9e424f2526819d70982423f"
   },
   {
-    "url": "assets/js/16.0a60ac1e.js",
+    "url": "assets/js/16.b1761d07.js",
     "revision": "4da045f8d90762c347cd1429016cd686"
   },
   {
-    "url": "assets/js/17.07dbe46f.js",
-    "revision": "2701cb0934ea254db5a46defdff8510d"
+    "url": "assets/js/17.fd9a5056.js",
+    "revision": "d89b81c3d37cd395448c0abff700c6ac"
   },
   {
-    "url": "assets/js/18.362a932c.js",
+    "url": "assets/js/18.40a44450.js",
     "revision": "8f9b2d677a0076ed03e3381f297b03a1"
   },
   {
-    "url": "assets/js/19.7a32c01b.js",
+    "url": "assets/js/19.6f5556e4.js",
     "revision": "2b8a8c4ea6d94420379e032cce377765"
   },
   {
@@ -82,12 +82,12 @@ self.__precacheManifest = [
     "revision": "daa3d4cf0ef778c12188668bb6a12d62"
   },
   {
-    "url": "assets/js/20.99b6f13c.js",
-    "revision": "e51f53df4e04f7914b7a91495128bcc9"
+    "url": "assets/js/20.32da0d1d.js",
+    "revision": "6221e02d9ae329704e4f3e31bd734d59"
   },
   {
-    "url": "assets/js/21.7c7cb977.js",
-    "revision": "f93c5df6d787ef33f379c92d0f1c9f81"
+    "url": "assets/js/21.2094e7dc.js",
+    "revision": "d355d7fcd85edd2fbcf6e145a77e658b"
   },
   {
     "url": "assets/js/22.8a9b0de5.js",
@@ -118,72 +118,72 @@ self.__precacheManifest = [
     "revision": "44f9759ac7ad49044251f56ad9ec31ff"
   },
   {
-    "url": "assets/js/8.102080d5.js",
-    "revision": "a8f24464c69d795f22a3da091b3913b6"
+    "url": "assets/js/8.aa2e6563.js",
+    "revision": "ea2d6ef393580b1cf4c1532d856a431b"
   },
   {
-    "url": "assets/js/9.c0147e08.js",
-    "revision": "8a86a5de4af70c260d58e89307da0460"
+    "url": "assets/js/9.6ef2c7cf.js",
+    "revision": "a7481efb2272bde2584192d1e7cc7008"
   },
   {
-    "url": "assets/js/app.e480d63f.js",
-    "revision": "8b2f94b1b2476a4a06c358dc18856f5e"
+    "url": "assets/js/app.a0b38d39.js",
+    "revision": "36ff90522a384764a0f36d370760264f"
   },
   {
     "url": "faq/index.html",
-    "revision": "b8b73d2edaf3dc39d61918f1bbc4260d"
+    "revision": "3b6e2a7eb6db4860c91043df1c9133c9"
   },
   {
-    "url": "guide/index.html",
-    "revision": "556deec821e98249ab223a7954a3c07a"
+    "url": "fun-wallet-docs/index.html",
+    "revision": "6c27283db6eb5fee65ec257620fda79f"
   },
   {
-    "url": "guide/information/getting-started.html",
-    "revision": "e27ed232b0ccffd99648f5ab3c9b3dd1"
+    "url": "fun-wallet-docs/information/getting-started.html",
+    "revision": "72d00202eaca356ecb613a9df988d54b"
   },
   {
-    "url": "guide/information/leader-and-follower.html",
-    "revision": "c0d07a774e594c4e73b401543be00914"
+    "url": "fun-wallet-docs/information/leader-and-follower.html",
+    "revision": "0c86bae9a4950c5b19655fe01a0978ef"
   },
   {
-    "url": "guide/web-sdk/approval-modal.html",
-    "revision": "805420aee32e73bccaa43ed887562474"
+    "url": "fun-wallet-docs/web-sdk/approval-modal.html",
+    "revision": "5aa3e2e4ee80795b440c61d2ea77fce7"
   },
   {
-    "url": "guide/web-sdk/authentication.html",
-    "revision": "0a63c3193b523e78c4886dd09e59e708"
+    "url": "fun-wallet-docs/web-sdk/authentication.html",
+    "revision": "6ce8747dc26bb265a3e467ca1e3d21a0"
   },
   {
-    "url": "guide/web-sdk/ethereum-provider.html",
-    "revision": "2aafbc1b7a71b2922d15afeb60e7c39f"
+    "url": "fun-wallet-docs/web-sdk/ethereum-provider.html",
+    "revision": "22fbb112971921ebb5d739110fa71134"
   },
   {
-    "url": "guide/web-sdk/initialising-the-sdk.html",
-    "revision": "c16324d0b6d8bffd93a6c7ea07b3fa53"
+    "url": "fun-wallet-docs/web-sdk/initialising-the-sdk.html",
+    "revision": "20ca40b2db4cb394c45d066571e21967"
   },
   {
-    "url": "guide/web-sdk/installing-sdk.html",
-    "revision": "ff9027a8c4e5a9995fbd2767a89390a7"
+    "url": "fun-wallet-docs/web-sdk/installing-sdk.html",
+    "revision": "59c792a376e2ac9157232191385d0ff2"
   },
   {
-    "url": "guide/web-sdk/languages.html",
-    "revision": "cea129065d2b6ca09fe0becebad7b96c"
+    "url": "fun-wallet-docs/web-sdk/languages.html",
+    "revision": "9c55d4df2a0baeb0ee76e1ae88cc7b5c"
   },
   {
-    "url": "guide/web-sdk/sdk-event-listeners.html",
-    "revision": "86322442cba7b6376451ba21a8e62864"
+    "url": "fun-wallet-docs/web-sdk/sdk-event-listeners.html",
+    "revision": "4284f752bdb6ec12bbfdb9fe99a03127"
   },
   {
-    "url": "guide/web-sdk/sdk-methods.html",
-    "revision": "bc967a717b7912fb73290c622c1c421d"
+    "url": "fun-wallet-docs/web-sdk/sdk-methods.html",
+    "revision": "9dcc2f4aa5be36cb13b238b903057caa"
   },
   {
-    "url": "guide/web-sdk/setting-up-the-sdk-with-project.html",
-    "revision": "f74c4205616453b73625df2e08a69eff"
+    "url": "fun-wallet-docs/web-sdk/setting-up-the-sdk-with-project.html",
+    "revision": "f56c0f5dbbe1ff2bb972cb2c835ad724"
   },
   {
-    "url": "guide/web-sdk/wallet-ui.html",
-    "revision": "776ae64c4423931bc6a72c3af604214e"
+    "url": "fun-wallet-docs/web-sdk/wallet-ui.html",
+    "revision": "ef0bdc5c9ee11895b662f8cd3b202e8b"
   },
   {
     "url": "leader-follower-authentication-flow.png",
