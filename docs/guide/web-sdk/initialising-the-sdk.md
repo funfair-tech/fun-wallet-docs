@@ -1,4 +1,4 @@
-# Initialising the sdk
+# Initialising The SDK
 
 We call the wallet authentication iframe a `leader` If you want to read more information about what a `leader` is please go here.
 
