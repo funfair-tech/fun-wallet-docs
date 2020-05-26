@@ -4,13 +4,13 @@ module.exports = (_ctx) => ({
   locales: {
     '/': {
       lang: 'en-US',
-      title: 'FunWallet Docs',
+      title: 'FunWallet Documentation',
       description: 'Welcome',
     },
   },
 
   head: [
-    ['link', { rel: 'icon', href: `/logo.jpg` }],
+    ['link', { rel: 'icon', href: `/logo.svg` }],
     ['link', { rel: 'manifest', href: '/manifest.json' }],
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
@@ -44,7 +44,7 @@ module.exports = (_ctx) => ({
 
   themeConfig: {
     repo: 'funfair-tech/fun-wallet-docs',
-    logo: '/logo.jpg',
+    logo: '/logo.svg',
     editLinks: true,
     docsDir: 'packages/docs/dist',
     locales: {
