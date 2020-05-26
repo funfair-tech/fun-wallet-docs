@@ -17,3 +17,9 @@ To deploy just run
 ```bash
 $ npm run deploy
 ```
+
+# Documentation
+
+All the documenation can be found here.
+
+https://funfair-tech.github.io/fun-wallet-docs/guide/
