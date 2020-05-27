@@ -30,7 +30,7 @@ public async yourLeaderInstanceLoadFunction(): Promise<void> {
    window.funwallet.sdk.on<AuthenticationCompletedResponse>(
       MessageListeners.authenticationCompleted,
       async (result: AuthenticationCompletedResponse) => {
-        if (result.origin  + '/' === window.funwallet.url) {
+        if (result.origin === 'https://wallet.funfair.io') {
           // ....
         } else {
           throw this.someoneEvilTryingToSendMessage();

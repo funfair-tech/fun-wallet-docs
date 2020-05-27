@@ -56,7 +56,11 @@ module.exports = (_ctx) => ({
         lastUpdated: 'Last Updated',
         nav: require('./nav/en'),
         sidebar: {
-          '/guide/': getGuideSidebar('Information', 'Web SDK'),
+          '/guide/': getGuideSidebar(
+            'Information',
+            'How Does It Work?',
+            'Web SDK'
+          ),
         },
       },
     },
@@ -99,20 +103,51 @@ module.exports = (_ctx) => ({
         ],
       },
     ],
+    [
+      'vuepress-plugin-zooming',
+      {
+        options: {
+          bgColor: 'black',
+          zIndex: 10000,
+        },
+      },
+    ],
   ],
 
   extraWatchFiles: ['.vuepress/nav/en.js'],
 });
 
-function getGuideSidebar(Information, websdk) {
+function getGuideSidebar(information, howDoesItWork, websdk) {
   return [
     {
-      title: Information,
+      title: information,
       collapsable: false,
       children: [
         '',
         'information/getting-started',
-        'information/leader-and-follower',
+        'information/testing',
+        'information/layouts',
+        'information/branding',
+        'information/kyc',
+        'information/fiat-gateway',
+      ],
+    },
+    {
+      title: howDoesItWork,
+      collapsable: false,
+      children: [
+        'how-does-it-work/how-authentication-works',
+        'how-does-it-work/registration',
+        'how-does-it-work/login-and-recovery-token-generation',
+        'how-does-it-work/recovery',
+        'how-does-it-work/re-authentication',
+        'how-does-it-work/how-is-the-authentication-secure',
+        'how-does-it-work/how-popup-authenticates-leader',
+        'how-does-it-work/leader-and-follower-communication',
+        'how-does-it-work/how-broadcast-works',
+        'how-does-it-work/fun-wallet-sdk',
+        'how-does-it-work/fun-wallet-ethereum-provider',
+        'how-does-it-work/blooms',
       ],
     },
     {

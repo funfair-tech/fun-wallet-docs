@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "name": "docs",
   "description": "FunWallet documentation.",
   "scripts": {
@@ -40,7 +40,8 @@
     "vue-toasted": "^1.1.25",
     "vuepress": "^1.0.3",
     "vuepress-plugin-flowchart": "^1.4.2",
-    "vuepress-plugin-redirect": "^1.2.3"
+    "vuepress-plugin-redirect": "^1.2.3",
+    "vuepress-plugin-zooming": "^1.1.7"
   },
   "dependencies": {}
 }

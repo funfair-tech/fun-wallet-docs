@@ -1,4 +1,4 @@
-# Leader And Follower
+# Leader And Follower Communication
 
 ## Introduction
 
@@ -33,3 +33,21 @@ The leader and the follower communicate using the [`Broadcast Channel Api`](http
 <img :src="$withBase('/leader-follower-authentication-flow.png')" >
 
 As you can see in the above flow all data passed between the instances is encrypted, meaning if someone did get to that data it's useless without the RSA private key which encrypted it. This private key is never exposed and held in memory within the instances.
+
+## How is the leader and follower communication service?
+
+💡 Encrypted every message between leader > follower / follower > leader,
+
+💡 Even if the dapp could snoop (which it can not) the messages will be a blob of data without the RSA private key which is held in the instances memory, which means its a useless blob of data.
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 💡 Dapp can not get to that as its protected by cross site scripting and standard internet security.
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 💡 If it was possible the whole internet would be insecure,
+
+💡 Broadcast API is something supported in every browser but Safari.
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 💡 This only can broadcast to your own domain so it’s never exposed to anyone else.
+
+💡 Due to safari we had to write our own broadcast logic for them which uses cookies to read and write values to each instance again protected by the domain.
+
+💡 As its client side code is holding the private key in memory there is no physical trace of it anywhere after you refresh.

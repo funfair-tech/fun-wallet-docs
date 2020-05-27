@@ -27,7 +27,7 @@ import { MessageListeners, TStronglyTypedResponse } from '@funfair/wallet-sdk';
 window.funwallet.sdk.on<TStronglyTypedResponse>(
   MessageListeners.TypeYouWantToUse,
   (result: TStronglyTypedResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       // logic here
     }
   }
@@ -40,7 +40,7 @@ window.funwallet.sdk.on<TStronglyTypedResponse>(
 
 ```js
 window.funwallet.sdk.once('MESSAGE LISTENER NAME', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     // logic here
   }
 });
@@ -55,7 +55,7 @@ import { MessageListeners, TStronglyTypedResponse } from '@funfair/wallet-sdk';
 window.funwallet.sdk.once<TStronglyTypedResponse>(
   MessageListeners.TypeYouWantToUse,
   (result: TStronglyTypedResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       // logic here
     }
   }
@@ -78,7 +78,7 @@ The object passed from the other window.
 `origin`
 The origin of the window that sent the message at the time postMessage was called. This string is the concatenation of the protocol and "://", the host name if one exists, and ":" followed by a port number if a port is present and differs from the default port for the given protocol. Examples of typical origins are https://example.org (implying port 443), http://example.net (implying port 80), and http://example.com:8080. Note that this origin is not guaranteed to be the current or future origin of that window, which might have been navigated to a different location since postMessage was called.
 
-In our examples we use a placeholder of `FUN_WALLET_ORIGIN` but yours should have the correct, valid origin for the wallet environment you're pointing to within your iframes.
+In our examples we use a placeholder of `https://wallet.funfair.io` but yours should have the correct, valid origin for the wallet environment you're pointing to within your iframes.
 
 `source`
 A reference to the window object that sent the message; you can use this to establish two-way communication between two windows with different origins.
@@ -91,7 +91,7 @@ To protect yourself from opening yourself up to cross-site scripting, make sure 
 
 ```js
 window.funwallet.sdk.once('MESSAGE LISTENER NAME', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     // OUCH!! YOU HAVE OPENED YOURSELF UP FOR THE TRUSTED DOMAINS TO
     // INJECT BAD SCRIPTS INTO YOUR PAGE, RULE OF THUMB NEVER EVER
     // DO THIS (DON'T WORRY WE WOULD NEVER DO SOMETHING SO MEAN :D)
@@ -146,7 +146,7 @@ To allow restoring someone to be logged in after they refresh on initial load th
 
 ```js
 window.funwallet.sdk.on('restoreAuthenticationCompleted', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -164,7 +164,7 @@ import {
 window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
   MessageListeners.restoreAuthenticationCompleted,
   (result: RestoreAuthenticationCompletedResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -189,7 +189,7 @@ This will fire when the wallet network has been changed (This will fire on initi
 
 ```js
 window.funwallet.sdk.on('changeNetwork', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -204,7 +204,7 @@ import { MessageListeners, ChangeNetworkResponse } from '@funfair/wallet-sdk';
 window.funwallet.sdk.on<ChangeNetworkResponse>(
   MessageListeners.changeNetwork,
   (result: ChangeNetworkResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -230,7 +230,7 @@ This will fire when the leader instance has been authenticated by a user, meanin
 
 ```js
 window.funwallet.sdk.on('authenticationCompleted', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -248,7 +248,7 @@ import {
 window.funwallet.sdk.on<AuthenticationCompletedResponse>(
   MessageListeners.authenticationCompleted,
   (result: AuthenticationCompletedResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -273,7 +273,7 @@ This will fire when the follower instance has authenticated itself successfully 
 
 ```js
 window.funwallet.sdk.on('followerAuthenticationCompleted', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -291,7 +291,7 @@ import {
 window.funwallet.sdk.on<FollowerAuthenticationCompletedResponse>(
   MessageListeners.followerAuthenticationCompleted,
   (result: FollowerAuthenticationCompletedResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -316,7 +316,7 @@ This will fire when the inactivity timeout has expired meaning all authenticated
 
 ```js
 window.funwallet.sdk.on('walletInactivityLoggedOut', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -334,7 +334,7 @@ import {
 window.funwallet.sdk.on<WalletInactivityLoggedOutResponse>(
   MessageListeners.walletInactivityLoggedOut,
   (result: WalletInactivityLoggedOutResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -357,7 +357,7 @@ This will fire when the current device the user is using has been deleted meanin
 
 ```js
 window.funwallet.sdk.on('walletDeviceDeletedLoggedOut', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -375,7 +375,7 @@ import {
 window.funwallet.sdk.on<WalletDeviceDeletedLoggedOutResponse>(
   MessageListeners.walletDeviceDeletedLoggedOut,
   (result: WalletDeviceDeletedLoggedOutResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -400,7 +400,7 @@ This will fire when the wallet nonce is updated.
 
 ```js
 window.funwallet.sdk.on('walletNonceUpdated', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -418,7 +418,7 @@ import {
 window.funwallet.sdk.on<WalletNonceUpdatedResponse>(
   MessageListeners.walletNonceUpdated,
   (result: WalletNonceUpdatedResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -443,7 +443,7 @@ This will fire when a pending transaction has occurred on the funwallet. We sugg
 
 ```js
 window.funwallet.sdk.on('pendingTransaction', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -461,7 +461,7 @@ import {
 window.funwallet.sdk.on<PendingTransactionResponse>(
   MessageListeners.pendingTransaction,
   (result: PendingTransactionResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -487,7 +487,7 @@ This will fire when a completed transaction has occurred on the funwallet (1 con
 
 ```js
 window.funwallet.sdk.on('completedTransaction', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -505,7 +505,7 @@ import {
 window.funwallet.sdk.on<CompletedTransactionResponse>(
   MessageListeners.completedTransaction,
   (result: CompletedTransactionResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -531,7 +531,7 @@ This will fire when a cancelled transaction has occurred on the funwallet.
 
 ```js
 window.funwallet.sdk.on('cancelledTransaction', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -549,7 +549,7 @@ import {
 window.funwallet.sdk.on<CancelledTransactionResponse>(
   MessageListeners.cancelledTransaction,
   (result: CancelledTransactionResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -576,7 +576,7 @@ This will fire when a failed transaction has occurred on the funwallet (1 confir
 
 ```js
 window.funwallet.sdk.on('failedTransaction', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -594,7 +594,7 @@ import {
 window.funwallet.sdk.on<FailedTransactionResponse>(
   MessageListeners.failedTransaction,
   (result: FailedTransactionResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -619,7 +619,7 @@ This will fire when a ERC20 token balance changes for the authenticated user.
 
 ```js
 window.funwallet.sdk.on('erc20TokenBalanceChanged', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -637,7 +637,7 @@ import {
 window.funwallet.sdk.on<ERC20TokenBalanceChangedResponse>(
   MessageListeners.erc20TokenBalanceChanged,
   (result: ERC20TokenBalanceChangedResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -665,7 +665,7 @@ This will fire when a ERC20 token fiat price changes.
 
 ```js
 window.funwallet.sdk.on('erc20TokenFiatPriceChanged', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -683,7 +683,7 @@ import {
 window.funwallet.sdk.on<ERC20FiatPriceChangedResponse>(
   MessageListeners.erc20TokenFiatPriceChanged,
   (result: ERC20FiatPriceChangedResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -709,7 +709,7 @@ This will fire when the ETH balance changes for the authenticated user.
 
 ```js
 window.funwallet.sdk.on('ethBalanceChanged', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -727,7 +727,7 @@ import {
 window.funwallet.sdk.on<ETHBalanceChangedResponse>(
   MessageListeners.ethBalanceChanged,
   (result: ETHBalanceChangedResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -754,7 +754,7 @@ This will fire when an ETH fiat price changes.
 
 ```js
 window.funwallet.sdk.on('ethFiatPriceChanged', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -772,7 +772,7 @@ import {
 window.funwallet.sdk.on<ETHFiatPriceChangedResponse>(
   MessageListeners.ethFiatPriceChanged,
   (result: ETHFiatPriceChangedResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -797,7 +797,7 @@ This will fire when the authenticated user's selected currency has changed.
 
 ```js
 window.funwallet.sdk.on('changeCurrency', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -812,7 +812,7 @@ import { MessageListeners, ChangeCurrencyResponse } from '@funfair/wallet-sdk';
 window.funwallet.sdk.on<ChangeCurrencyResponse>(
   MessageListeners.changeCurrency,
   (result: ChangeCurrencyResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -837,7 +837,7 @@ This will fire if the account is kyc verified or not. It will fire on the inital
 
 ```js
 window.funwallet.sdk.on('isKycVerified', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -855,7 +855,7 @@ import {
 window.funwallet.sdk.on<IsKycVerifiedResponse>(
   MessageListeners.isKycVerified,
   (result: IsKycVerifiedResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -880,7 +880,7 @@ This will fire when the authenticated account going through the kyc process canc
 
 ```js
 window.funwallet.sdk.on('kycProcessCancelled', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -898,7 +898,7 @@ import {
 window.funwallet.sdk.on<KycProcessCancelledResponse>(
   MessageListeners.kycProcessCancelled,
   (result: KycProcessCancelledResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -923,7 +923,7 @@ This will fire when the websocket connect successfully, please keep this in memo
 
 ```js
 window.funwallet.sdk.on('websocketConnected', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -941,7 +941,7 @@ import {
 window.funwallet.sdk.on<WebsocketConnectedResponse>(
   MessageListeners.websocketConnected,
   (result: WebsocketConnectedResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -966,7 +966,7 @@ This will fire when the websocket disconnects or gets closed.
 
 ```js
 window.funwallet.sdk.on('websocketDisconnected', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -984,7 +984,7 @@ import {
 window.funwallet.sdk.on<WebsocketDisconnectedResponse>(
   MessageListeners.websocketDisconnected,
   (result: WebsocketDisconnectedResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -1009,7 +1009,7 @@ This will fire when the wallet receives a new block alert through the websockets
 
 ```js
 window.funwallet.sdk.on('newBlock', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -1024,7 +1024,7 @@ import { MessageListeners, NewBlockResponse } from '@funfair/wallet-sdk';
 window.funwallet.sdk.on<NewBlockResponse>(
   MessageListeners.newBlock,
   (result: NewBlockResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -1053,7 +1053,7 @@ This will fire when the wallet receives a new block alert through the websockets
 
 ```js
 window.funwallet.sdk.on('newBlockBloomMatchUser', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -1071,7 +1071,7 @@ import {
 window.funwallet.sdk.on<NewBlockBloomMatchUserResponse>(
   MessageListeners.newBlockBloomMatchUser,
   (result: NewBlockBloomMatchUserResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -1100,7 +1100,7 @@ This will fire when the player protection data has been updated aka they just ba
 
 ```js
 window.funwallet.sdk.on('playerProtectionUpdated', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -1118,7 +1118,7 @@ import {
 window.funwallet.sdk.on<PlayerProtectionUpdatedResponse>(
   MessageListeners.playerProtectionUpdated,
   (result: PlayerProtectionUpdatedResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -1156,7 +1156,7 @@ Due to the wallet holding your PK in memory we do not allow google analytics scr
 
 ```js
 window.funwallet.sdk.on('walletTracking', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -1171,7 +1171,7 @@ import { MessageListeners, WalletTrackingResponse } from '@funfair/wallet-sdk';
 window.funwallet.sdk.on<WalletTrackingResponse>(
   MessageListeners.walletTracking,
   (result: WalletTrackingResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -1321,7 +1321,7 @@ This emits an event when the authentication popup is closed. If `isAuthenticated
 
 ```js
 window.funwallet.sdk.on('authenticationPopUpClosed', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -1339,7 +1339,7 @@ import {
 window.funwallet.sdk.on<AuthenticationPopUpClosedResponse>(
   MessageListeners.authenticationPopUpClosed,
   (result: AuthenticationPopUpClosedResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -1370,7 +1370,7 @@ window.funwallet.sdk.on<AuthenticationPopUpClosedResponse>(
 
 ```js
 const listener = window.funwallet.sdk.on('MESSAGE LISTENER NAME', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -1388,7 +1388,7 @@ import { MessageListeners, TStronglyTypedResponse } from '@funfair/wallet-sdk';
 const listener = window.funwallet.sdk.on<TStronglyTypedResponse>(
   MessageListeners.TypeYouWantToUse,
   (result: TStronglyTypedResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
@@ -1404,7 +1404,7 @@ this works the same as `once`:
 
 ```js
 const listener = funwalletsdk.once('MESSAGE LISTENER NAME', (result) => {
-  if (result.origin === 'FUN_WALLET_ORIGIN') {
+  if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
 });
@@ -1422,7 +1422,7 @@ import { MessageListeners, TStronglyTypedResponse } from '@funfair/wallet-sdk';
 const listener = window.funwallet.sdk.once<TStronglyTypedResponse>(
   MessageListeners.TypeYouWantToUse,
   (result: TStronglyTypedResponse) => {
-    if (result.origin === 'FUN_WALLET_ORIGIN') {
+    if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
   }
