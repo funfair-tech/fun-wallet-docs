@@ -160,6 +160,7 @@ function getGuideSidebar(information, howDoesItWork, websdk) {
         'web-sdk/initialising-the-sdk',
         'web-sdk/authentication',
         'web-sdk/wallet-ui',
+        'web-sdk/routing',
         'web-sdk/languages',
         'web-sdk/approval-modal',
         'web-sdk/ethereum-provider',
