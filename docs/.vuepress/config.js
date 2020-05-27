@@ -125,6 +125,7 @@ function getGuideSidebar(information, howDoesItWork, websdk) {
       children: [
         '',
         'information/getting-started',
+        'information/browser-support',
         'information/testing',
         'information/layouts',
         'information/branding',
