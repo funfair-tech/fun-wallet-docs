@@ -24,7 +24,7 @@ public init(options?: InitOptions): void
 `JavaScript`:
 
 ```js
-await window.funwallet.sdk.init();
+window.funwallet.sdk.init();
 ```
 
 `TypeScript`:
@@ -32,7 +32,7 @@ await window.funwallet.sdk.init();
 ```ts
 import window from '@funfair/wallet-sdk/window';
 
-await window.funwallet.sdk.init({ ngZone: this._zone });
+window.funwallet.sdk.init({ ngZone: this._zone });
 ```
 
 ---

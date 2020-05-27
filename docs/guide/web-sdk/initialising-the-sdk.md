@@ -22,8 +22,8 @@ Please paste this html snippet as close as possible to the top of the `<body>`. 
 The wallet has certain event listeners it needs to register on load of the wallet. To avoid any race conditions you only want to `init` the sdk once the leader iframe has loaded.
 
 ```ts
-public async yourLeaderInstanceLoadFunction(): Promise<void> {
-   await window.funwallet.sdk.init({ options });
+public yourLeaderInstanceLoadFunction(): void {
+   window.funwallet.sdk.init({ options });
 
    // REGISTER ALL YOUR EVENT LISTENERS HERE PROBABLY BEST TO BE IN A NEW METHOD SOMEWHERE.
 
