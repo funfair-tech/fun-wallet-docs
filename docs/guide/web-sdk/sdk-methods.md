@@ -435,28 +435,6 @@ const walletFollowerUrl = window.funwallet.getWalletFollowerURL();
 
 ---
 
-## getWalletLeaderURL
-
-Build up the leader url for you and adds all the context in the query string so you do not have to worry about it.
-
-```ts
-public getWalletLeaderURL(): string
-```
-
-`JavaScript`:
-
-```js
-const walletLeaderUrl = window.funwallet.getWalletLeaderURL();
-```
-
-`TypeScript`:
-
-```ts
-import window from '@funfair/wallet-sdk/window';
-
-const walletLeaderUrl = window.funwallet.getWalletLeaderURL();
-```
-
 ---
 
 ## setLanguage
