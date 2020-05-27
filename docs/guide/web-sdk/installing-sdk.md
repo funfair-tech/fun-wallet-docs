@@ -42,7 +42,7 @@ Once installed you need to drop the below script into your `<head>` html tag:
 ## Peer Dependencies
 
 ```json
-  "post-robot": "9.0.36"
+"post-robot": "9.0.36"
 ```
 
 ### NPM
