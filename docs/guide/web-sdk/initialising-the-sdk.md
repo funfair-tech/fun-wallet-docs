@@ -1,6 +1,6 @@
 # Initialising The SDK
 
-We call the wallet authentication iframe a `leader` If you want to read more information about what a `leader` is please go here.
+We call the wallet authentication iframe a `leader` If you want to read more information about what a `leader` is please go [here](http://localhost:8080/fun-wallet-docs/guide/how-does-it-work/leader-and-follower-communication.html#what-is-a-leader-instance).
 
 Please paste this html snippet as close as possible to the top of the `<body>`. This should live in a place which does not get removed from the DOM. You need to allow the camera in the feature policies for our KYC provider to work. This example is using an angular `load` event but you can register a iframe `onload` event using JavaScript or how any other framework handle it. So just change that event accordingly to the framework you're using.
 
@@ -44,7 +44,7 @@ public async yourLeaderInstanceLoadFunction(): Promise<void> {
 
 You can find all the event listeners [here](/guide/web-sdk/sdk-event-listeners.html)
 
-You can supply options to the `init` SDK method if required. If you're using an angular app please supply the `ngZone` option which is passing angulars `NgZone` class to the SDK, to make sure we run the event listeners inside _your_ angular zone, allowing your application state to be updated and changes to be triggered automatically.
+You can supply options to the [init](http://localhost:8080/fun-wallet-docs/guide/web-sdk/sdk-methods.html#init) SDK method if required. If you're using an angular app please supply the `ngZone` option which is passing angulars `NgZone` class to the SDK, to make sure we run the event listeners inside _your_ angular zone, allowing your application state to be updated and changes to be triggered automatically.
 
 Options:
 

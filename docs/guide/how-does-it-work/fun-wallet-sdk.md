@@ -11,17 +11,17 @@
 
 💡 This way we only ever have 1 thing in control and the leader is the master in all of this.
 
-💡 Leader speaks to the sdk for internal tasks without the dapp doing anything
+💡 Leader speaks to the sdk for internal tasks without the dapp doing anything.
 
-💡 Keeps the iframe height in sync
+💡 Keeps the iframe height in sync.
 
-💡 As it is embedded in the integrator it has super powers like storage and other things.
+💡 As it is embedded in the dapp it has super powers like storage and other things.
 
 💡 Exposed on the window for easy web use.
 
-💡 Supports full typings
+💡 Supports full typings.
 
-💡 Handles web3 or ethers libs
+💡 Handles web3 or ethers libs.
 
 💡 Script is referenced to a place in fun wallet so we can deploy fixes and new features without having to make every dapp update their package. The NPM package is just enums and typings.
 

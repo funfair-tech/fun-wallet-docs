@@ -1,6 +1,6 @@
 # SDK Methods
 
-Please note none of the SDK calls will work if the `funwalletsdk` has not been initialised. The SDK will throw errors telling you this if you try to do so.
+Please note none of the SDK calls will work if the SDK has not been [initialised](http://localhost:8080/fun-wallet-docs/guide/web-sdk/initialising-the-sdk.html). The SDK will throw errors telling you this if you try to do so.
 
 ## init
 
@@ -217,7 +217,7 @@ const networkState = await window.funwallet.sdk.currentNetwork();
 
 ## enabledNetworks
 
-Returns the enabled networks set by the wallet-integrated application/casino
+Returns the enabled networks set by the wallet dapp config
 
 ```ts
 public async enabledNetworks(): Promise<NetworkDetails[] | undefined>
@@ -559,7 +559,7 @@ const signature = await window.funwallet.sdk.signAndVerifyInterpretedBytes(
 
 ## appJwtToken
 
-Get the casino jwt token.
+Get the dapp jwt token.
 
 ```ts
 public async appJwtToken(): Promise<string>

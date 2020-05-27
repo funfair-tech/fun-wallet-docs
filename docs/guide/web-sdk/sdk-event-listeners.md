@@ -76,7 +76,7 @@ It will always have 1 parameter which is the result of the `postMessage` outcome
 The object passed from the other window.
 
 `origin`
-The origin of the window that sent the message at the time postMessage was called. This string is the concatenation of the protocol and "://", the host name if one exists, and ":" followed by a port number if a port is present and differs from the default port for the given protocol. Examples of typical origins are https://example.org (implying port 443), http://example.net (implying port 80), and http://example.com:8080. Note that this origin is not guaranteed to be the current or future origin of that window, which might have been navigated to a different location since postMessage was called.
+The origin of the window that sent the message at the time postMessage was called. This string is the concatenation of the protocol and `"://"`, the host name if one exists, and `":"` followed by a port number if a port is present and differs from the default port for the given protocol. Examples of typical origins are https://example.org (implying port 443), http://example.net (implying port 80), and http://example.com:8080. Note that this origin is not guaranteed to be the current or future origin of that window, which might have been navigated to a different location since postMessage was called.
 
 In our examples we use a placeholder of `https://wallet.funfair.io` but yours should have the correct, valid origin for the wallet environment you're pointing to within your iframes.
 
@@ -874,7 +874,7 @@ window.funwallet.sdk.on<IsKycVerifiedResponse>(
 
 ## kycProcessCancelled
 
-This will fire when the authenticated account going through the kyc process cancels the modal and goes back to the casino website.
+This will fire when the authenticated account going through the kyc process cancels the modal and goes back to the dapp website.
 
 `JavaScript`:
 
@@ -1220,7 +1220,7 @@ export declare enum TrackingEventLabel {
   emailValidationComplete = 'emailValidationComplete',
   backToSignIn = 'backToSignIn',
   emailValidationFailed = 'emailValidationFailed',
-  closeAndReturnToCasino = 'closeAndReturnToCasino',
+  closeAndReturnToApp = 'closeAndReturnToApp',
   passwordSetup = 'passwordSetup',
   registrationComplete = 'registrationComplete',
   startKyc = 'startKyc',

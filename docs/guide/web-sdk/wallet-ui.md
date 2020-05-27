@@ -1,6 +1,6 @@
 # Show Wallet UI
 
-We call the wallet UI iframe a `follower`. If you want to read more information about what a `follower` is please go here.
+We call the wallet UI iframe a `follower`. If you want to read more information about what a `follower` is please go [here](http://localhost:8080/fun-wallet-docs/guide/how-does-it-work/leader-and-follower-communication.html#what-is-a-follower).
 
 Please paste this html snippet where you want the wallet ui to render on your dapp. This example is using an angular `load` event but you can register a iframe `onload` event using JavaScript or how any other framework handle it. So just change that event accordingly to the framework you're using.
 

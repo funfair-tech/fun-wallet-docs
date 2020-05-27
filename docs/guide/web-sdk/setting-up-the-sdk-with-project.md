@@ -2,7 +2,7 @@
 
 ## TypeScript Typings
 
-If you're using `TypeScript` please make sure you use all the typings the SDK supplies. As the SDK exposes the `funwalletsdk` on the window you should use the window object supplied by the `funwalletsdk`. This extends the `Window` object as well so you can use it for standard window calls. It also exposes full `web3` typings if you want to use the `window.web3` which is injected.
+If you're using `TypeScript` please make sure you use all the typings the SDK supplies. As the SDK exposes the SDK on the window you should use the window object supplied by the SDK. This extends the `Window` object as well so you can use it for standard window calls.
 
 ```ts
 import window from '@funfair/wallet-sdk/window';
@@ -25,8 +25,6 @@ To get it to build with the angular CLI compiler you need to add the `window.ts`
 ```ts
 import window from '@funfair/wallet-sdk/window';
 ```
-
-This will now have strongly typed logic for `window.web3` and `window.funwallet`. This means you should **NEVER** have to use `(<any>window)` again.
 
 All the other typings can be imported directly from the module itself.
 
@@ -60,4 +58,4 @@ Coming soon.. the SDK does support it but no dev docs are supplied for the confi
 
 ## Setting it up with another framework
 
-FunWallet SDK supports any frontend framework so it will work with any library you are using, we have just done some examples above of the main ones.
+FunWallet SDK supports any frontend framework so it will work with any library you are using, we have just done some examples above of the main ones. Let us know if you like us to add anymore.

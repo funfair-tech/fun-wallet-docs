@@ -2,7 +2,7 @@
 
 We have our own ethereum provider which can be injected into any new `web3` or `ethers` instance. This means you can use the standard `web3` or `ethers` interface to do all your blockchain calls and our ethereum provider makes sure all those calls go through the authenticated leader wallet instance.
 
-Once you initialise the wallet the SDK will expose the ethereum provider on the window which can be used as the provider you inject when you create a new `web3` or `ethers` instance.
+Once you initialise the wallet, the SDK will expose the ethereum provider on the window which can be used as the provider you inject when you create a new `web3` or `ethers` instance.
 
 ```ts
 // provider lives here in the funwalletsdk object

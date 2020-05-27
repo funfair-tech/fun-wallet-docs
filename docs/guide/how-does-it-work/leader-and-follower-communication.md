@@ -14,15 +14,11 @@ The `leader` is the authenticated instance which never gets removed from the DOM
 
 The `leader` instance will be in a `iframe` hidden away in the start of the `<body>` and invisible. Once the user has logged in the event [`authenticationCompleted`](#authenticationcompleted) is fired and the leader is completely authenticated. Any sensitive data passed between the leader and the follower is RSA encrypted so nobody can decrypt it, _including_ the dapp. The leader will keep everything in sync going forward (like nonces, blocks etc).
 
-All you have to do is paste this html snippet as close as possible to the top of the `<body>`. You need to allow the camera in the feature policies for our KYC provider to work. This example is using an angular `load` event but you can register a iframe `onload` event using JavaScript or how any other framework handle it. We talk about the `funWalletLoaded` below and why we need it.
-
 You should never use the `leader` instance to show the standard UI as it doesn't route to certain views as its mainly used for the communication, approval modals, KYC process and player protection. If you want to show any other wallet UI please use a `follower` instance to do that.
 
 ## What Is A Follower
 
-The follower is an instance you can spawn and destroy whenever you want. This is what you would use to show content on the UI for the wallet. You can only ever have 1 leader and 1 follower, due to synchronisation being essential. This is a fixed limit.
-
-To spawn a `follower` instance you need to point it to the `follower-loading` path in the src, also adding the HTML5 attributes `is-fun-wallet` and `is-follower` so the SDK can locate the follower `iframe` for auto-resizing amongst other things. An `id` is **always** required on any wallet `iframe` you embed and like all IDs, must be unique.
+The follower is an instance you can spawn and destroy whenever you want. This is what you would use to show content on the UI for the wallet. You can only ever have `1 leader` and `1 follower`, due to synchronisation being essential. This is a fixed limit.
 
 You must only ever show this when the [`authenticationCompleted`](#authenticationcompleted) event has fired and you know the leader instance is authenticated. You can also check this by using the [`isAuthenticated`](#isauthenticated) SDK method. This again is all shown in the wallet integration test app.
 
@@ -32,22 +28,21 @@ The leader and the follower communicate using the [`Broadcast Channel Api`](http
 
 <img :src="$withBase('/leader-follower-authentication-flow.png')" >
 
-As you can see in the above flow all data passed between the instances is encrypted, meaning if someone did get to that data it's useless without the RSA private key which encrypted it. This private key is never exposed and held in memory within the instances.
+As you can see in the above flow all data passed between the instances is encrypted, meaning if someone did get to that data it's useless without the RSA private key. This private key is never exposed and held in memory within the instances.
 
 ## How is the leader and follower communication service?
 
-💡 Encrypted every message between leader > follower / follower > leader,
+💡 Encrypted every message between leader > follower and follower > leader,
 
 💡 Even if the dapp could snoop (which it can not) the messages will be a blob of data without the RSA private key which is held in the instances memory, which means its a useless blob of data.
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 💡 Dapp can not get to that as its protected by cross site scripting and standard internet security.
 <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 💡 If it was possible the whole internet would be insecure,
 
-💡 Broadcast API is something supported in every browser but Safari.
+💡 Broadcast API is something supported in most browsers but Safari and Edge.
 <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 💡 This only can broadcast to your own domain so it’s never exposed to anyone else.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 💡 This only can broadcast to it's own domain, for example `wallet.funfair.io` can only speak to `wallet.funfair.io` so it’s never exposed to anyone else.
 
 💡 Due to safari we had to write our own broadcast logic for them which uses cookies to read and write values to each instance again protected by the domain.
 
-💡 As its client side code is holding the private key in memory there is no physical trace of it anywhere after you refresh.
+💡 As its client side code is holding the private key in memory there is no physical trace of it anywhere after you refresh, minus the encrypted session data which is useless without all the other encrypted data as its double encrypted. This is also removed when you close the tab.

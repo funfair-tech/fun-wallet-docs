@@ -4,4 +4,4 @@ Here at FunWallet we are huge lovers of unit tests. We have 90% coverage overall
 
 We also have a QA team who has to sign it off before it goes to live.
 
-This allows us to be super postive that what we release will never break anything.
+This allows us to be super postive that what we release will not break anything.
