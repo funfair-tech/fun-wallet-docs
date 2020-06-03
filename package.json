@@ -2,7 +2,7 @@
   "private": true,
   "version": "1.0.4",
   "name": "docs",
-  "description": "FunWallet documentation.",
+  "description": "FunFair Wallet documentation.",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d docs/dist",

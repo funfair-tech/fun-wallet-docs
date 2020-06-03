@@ -1,3 +1,3 @@
 # Introduction
 
-Welcome to FunWallet Documentation. This documentation shows how you can integrate your dapp with the FunWallet.
+Welcome to FunFair Wallet Documentation. This documentation shows how you can integrate your dApp with the Wallet.

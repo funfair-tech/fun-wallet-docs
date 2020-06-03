@@ -1,4 +1,4 @@
-# Installing FunWallet SDK
+# Installing the FunFair Wallet SDK
 
 ## NPM
 
@@ -12,9 +12,9 @@ $ npm install @funfair/wallet-sdk
 $ npm install @funfair/wallet-sdk
 ```
 
-## Reference The Web SDK
+## Reference the Web SDK
 
-Once installed you need to drop the below script into your `<head>` html tag:
+Once installed you need to drop the below script into your `<head>` HTML tag:
 
 ```js
 <script
@@ -23,7 +23,7 @@ Once installed you need to drop the below script into your `<head>` html tag:
 ></script>
 ```
 
-### example
+### Example
 
 ```html
 <!DOCTYPE html>
@@ -57,4 +57,4 @@ $ npm install post-robot@9.0.36
 $ yarn add post-robot@9.0.36
 ```
 
-If you want to use the latest version of [post-robot](https://github.com/krakenjs/post-robot) that is fine but if your only installing this to allow the SDK to work then just install the exact version.
+It should be fine to use the latest version of [post-robot](https://github.com/krakenjs/post-robot); however, if you're only installing it to allow the SDK to work then we recommend installing the exact version that's referenced.

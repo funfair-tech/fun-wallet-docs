@@ -1,6 +1,6 @@
 # Browser Support
 
-The FunWallet can run on any device and mostly all browsers. Obviously we can only test the main ones but here is the list of tried browsers we fully support:
+The Wallet can run on any device and mostly all browsers. Obviously we can only test the main ones but here's a list of tried and tested browsers we fully support:
 
 💡 New Edge
 <br/>
@@ -16,13 +16,13 @@ The FunWallet can run on any device and mostly all browsers. Obviously we can on
 <br/>
 💡 Opera Mobile
 <br/>
-💡 IOS Safari
+💡 iOS Safari
 <br/>
 💡 Android Browser
 <br/>
-💡 Chrome For Android
+💡 Chrome for Android
 <br/>
-💡 Firefox For Android
+💡 Firefox for Android
 <br/>
 💡 Samsung Internet
 <br/>

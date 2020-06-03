@@ -1,20 +1,20 @@
-# FunWallet Ethereum Provider
+# FunFair Wallet Ethereum Provider
 
-## What Is A Ethereum Provider ?
+## What is an Ethereum provider ?
 
-💡 Most dapps use web3 or etherjs to do blockchain stuff on the client.
+💡 Most dApps use either web3 or etherjs to read from and write to the blockchain directly from the client.
 
-💡 These all follow “best” practices on interfaces and expose everything you need to do blockchain development.
+💡 These libraries follow best practices, and expose interfaces that should allow you to do everything necessary for blockchain development.
 
-💡 Also the nodes and signing all needs to happen in the wallet client not the dapp client as that’s where it has all the context.
+💡 Also, the nodes and signing all need to happen in the Wallet client not the dApp client as only the Wallet client has access to the necessary context information.
 
-💡 A ethereum provider is something you can inject into the constructor of web3 or etherjs and override the point it does the JSONRPC call.
+💡 An Ethereum provider is something you can inject into the constructor of web3 or etherjs and override the point at which it makes the JSON-RPC call.
 
-💡 Minimal changes if any to the web3/ethers code.
+💡 Minimal changes, if any, should be required to the web3/etherjs code.
 
-💡 Once done our ethereum provider will proxy all the JSONRPC calls to the wallet
+💡 Once done, our Ethereum provider will proxy all the JSON-RPC calls to the Wallet.
 
-## Ethereum provider flow
+## Ethereum Provider Flow
 
 Click on the image to zoom in.
 
