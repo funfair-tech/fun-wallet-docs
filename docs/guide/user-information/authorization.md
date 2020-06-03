@@ -1,3 +1,7 @@
-# Introduction
+# Authorization
 
-We provide a set of endpoints which can be called using any HTTP client in order to obtain in-depth information about your dApp's Wallet users. These endpoints are intended to allow your server-side code to retrieve canonical information about individual users based on a supplied user account address.
+These endpoint require requests to be signed using your organisation's private key. 
+
+Populate the ```X-App-Signature``` header in all requests using the generated signature.
+
+Requests that are unsigned, or are signed using a private key that hasn't been configured for use with the Fun Wallet, will be rejected - you'll receive a 403.
