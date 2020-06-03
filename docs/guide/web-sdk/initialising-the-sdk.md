@@ -2,7 +2,7 @@
 
 We call the Wallet authentication iframe the `leader`. If you want to read more information about what a `leader` is, please go [here](http://localhost:8080/fun-wallet-docs/guide/how-does-it-work/leader-and-follower-communication.html#what-is-a-leader-instance).
 
-Please paste this HTML snippet as close as possible to the top of the `<body>`. This should live in a place which does not get removed from the DOM. You need to allow the camera in the feature policies in order for our KYC provider to work. This example is using an Angular `load` event, but you can register an iframe `onload` event using JavaScript or how any other framework handle it - just change that event accordingly for the framework you're using.
+Paste this HTML snippet as close as possible to the top of the `<body>`. This should live in a place which does not get removed from the DOM. You need to allow the camera in the feature policies in order for our KYC provider to work. This example is using an Angular `load` event, but you can register an iframe `onload` event using JavaScript or how any other framework handle it - just change that event accordingly for the framework you're using.
 
 ```html
 <div id="fun-wallet-leader">

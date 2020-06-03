@@ -1,6 +1,6 @@
 # Routing and Deep Linking
 
-The SDK handles deep linking for you. Every Wallet change performed by the user in the Wallet iframe will silently change the URL without reloading and append a `funWalletRoute` query parameter to the query string. This functionality preserves any other query parameters which exist in your dApp URL, so no need to worry about losing any of your other query string parameters - all it does is add it to it or edit it if it already exists.
+The SDK handles deep linking for you. Every Wallet change performed by the user in the Wallet iframe will silently change the URL without reloading and append a `funWalletRoute` query parameter to the query string. This functionality preserves any other query parameters which exist in your dApp's URL, so there's no need to worry about losing any of your other query string parameters - all it does is add it, or edit it if it already exists.
 
 ## Deep Linking With Your dApp
 

@@ -1,10 +1,10 @@
 # Authentication
 
-It's up to the integration to show the user the login and logout buttons which gives flexibility on designs.
+It's up to the integration to show the user the login and logout buttons, which allows flexibility on designs.
 
 ## Login
 
-Register a click event on the element you want to trigger the FunFair Wallet login modal.
+Register a click event on the element you want to trigger the Wallet login modal.
 
 Example:
 
@@ -50,7 +50,7 @@ function async logout() {
 }
 ```
 
-This will log all the instances out of the Wallet. Also, if the inactivity time is reached, all instances of the wallet will be logged out, which fires a [walletInactivityLoggedOut](/guide/web-sdk/sdk-event-listeners.html#walletinactivityloggedout) event that you should hook onto. This can also fire if a user deletes a device from their approved device screen [walletDeviceDeletedLoggedOut](/guide/web-sdk/sdk-event-listeners.html#walletdevicedeletedloggedout). If any of these events fire, the dApp needs to update its state back to a logged-out state.
+This will log all the instances out of the Wallet. Also, if the inactivity time is reached, all instances of the Wallet will be logged out, which fires a [walletInactivityLoggedOut](/guide/web-sdk/sdk-event-listeners.html#walletinactivityloggedout) event that you should hook onto. This can also fire if a user deletes a device from their approved device screen [walletDeviceDeletedLoggedOut](/guide/web-sdk/sdk-event-listeners.html#walletdevicedeletedloggedout). If any of these events fire, the dApp needs to update its state back to a logged-out state.
 
 ## Tolerate Refresh
 

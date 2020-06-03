@@ -2,7 +2,7 @@
 
 We call the Wallet UI iframe a `follower`. If you want to read more information about what a `follower` is, please go [here](http://localhost:8080/fun-wallet-docs/guide/how-does-it-work/leader-and-follower-communication.html#what-is-a-follower).
 
-Please paste this HTML snippet where you want the Wallet UI to render on your dApp. This example uses an Angular `load` event, but you can register an iframe `onload` event using JavaScript or via functionality exposed by whatever framework you're using. So just change that event accordingly depending on the framework you're using.
+Paste this HTML snippet where you want the Wallet UI to render on your dApp. This example uses an Angular `load` event, but you can register an iframe `onload` event using JavaScript or via functionality exposed by whatever framework you're using. So just change that event accordingly depending on the framework you're using.
 
 Due to the ability of [deep-linking](./routing.md), which is supported out of the box, the Wallet has to build up your src dynamically (hence the `| safe` pipe in the example). Again, the example shown is from an Angular app, so change how you handle that accordingly depending on the framework you're using.
 
