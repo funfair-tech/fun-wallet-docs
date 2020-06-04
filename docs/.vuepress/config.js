@@ -59,7 +59,8 @@ module.exports = (_ctx) => ({
           '/guide/': getGuideSidebar(
             'Information',
             'How Does It Work?',
-            'Web SDK'
+            'Web SDK',
+            'Server > Server API'
           ),
         },
       },
@@ -117,7 +118,7 @@ module.exports = (_ctx) => ({
   extraWatchFiles: ['.vuepress/nav/en.js'],
 });
 
-function getGuideSidebar(information, howDoesItWork, websdk) {
+function getGuideSidebar(information, howDoesItWork, websdk, userInformation) {
   return [
     {
       title: information,
@@ -150,7 +151,7 @@ function getGuideSidebar(information, howDoesItWork, websdk) {
         'how-does-it-work/fun-wallet-ethereum-provider',
         'how-does-it-work/blooms',
       ],
-    },
+    },   
     {
       title: websdk,
       collapsable: false,
@@ -168,5 +169,15 @@ function getGuideSidebar(information, howDoesItWork, websdk) {
         'web-sdk/sdk-event-listeners',
       ],
     },
-  ];
+    {
+      title: userInformation,
+      collapsable: false,
+      children: [
+        'user-information/introduction',
+        'user-information/authorization',
+        'user-information/user-information',
+        'user-information/encrypted-user-information',
+      ],
+    }, 
+    ];
 }
