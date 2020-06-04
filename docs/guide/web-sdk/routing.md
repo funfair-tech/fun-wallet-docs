@@ -25,26 +25,23 @@ export enum DeepLinkRouteTypes {
   securitySettingsApprovedDevices = '/settings/security-settings/approved-devices',
   responsibleGaming = '/settings/responsible-gaming',
   responsibleGamingTakeABreak = '/settings/responsible-gaming/take-a-break',
-  responsibleGamingTakeABreakReview = '/settings/responsible-gaming/take-a-break/review',
-  responsibleGamingTakeABreakConfirmed = '/settings/responsible-gaming/take-a-break/confirmed',
   responsibleGamingSelfExclude = '/settings/responsible-gaming/self-exclude',
-  responsibleGamingSelfExcludeConfirmed = '/settings/responsible-gaming/self-exclude/confirmed',
-  responsibleGamingWelcomeBack = '/settings/responsible-gaming/welcome-back',
-  responsibleGamingWelcomeBackExtendBreak = '/settings/responsible-gaming/welcome-back/extend-break',
-  responsibleGamingWelcomeBackExtendBreakReview = '/settings/responsible-gaming/welcome-back/extend-break/review',
-  responsibleGamingWelcomeBackExtendBreakConfirmed = '/settings/responsible-gaming/welcome-back/extend-break/confirmed',
-  responsibleGamingWelcomeBackSelfExclude = '/settings/responsible-gaming/welcome-back/self-exclude',
-  responsibleGamingWelcomeBackSelfExcludeConfirmed = '/settings/responsible-gaming/welcome-back/self-exclude/confirmed',
   funds = '/funds',
   convertFunds = '/funds/convert',
   withdrawFunds = '/funds/withdraw',
-  deposit = '/funds/deposit',
+  // you need to append the token symbol in the query string for this page
+  // aka `/funds/deposit/address?symbol=FUN`
+  // make sure you use the `formatRouterToValue` method.
   depositAddress = '/funds/deposit/address',
+  // you need to append the token symbol in the query string for this page
+  // aka `/funds/deposit/crypto?symbol=FUN`
+  // make sure you use the `formatRouterToValue` method.
   depositCrypto = '/funds/deposit/crypto',
+  // you need to append the token symbol in the query string for this page
+  // aka `/funds/deposit/card?symbol=FUN`
+  // make sure you use the `formatRouterToValue` method.
   depositCard = '/funds/deposit/card',
-  history = '/history',
   historyTransfers = '/history/transfers',
   historyTransactions = '/history/transactions',
-  help = '/help',
 }
 ```
