@@ -5,7 +5,7 @@ module.exports = (_ctx) => ({
   locales: {
     '/': {
       lang: 'en-US',
-      title: 'FunWallet Documentation',
+      title: 'FunFair Wallet Documentation',
       description: 'Welcome',
     },
   },

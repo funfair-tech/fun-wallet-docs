@@ -1,4 +1,4 @@
-# Login & Recovery Token Generation
+# Login and Recovery Token Generation
 
 Click on the image to zoom in.
 

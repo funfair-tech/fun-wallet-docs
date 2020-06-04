@@ -1,24 +1,28 @@
 # SDK Event Listeners
 
-The wallet emits events when properties change. For example, when the authenticated user changes their network - events help your app to keep in sync. You can hook onto the event listeners in the SDK, writing your own logic you want to fire when the event is emitted.
+The Wallet emits events when properties change, for example, when the authenticated user changes their network. Events allow your dApp to keep in sync. You can hook onto event listeners via methods exposed in the SDK, writing your own handling logic that you want to fire when the event is received.
 
-You can only register 1 event listener per message listener, if you do try to listen to a listener which has already been registered it will throw a error. You can cancel listeners and you will be able to register them again without an error throwing.
+You can only register one event listener per message listener - if you do try to listen to a listener which has already been registered, it will throw a error. You can cancel listeners as necessary, and you'll then be able to register them again without an error being thrown.
 
-Once the SDK is initialised you should hook onto all the event listeners as each one is important within the integration. We recommend the callback you write for each message listener is just a simple state change to your redux store, which then allows your UI components to react to that state change. Reactive programming (rxjs) in this case will make the integration a lot nicer. The SDK itself doesn't have any hard limits on this though, so if you did want to integrate it another way then that's ok, the above is just our recommended integration approach for a clean solution.
+The SDK exposes two different ways to register an event listener:
+1. Event listeners: listen to all events of a specified type until the listener is cancelled explicitly.
+2. One-off listeners: subscribe only to the first event of a specified type. Once the event has fired, your dApp will be unsubscribed and will receive no further events of the type. An example use case of a one-off listener might be when your dApp wants to update its state based on the next block mined, but isn't interested in subsequent changes to the blockchain.
 
-## Register an event listener
+Once the SDK is initialized, you should hook onto all the event listeners, as each one is important to the integration. We recommend that the callback you write for each message listener is just a simple state change to your Redux store, allowing that state change to be reflected in your UI components. Reactive programming (e.g. RxJS) will simplify the integration, and while it's not required (the SDK itself doesn't impose any constraints on this), it is our recommended integration approach for a clean solution.
+
+## Registering an event listener
 
 `JavaScript`:
 
 ```js
 window.funwallet.sdk.on('MESSAGE LISTENER NAME', (result) => {
-  // logic here
+  // your event-handling logic here
 });
 ```
 
 `TypeScript`:
 
-Note: `TStronglyTypedResponse` is a reference to a strongly typed model - obviously don't use this in your application.
+Note: `TStronglyTypedResponse` is a reference to a strongly-typed model - obviously don't use this in your application.
 
 ```ts
 import window from '@funfair/wallet-sdk/window';
@@ -28,20 +32,20 @@ window.funwallet.sdk.on<TStronglyTypedResponse>(
   MessageListeners.TypeYouWantToUse,
   (result: TStronglyTypedResponse) => {
     if (result.origin === 'https://wallet.funfair.io') {
-      // logic here
+      // your event-handling logic here
     }
   }
 );
 ```
 
-## Listen for a one-off listener
+## Registering a one-off listener
 
 `JavaScript`:
 
 ```js
 window.funwallet.sdk.once('MESSAGE LISTENER NAME', (result) => {
   if (result.origin === 'https://wallet.funfair.io') {
-    // logic here
+    // your event-handling logic here
   }
 });
 ```
@@ -56,13 +60,13 @@ window.funwallet.sdk.once<TStronglyTypedResponse>(
   MessageListeners.TypeYouWantToUse,
   (result: TStronglyTypedResponse) => {
     if (result.origin === 'https://wallet.funfair.io') {
-      // logic here
+      // your event-handling logic here
     }
   }
 );
 ```
 
-It will always have 1 parameter which is the result of the `postMessage` outcome:
+Results are returned to the listener as follows:
 
 ```ts
 {
@@ -72,39 +76,45 @@ It will always have 1 parameter which is the result of the `postMessage` outcome
 }
 ```
 
+This is the result of the `postMessage` operation performed by the SDK.
+
+As well as indicating the origin and the source of the received data, the returned result will always have a *data* property which specifies the data for the event being received.
+
 `data`
 The object passed from the other window.
 
 `origin`
-The origin of the window that sent the message at the time postMessage was called. This string is the concatenation of the protocol and `"://"`, the host name if one exists, and `":"` followed by a port number if a port is present and differs from the default port for the given protocol. Examples of typical origins are https://example.org (implying port 443), http://example.net (implying port 80), and http://example.com:8080. Note that this origin is not guaranteed to be the current or future origin of that window, which might have been navigated to a different location since postMessage was called.
+The origin of the window that sent the message at the time `postMessage` was called. This string is the concatenation of the protocol and `"://"`, the host name if one exists, and `":"` followed by a port number if a port is present and differs from the default port for the given protocol. Examples of typical origins are https://example.org (implying port 443), http://example.net (implying port 80), and http://example.com:8080. 
 
-In our examples we use a placeholder of `https://wallet.funfair.io` but yours should have the correct, valid origin for the wallet environment you're pointing to within your iframes.
+Note that this origin is not guaranteed to be the current or future origin of that window, which might have been navigated to a different location since postMessage was called.
+
+In our examples we use a placeholder of `https://wallet.funfair.io` but yours should have the correct, valid origin for the Wallet environment you're pointing to within your iframes.
 
 `source`
-A reference to the window object that sent the message; you can use this to establish two-way communication between two windows with different origins.
+A reference to the window object that sent the message. You can use this to establish two-way communication between two windows with different origins.
 
-## Security concerns
+## Security Concerns
 
-Always verify the sender's identity using the origin and possibly source properties. Any window (including, for example, http://evil.example.com) can send a message to any other window, and you have no guarantees that an unknown sender will not send malicious messages. Having verified identity, however, you still should always verify the syntax of the received message. Otherwise, a security hole in the site you trusted to send only trusted messages could then open a cross-site scripting hole in your site.
+💡 Always verify the sender's identity using the origin and possibly source properties. Any window (including, for example, http://evil.example.com) can send a message to any other window, and you have no guarantee that an unknown sender will not send malicious messages. Having verified identity, however, you still should always verify the syntax of the received message. Otherwise, a security hole in the site you trusted to send only trusted messages could then open a cross-site scripting hole in your site.
 
-To protect yourself from opening yourself up to cross-site scripting, make sure you **NEVER** set the data result from the postMessage to any HTML elements:
+💡 To protect your dApp's users from cross-site scripting attacks, make sure you **NEVER** assign the *data* result from the `postMessage` to any HTML elements:
 
 ```js
 window.funwallet.sdk.once('MESSAGE LISTENER NAME', (result) => {
   if (result.origin === 'https://wallet.funfair.io') {
     // OUCH!! YOU HAVE OPENED YOURSELF UP FOR THE TRUSTED DOMAINS TO
-    // INJECT BAD SCRIPTS INTO YOUR PAGE, RULE OF THUMB NEVER EVER
+    // INJECT BAD SCRIPTS INTO YOUR PAGE. AS RULE OF THUMB, NEVER, *EVER*
     // DO THIS (DON'T WORRY WE WOULD NEVER DO SOMETHING SO MEAN :D)
-    document.getElementById('message').innerHTML = message.data;
+    document.getElementById('message').innerHTML = result.data;
   }
 });
 ```
 
-Always specify an exact target origin, not "\*", when you use postMessage to send data to other windows. A malicious site can change the location of the window without your knowledge, and therefore it can intercept the data sent using postMessage.
+Always specify an exact target origin, not "\*", when you use `postMessage` to send data to other windows. A malicious site can change the location of the window without your knowledge, and therefore it can intercept the data sent using `postMessage`.
 
-Please note the SDK does check this as well and only connects messages from the wallet but as the SDK is hosted on your side and exported globally on the window we suggest you check the origin as well. The messages the wallet sends you are just information based anyway, we never register a event which says "go and execute this script on the parent site" so this makes it a lot less to worry about but we still suggest you abide by the security concerns addressed. If you fail to check this you can not be sure that the message has came from the wallet.
+Please note the SDK does check this as well and only connects messages from the Wallet but as the SDK is hosted on your side and exported globally on the window we suggest you check the origin as well. The messages the Wallet sends you are just information based anyway, we never register a event which says "go and execute this script on the parent site" so this makes it a lot less to worry about but we still suggest you abide by the security concerns addressed. If you fail to check this you can not be sure that the message has came from the Wallet.
 
-## All listeners
+## List of All Available Listeners
 
 ```ts
 {
@@ -136,11 +146,11 @@ Please note the SDK does check this as well and only connects messages from the 
 }
 ```
 
-All the examples of code here will use the `on` but remember on all of these cases you can use `once`.
+All the examples of code here will use the `on` but in all of these cases, you can also use `once` if you require one-off listening functionality.
 
 ## restoreAuthenticationCompleted
 
-To allow restoring someone to be logged in after they refresh on initial load the wallet tries to restore a session, once done it will emit `restoreAuthenticationCompleted` telling you if its restored a users session or not. You should disable any sign in/up click button until you get this event, it should happen very fast.
+To allow restoring someone to be logged in after they refresh on initial load the Wallet tries to restore a session. Upon success, it will emit `restoreAuthenticationCompleted` telling you if it's restored a user's session or not. You should disable any sign-in/up click button until you get this event (it should happen very fast).
 
 `JavaScript`:
 
@@ -183,7 +193,7 @@ window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
 
 ## changeNetwork
 
-This will fire when the wallet network has been changed (This will fire on initial authentication of the leader as they do change state once authenticated).
+This will fire when the Wallet network has been changed. *Note: this will always fire upon initial authentication of the leader as networks will update as a result of authentication.*
 
 `JavaScript`:
 
@@ -224,7 +234,7 @@ window.funwallet.sdk.on<ChangeNetworkResponse>(
 
 ## authenticationCompleted
 
-This will fire when the leader instance has been authenticated by a user, meaning you can now inject follower instances to show the UI to the authenticated user.
+This will fire when the leader instance has been authenticated by a user. Once (and not until) this event has been received, you can go ahead and inject follower instances to show the UI to the authenticated user.
 
 `JavaScript`:
 
@@ -267,7 +277,7 @@ window.funwallet.sdk.on<AuthenticationCompletedResponse>(
 
 ## followerAuthenticationCompleted
 
-This will fire when the follower instance has authenticated itself successfully and is your notification to re-enable any disabled wallet buttons.
+This will fire when the follower instance has authenticated itself successfully and indicates that you should re-enable any disabled Wallet buttons.
 
 `JavaScript`:
 
@@ -310,7 +320,7 @@ window.funwallet.sdk.on<FollowerAuthenticationCompletedResponse>(
 
 ## walletInactivityLoggedOut
 
-This will fire when the inactivity timeout has expired meaning all authenticated instances have now been logged out.
+This will fire when the inactivity timeout has expired, meaning all authenticated instances have now been logged out.
 
 `JavaScript`:
 
@@ -351,7 +361,7 @@ window.funwallet.sdk.on<WalletInactivityLoggedOutResponse>(
 
 ## walletDeviceDeletedLoggedOut
 
-This will fire when the current device the user is using has been deleted meaning all authenticated instances have now been logged out.
+This will fire when the current device the user is using has been deleted, meaning all authenticated instances have now been logged out.
 
 `JavaScript`:
 
@@ -394,7 +404,7 @@ window.funwallet.sdk.on<WalletDeviceDeletedLoggedOutResponse>(
 
 ## walletNonceUpdated
 
-This will fire when the wallet nonce is updated.
+This will fire when the Wallet nonce is updated. The Wallet nonce is incremented as transactions are signed and sent, making it possible for your dApp to remain aware of these changes.
 
 `JavaScript`:
 
@@ -437,7 +447,7 @@ window.funwallet.sdk.on<WalletNonceUpdatedResponse>(
 
 ## pendingTransaction
 
-This will fire when a pending transaction has occurred on the funwallet. We suggest if your app sends the transaction and wants to hook onto certain notifications, e.g. the transaction hash, then use the web3 promise events - https://web3js.readthedocs.io/en/1.0/callbacks-promises-events.html.
+This will fire when a pending transaction has occurred on the Wallet. We suggest if your dApp sends the transaction and wants to hook onto certain notifications, e.g. the transaction hash, then use [web3 promise events](https://web3js.readthedocs.io/en/1.0/callbacks-promises-events.html).
 
 `JavaScript`:
 
@@ -481,7 +491,7 @@ window.funwallet.sdk.on<PendingTransactionResponse>(
 
 ## completedTransaction
 
-This will fire when a completed transaction has occurred on the funwallet (1 confirmation). We do suggest if your app sends the transaction and wants to hook onto certain notifications, e.g the transaction hash, then use the web3 promise events.
+This will fire when a completed transaction has occurred on the Wallet (i.e. upon the first confirmation). We suggest if your dApp sends the transaction and wants to hook onto certain notifications, e.g. the transaction hash, then use [web3 promise events](https://web3js.readthedocs.io/en/1.0/callbacks-promises-events.html).
 
 `JavaScript`:
 
@@ -525,7 +535,7 @@ window.funwallet.sdk.on<CompletedTransactionResponse>(
 
 ## cancelledTransaction
 
-This will fire when a cancelled transaction has occurred on the funwallet.
+This will fire when a cancelled transaction has occurred on the Wallet.
 
 `JavaScript`:
 
@@ -570,7 +580,7 @@ window.funwallet.sdk.on<CancelledTransactionResponse>(
 
 ## failedTransaction
 
-This will fire when a failed transaction has occurred on the funwallet (1 confirmation). We do suggest if your app sends the transaction and wants to hook onto certain notifications, e.g. the transaction hash, then use the web3 promise events.
+This will fire when a failed transaction has occurred on the Wallet (based on first confirmation). We suggest if your app sends the transaction and wants to hook onto certain notifications, e.g. the transaction hash, then use [web3 promise events](https://web3js.readthedocs.io/en/1.0/callbacks-promises-events.html).
 
 `JavaScript`:
 
@@ -613,7 +623,7 @@ window.funwallet.sdk.on<FailedTransactionResponse>(
 
 ## erc20TokenBalanceChanged
 
-This will fire when a ERC20 token balance changes for the authenticated user.
+This will fire when an ERC20 token balance changes for the authenticated user.
 
 `JavaScript`:
 
@@ -649,7 +659,7 @@ window.funwallet.sdk.on<ERC20TokenBalanceChangedResponse>(
 ```ts
 {
   symbol: string,
-  // the balance is already formatted for you
+  // the balance is pre-formatted
   // to the correct maximum decimal
   tokenBalance: string,
 }
@@ -659,7 +669,7 @@ window.funwallet.sdk.on<ERC20TokenBalanceChangedResponse>(
 
 ## erc20TokenFiatPriceChanged
 
-This will fire when a ERC20 token fiat price changes.
+This will fire when an ERC20 token's fiat price changes. Fiat prices are monitored by the wallet server and updated regularly. Any change will trigger this event.
 
 `JavaScript`:
 
@@ -738,7 +748,7 @@ window.funwallet.sdk.on<ETHBalanceChangedResponse>(
 
 ```ts
 {
-  // the balance is already formatted for you
+  // the ethBalance is pre-formatted
   // to the correct maximum decimal
   ethBalance: string,
 }
@@ -748,7 +758,7 @@ window.funwallet.sdk.on<ETHBalanceChangedResponse>(
 
 ## ethFiatPriceChanged
 
-This will fire when an ETH fiat price changes.
+This will fire when the ETH fiat price changes. Fiat prices are monitored by the Wallet server and updated regularly. Any change will trigger this event.
 
 `JavaScript`:
 
@@ -831,7 +841,7 @@ window.funwallet.sdk.on<ChangeCurrencyResponse>(
 
 ## isKycVerified
 
-This will fire if the account is kyc verified or not. It will fire on the inital login allowing you to pop up the kyc modal automatically when a user logs in.
+This will fire upon initial login, whether the account is KYC-verified or not. This allows you to pop up the KYC modal automatically when a user logs in, if necessary.
 
 `JavaScript`:
 
@@ -874,7 +884,7 @@ window.funwallet.sdk.on<IsKycVerifiedResponse>(
 
 ## kycProcessCancelled
 
-This will fire when the authenticated account going through the kyc process cancels the modal and goes back to the dapp website.
+This will fire when the authenticated account going through the KYC process cancels the modal and goes back to the dApp website.
 
 `JavaScript`:
 
@@ -917,7 +927,7 @@ window.funwallet.sdk.on<KycProcessCancelledResponse>(
 
 ## websocketConnected
 
-This will fire when the websocket connect successfully, please keep this in memory and when `websocketDisconnected` update the value of the websocket connection status, if it reconnects another one of these will fire.
+This will fire when a successful WebSocket connection is made, including any time a dApp reconnects after being disconnected. Please keep the WebSocket connected status in memory, and when `websocketDisconnected` is received, update the value of the WebSocket connection status.
 
 `JavaScript`:
 
@@ -960,7 +970,7 @@ window.funwallet.sdk.on<WebsocketConnectedResponse>(
 
 ## websocketDisconnected
 
-This will fire when the websocket disconnects or gets closed.
+This will fire when the WebSocket disconnects or gets closed.
 
 `JavaScript`:
 
@@ -1003,7 +1013,7 @@ window.funwallet.sdk.on<WebsocketDisconnectedResponse>(
 
 ## newBlock
 
-This will fire when the wallet receives a new block alert through the websockets connection. This will remove any polling needed for the integration app and it can listen out for these to fire.
+This will fire when the wallet receives a new block alert through the WebSocket connection. This removes the need for any polling - the dApp can just listen for these events.
 
 `JavaScript`:
 
@@ -1047,7 +1057,7 @@ window.funwallet.sdk.on<NewBlockResponse>(
 
 ## newBlockBloomMatchUser
 
-This will fire when the wallet receives a new block alert through the websockets its connect to and the bloom filter matches the authentication users ethereum address.
+This will fire when the wallet receives a new block alert through the WebSocket it's connected to *and* the bloom filter matches the authenticated user's Ethereum address.
 
 `JavaScript`:
 
@@ -1094,7 +1104,7 @@ window.funwallet.sdk.on<NewBlockBloomMatchUserResponse>(
 
 ## playerProtectionUpdated
 
-This will fire when the player protection data has been updated aka they just ban themselves or something.
+This will fire when the player protection data has been updated, for example if they have self-excluded or changed their exclusion reactivation date.
 
 `JavaScript`:
 
@@ -1150,7 +1160,7 @@ export enum ExclusionStatusType {
 
 ## walletTracking
 
-Due to the wallet holding your PK in memory we do not allow google analytics scripts in the wallet itself. This event emits tracking events back to the client so the integrator can pass them to any tracking software they want.
+Due to the Wallet holding private keys in memory, we don't allow Google analytics scripts in the Wallet itself. However, this event emits tracking data back to the client so the you can pass them to any tracking software you want to use.
 
 `JavaScript`:
 
@@ -1315,7 +1325,7 @@ export declare enum TrackingEventLabel {
 
 ## authenticationPopUpClosed
 
-This emits an event when the authentication popup is closed. If `isAuthenticated` is the response is true it means the close happened on a successful login, if it's false it means they did not go through the whole login and closed the popup.
+This emits an event when the authentication popup is closed. If `isAuthenticated` in the response is true, it means the close happened after a successful login; if it's false it means the user didn't go through the whole login process (for example, if they closed the popup).
 
 `JavaScript`:
 
@@ -1398,7 +1408,7 @@ const listener = window.funwallet.sdk.on<TStronglyTypedResponse>(
 listener.cancel();
 ```
 
-this works the same as `once`:
+This works the same as `once`:
 
 `JavaScript`:
 
@@ -1432,4 +1442,4 @@ const listener = window.funwallet.sdk.once<TStronglyTypedResponse>(
 listener.cancel();
 ```
 
-Now if you try to listen to that message listener again it will work as you have cancelled the other listener. On the `once` calls once the `once` has been fired you will be able to register a new one without an error throwing.
+Now if you try to listen to that message listener again it will work, as you have cancelled the other listener. On the `once` calls, once the `once` has been fired you will be able to register a new listener without an error being thrown.

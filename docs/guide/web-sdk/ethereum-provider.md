@@ -1,11 +1,11 @@
 # Ethereum Provider
 
-We have our own ethereum provider which can be injected into any new `web3` or `ethers` instance. This means you can use the standard `web3` or `ethers` interface to do all your blockchain calls and our ethereum provider makes sure all those calls go through the authenticated leader wallet instance.
+We have our own Ethereum provider which can be injected into any new `web3` or `ethers` instance. This means you can use the standard `web3` or `ethers` interface to do all your blockchain calls and our Ethereum provider makes sure all those calls go through the authenticated leader Wallet instance.
 
-Once you initialise the wallet, the SDK will expose the ethereum provider on the window which can be used as the provider you inject when you create a new `web3` or `ethers` instance.
+Once you initialize the Wallet, the SDK will expose the Ethereum provider on the window, which can be used as the provider you inject when you create a new `web3` or `ethers` instance.
 
 ```ts
-// provider lives here in the funwalletsdk object
+// provider lives here in the FunFair Wallet SDK object
 window.funwallet.sdk.ethereum;
 ```
 
@@ -13,7 +13,7 @@ window.funwallet.sdk.ethereum;
 
 ### isFunWallet
 
-This will return true if the provider is a fun wallet.
+This will return true if the provider is a FunFair Wallet.
 
 ```ts
 public get isFunWallet(): boolean
@@ -35,7 +35,7 @@ const isFunWallet = window.funwallet.sdk.ethereum.isFunWallet;
 
 ### isConnected
 
-This will return true if the provider is connected
+This will return true if the provider is connected.
 
 ```ts
 public get isConnected(): boolean
@@ -57,7 +57,7 @@ const isConnected = window.funwallet.sdk.ethereum.isConnected;
 
 ### initOptions
 
-Returns the initialised options supplied
+Returns the initialized options supplied.
 
 ```ts
 public get initOptions(): InitOptions | undefined
@@ -99,13 +99,12 @@ const web3 = new Web3(window.funwallet.sdk.ethereum);
 ```ts
 import window from '@funfair/wallet-sdk/window';
 
-// at the moment the current web3 typings does accept custom providers
-// something which will be fixed later on in web3 but for now you have
-// to cast it as `any`
+// the web3 typings do not handle certain custom providers in their TS typings
+// so please cast it as any for it to compile with TS
 const web3 = new Web3(window.funwallet.sdk.ethereum as any);
 ```
 
-## ethers
+## etherjs
 
 `JavaScript`:
 
@@ -125,8 +124,8 @@ const provider = new ethers.providers.Web3Provider(
 );
 ```
 
-<strong>All your web3 or ethers calls now will work as normal but proxy through to the wallet. Use the library to now send transaction and do all things blockchain.</strong>
+<strong>All your web3 or ethers calls now will work as normal but proxy through to the Wallet. Use the library to now send transaction and do all things blockchain.</strong>
 
 **NOTE**
 
-We do not support `eth_sign`, `eth_signTransaction` and `eth_sendRawTransaction` due to the security concerns with signing and not sending. You can only sign and send with our wallet. Also `eth_newFilter`, `eth_newBlockFilter`, `eth_getFilterChanges`, `eth_getFilterLogs`, `eth_uninstallFilter` and `eth_newPendingTransactionFilter` our not supported by our nodes so will not work.
+We don't support `eth_sign`, `eth_signTransaction` and `eth_sendRawTransaction` due to the security concerns with signing and not sending. You can only sign and send with our Wallet. Also `eth_newFilter`, `eth_newBlockFilter`, `eth_getFilterChanges`, `eth_getFilterLogs`, `eth_uninstallFilter` and `eth_newPendingTransactionFilter` are not supported by our nodes so will not work.

@@ -1,18 +1,18 @@
-# Routing And Deep Linking
+# Routing and Deep Linking
 
-The SDK handles deep linking for you. Every wallet change which is done by the user in the wallet iframe it will silently change the url without reloading and append a `funWalletRoute` query parameter in the query string. Don't worry it still preserves any other query parameters which exist in your dapp url, all it does is add it to it or edit it if it already exists.
+The SDK handles deep linking for you. Every Wallet change performed by the user in the Wallet iframe will silently change the URL without reloading and append a `funWalletRoute` query parameter to the query string. This functionality preserves any other query parameters which exist in your dApp's URL, so there's no need to worry about losing any of your other query string parameters - all it does is add it, or edit it if it already exists.
 
-## Deep Linking With Your Dapp
+## Deep Linking With Your dApp
 
-Say you want to deep link into the withdrawal page from a click on your dapp or something. When the `follower` iframe is loading the SDK passes whatever is in the `funWalletRoute` query parameter, so all you need to do is set the `funWalletRoute` to the page you wish to load before routing your dapp to the page which loads the `follower` iframe.
+Say you want to deep link into the withdrawal page, or any other page, from a click on your dApp. When the `follower` iframe is loading the SDK passes whatever is in the `funWalletRoute` query parameter, so all you need to do is set the `funWalletRoute` to the page you wish to load before routing your dApp to the page which loads the `follower` iframe.
 
-The SDK handles all the encoding and decoding for you the dapp just needs to make sure it calls:
+The SDK handles all the encoding and decoding for you: the dApp just needs to make sure it calls:
 
 ```ts
 window.funwallet.formatRouterToValue(YOUR_PAGE_VALUE);
 ```
 
-This will format certain stuff like replace `?` > `_` and `=` > `.` so we can preserves query string parameters for the wallet itself and also keeping the query string a valid format.
+This will format certain stuff like replace `?` > `_` and `=` > `.` so we can preserve query string parameters for the Wallet itself whilst also keeping the query string in a valid format.
 
 ## Deep Link Page Routes
 

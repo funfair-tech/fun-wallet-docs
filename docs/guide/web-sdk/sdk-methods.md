@@ -1,10 +1,10 @@
 # SDK Methods
 
-Please note none of the SDK calls will work if the SDK has not been [initialised](http://localhost:8080/fun-wallet-docs/guide/web-sdk/initialising-the-sdk.html). The SDK will throw errors telling you this if you try to do so.
+Please note none of the SDK calls will work if the SDK has not been [initialized](http://localhost:8080/fun-wallet-docs/guide/web-sdk/initialising-the-sdk.html). The SDK will throw errors telling you this if you try to do so.
 
 ## init
 
-This initialises the SDK and sets up communicate with the leader instance and the wallet.
+This initializes the SDK and sets up communicate with the leader instance and the Wallet.
 
 ```ts
 public init(options?: InitOptions): void
@@ -63,7 +63,7 @@ window.funwallet.sdk.openWalletAuthenticationPopUp();
 
 ## registerFollowerInstance
 
-This initialises an authenticated follower instance for you to display wallet UI with. If the leader is not authenticated this will throw an error.
+This initializes an authenticated follower instance for you to display Wallet UI with. If the leader is not authenticated this will throw an error.
 
 ```ts
 public async registerFollowerInstance(): Promise<void>
@@ -87,7 +87,7 @@ await window.funwallet.sdk.registerFollowerInstance();
 
 ## versionInfo
 
-Returns the wallet's version information.
+Returns the Wallet's version information.
 
 ```ts
 public async versionInfo(options?: InitOptions): Promise<VersionInfo>
@@ -120,7 +120,7 @@ const versionInfo = await window.funwallet.sdk.versionInfo();
 
 ## isAuthenticated
 
-Returns the authenticated status of the user on the wallet.
+Returns the authenticated status of the user on the Wallet.
 
 ```ts
 public async isAuthenticated(): Promise<boolean>
@@ -144,7 +144,7 @@ const loggedIn = await window.funwallet.sdk.isAuthenticated();
 
 ## ethereumAddress
 
-Returns the authenticated user's ethereum address. If they're not authenticated it will return `null`.
+Returns the authenticated user's Ethereum address. If they're not authenticated it will return `null`.
 
 ```ts
 public async ethereumAddress(): Promise<string | null>
@@ -217,7 +217,7 @@ const networkState = await window.funwallet.sdk.currentNetwork();
 
 ## enabledNetworks
 
-Returns the enabled networks set by the wallet dapp config
+Returns the enabled networks set by the wallet dApp config.
 
 ```ts
 public async enabledNetworks(): Promise<NetworkDetails[] | undefined>
@@ -241,7 +241,7 @@ const enabledNetworks = await window.funwallet.sdk.enabledNetworks();
 
 ## currentCurrency
 
-Returns the authenticated user's current currency
+Returns the authenticated user's current currency.
 
 ```ts
 public async currentCurrency(): Promise<string>
@@ -265,7 +265,7 @@ const currentCurrency = await window.funwallet.sdk.currentCurrency();
 
 ## userActive
 
-This needs to be called every 10 minutes to make sure the JWT token refreshes. We suggest calling this every 2-3 minutes just to be safe. This will make sure the JWT token refreshes when it needs to and it does not fire an inactivity event which logs all instances out of the wallet.
+This needs to be called every 10 minutes to make sure the JWT refreshes. We suggest calling this every 2-3 minutes just to be safe. This will make sure the JWT refreshes when it needs to and it does not fire an inactivity event which logs all instances out of the Wallet.
 
 ```ts
 public async userActive(): Promise<void>
@@ -365,7 +365,7 @@ const result = await window.funwallet.sdk.destroyFollowerInstance();
 
 ## kycModalOpen
 
-This manually starts the kyc process which pops up the kyc modal. This can be used if the initial kyc popup got closed and the account now wanted to kyc. If you call this when the account has already been kyc verified then it will throw a error.
+This manually starts the kyc process which pops up the kyc modal. This can be used if the initial KYC popup got closed and the account now wanted to KYC. If you call this when the account has already been KYC-verified then it will throw a error.
 
 ```ts
 public async kycModalOpen(): Promise<void>
@@ -413,7 +413,7 @@ const isKycVerified = await window.funwallet.sdk.isKycVerified();
 
 ## getWalletFollowerURL
 
-Build up the follower url for you and adds all the context in the query string so you do not have to worry about it.
+Build up the follower URL for you and adds all the context in the query string so you do not have to worry about it.
 
 ```ts
 public getWalletFollowerURL(): string
@@ -463,7 +463,7 @@ window.funwallet.setLanguage('en');
 
 ### signAndVerifyInterpretedBytes
 
-This method is used to call contract calls we whitelist for example `openFateChannel` without the need for the approval modal.
+This method is used to call contract calls we whitelist, for example `openFateChannel`, without the need for the approval modal.
 
 ```ts
  public async signAndVerifyInterpretedBytes(
@@ -559,7 +559,7 @@ const signature = await window.funwallet.sdk.signAndVerifyInterpretedBytes(
 
 ## appJwtToken
 
-Get the dapp jwt token.
+Get the dApp's JWT.
 
 ```ts
 public async appJwtToken(): Promise<string>
@@ -583,7 +583,7 @@ const appJwtToken = await window.funwallet.sdk.appJwtToken();
 
 ## getMarketingOptInStatus
 
-Get marketing opt in status
+Get marketing opt-in status
 
 ```ts
 public async getMarketingOptInStatus(): Promise<boolean | null>
@@ -607,7 +607,7 @@ const marketingOptInStatus = await window.funwallet.sdk.getMarketingOptInStatus(
 
 ## updateMarketingOptInStatus
 
-Update marketing opt in status. Will throw if it did not update the status successfully.
+Update marketing opt-in status. Will throw if it did not update the status successfully.
 
 ```ts
 public async updateMarketingOptInStatus(status: boolean): Promise<void>
