@@ -60,7 +60,7 @@ module.exports = (_ctx) => ({
             'Information',
             'How Does It Work?',
             'Web SDK',
-            'User Information'
+            'Server > Server API'
           ),
         },
       },
