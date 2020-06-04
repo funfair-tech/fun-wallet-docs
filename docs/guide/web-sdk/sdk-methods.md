@@ -263,6 +263,47 @@ const currentCurrency = await window.funwallet.sdk.currentCurrency();
 
 ---
 
+## setCurrency
+
+Allows the dApp to set the currency for the wallet. This can be useful if you have your own currency UI and on change of that you want to make sure the wallet shows in the same currency the user has selected.
+
+```ts
+public async setCurrency(fiatCurrency: FiatCurrencyType): Promise<void>
+```
+
+`FiatCurrencyType`:
+
+```ts
+export enum FiatCurrencyType {
+  CAD = 'CAD',
+  JPY = 'JPY',
+  USD = 'USD',
+  EUR = 'EUR',
+  GBP = 'GBP',
+  KRW = 'KRW',
+  CNY = 'CNY',
+  SGD = 'SGD',
+}
+```
+
+`JavaScript`:
+
+```js
+import { FiatCurrencyType } from '@funfair/wallet-sdk';
+
+await window.funwallet.sdk.setCurrency(FiatCurrencyType.USD);
+```
+
+`TypeScript`:
+
+```ts
+import { FiatCurrencyType } from '@funfair/wallet-sdk';
+
+await window.funwallet.sdk.setCurrency(FiatCurrencyType.USD);
+```
+
+---
+
 ## userActive
 
 This needs to be called every 10 minutes to make sure the JWT refreshes. We suggest calling this every 2-3 minutes just to be safe. This will make sure the JWT refreshes when it needs to and it does not fire an inactivity event which logs all instances out of the Wallet.
