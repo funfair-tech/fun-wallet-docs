@@ -118,7 +118,12 @@ module.exports = (_ctx) => ({
   extraWatchFiles: ['.vuepress/nav/en.js'],
 });
 
-function getGuideSidebar(information, howDoesItWork, websdk, userInformation) {
+function getGuideSidebar(
+  information,
+  howDoesItWork,
+  websdk,
+  serverToServerApi
+) {
   return [
     {
       title: information,
@@ -151,7 +156,7 @@ function getGuideSidebar(information, howDoesItWork, websdk, userInformation) {
         'how-does-it-work/fun-wallet-ethereum-provider',
         'how-does-it-work/blooms',
       ],
-    },   
+    },
     {
       title: websdk,
       collapsable: false,
@@ -170,14 +175,14 @@ function getGuideSidebar(information, howDoesItWork, websdk, userInformation) {
       ],
     },
     {
-      title: userInformation,
+      title: serverToServerApi,
       collapsable: false,
       children: [
-        'user-information/introduction',
-        'user-information/authorization',
-        'user-information/user-information',
-        'user-information/encrypted-user-information',
+        'server-to-server-api/introduction',
+        'server-to-server-api/authorization',
+        'server-to-server-api/user-information',
+        'server-to-server-api/encrypted-user-information',
       ],
-    }, 
-    ];
+    },
+  ];
 }
