@@ -5,6 +5,7 @@ The Wallet emits events when properties change, for example, when the authentica
 You can only register one event listener per message listener - if you do try to listen to a listener which has already been registered, it will throw a error. You can cancel listeners as necessary, and you'll then be able to register them again without an error being thrown.
 
 The SDK exposes two different ways to register an event listener:
+
 1. Event listeners: listen to all events of a specified type until the listener is cancelled explicitly.
 2. One-off listeners: subscribe only to the first event of a specified type. Once the event has fired, your dApp will be unsubscribed and will receive no further events of the type. An example use case of a one-off listener might be when your dApp wants to update its state based on the next block mined, but isn't interested in subsequent changes to the blockchain.
 
@@ -25,8 +26,11 @@ window.funwallet.sdk.on('MESSAGE LISTENER NAME', (result) => {
 Note: `TStronglyTypedResponse` is a reference to a strongly-typed model - obviously don't use this in your application.
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
-import { MessageListeners, TStronglyTypedResponse } from '@funfair/wallet-sdk';
+import window from '@funfair-tech/wallet-sdk/window';
+import {
+  MessageListeners,
+  TStronglyTypedResponse,
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<TStronglyTypedResponse>(
   MessageListeners.TypeYouWantToUse,
@@ -53,8 +57,11 @@ window.funwallet.sdk.once('MESSAGE LISTENER NAME', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
-import { MessageListeners, TStronglyTypedResponse } from '@funfair/wallet-sdk';
+import window from '@funfair-tech/wallet-sdk/window';
+import {
+  MessageListeners,
+  TStronglyTypedResponse,
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.once<TStronglyTypedResponse>(
   MessageListeners.TypeYouWantToUse,
@@ -78,13 +85,13 @@ Results are returned to the listener as follows:
 
 This is the result of the `postMessage` operation performed by the SDK.
 
-As well as indicating the origin and the source of the received data, the returned result will always have a *data* property which specifies the data for the event being received.
+As well as indicating the origin and the source of the received data, the returned result will always have a _data_ property which specifies the data for the event being received.
 
 `data`
 The object passed from the other window.
 
 `origin`
-The origin of the window that sent the message at the time `postMessage` was called. This string is the concatenation of the protocol and `"://"`, the host name if one exists, and `":"` followed by a port number if a port is present and differs from the default port for the given protocol. Examples of typical origins are https://example.org (implying port 443), http://example.net (implying port 80), and http://example.com:8080. 
+The origin of the window that sent the message at the time `postMessage` was called. This string is the concatenation of the protocol and `"://"`, the host name if one exists, and `":"` followed by a port number if a port is present and differs from the default port for the given protocol. Examples of typical origins are https://example.org (implying port 443), http://example.net (implying port 80), and http://example.com:8080.
 
 Note that this origin is not guaranteed to be the current or future origin of that window, which might have been navigated to a different location since postMessage was called.
 
@@ -97,7 +104,7 @@ A reference to the window object that sent the message. You can use this to esta
 
 💡 Always verify the sender's identity using the origin and possibly source properties. Any window (including, for example, http://evil.example.com) can send a message to any other window, and you have no guarantee that an unknown sender will not send malicious messages. Having verified identity, however, you still should always verify the syntax of the received message. Otherwise, a security hole in the site you trusted to send only trusted messages could then open a cross-site scripting hole in your site.
 
-💡 To protect your dApp's users from cross-site scripting attacks, make sure you **NEVER** assign the *data* result from the `postMessage` to any HTML elements:
+💡 To protect your dApp's users from cross-site scripting attacks, make sure you **NEVER** assign the _data_ result from the `postMessage` to any HTML elements:
 
 ```js
 window.funwallet.sdk.once('MESSAGE LISTENER NAME', (result) => {
@@ -165,11 +172,11 @@ window.funwallet.sdk.on('restoreAuthenticationCompleted', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   RestoreAuthenticationCompletedResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
   MessageListeners.restoreAuthenticationCompleted,
@@ -193,7 +200,7 @@ window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
 
 ## changeNetwork
 
-This will fire when the Wallet network has been changed. *Note: this will always fire upon initial authentication of the leader as networks will update as a result of authentication.*
+This will fire when the Wallet network has been changed. _Note: this will always fire upon initial authentication of the leader as networks will update as a result of authentication._
 
 `JavaScript`:
 
@@ -208,8 +215,11 @@ window.funwallet.sdk.on('changeNetwork', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
-import { MessageListeners, ChangeNetworkResponse } from '@funfair/wallet-sdk';
+import window from '@funfair-tech/wallet-sdk/window';
+import {
+  MessageListeners,
+  ChangeNetworkResponse,
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<ChangeNetworkResponse>(
   MessageListeners.changeNetwork,
@@ -249,11 +259,11 @@ window.funwallet.sdk.on('authenticationCompleted', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   AuthenticationCompletedResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<AuthenticationCompletedResponse>(
   MessageListeners.authenticationCompleted,
@@ -292,11 +302,11 @@ window.funwallet.sdk.on('followerAuthenticationCompleted', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   FollowerAuthenticationCompletedResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<FollowerAuthenticationCompletedResponse>(
   MessageListeners.followerAuthenticationCompleted,
@@ -335,11 +345,11 @@ window.funwallet.sdk.on('walletInactivityLoggedOut', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   WalletInactivityLoggedOutResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<WalletInactivityLoggedOutResponse>(
   MessageListeners.walletInactivityLoggedOut,
@@ -376,11 +386,11 @@ window.funwallet.sdk.on('walletDeviceDeletedLoggedOut', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   WalletInactivityLoggedOutResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<WalletDeviceDeletedLoggedOutResponse>(
   MessageListeners.walletDeviceDeletedLoggedOut,
@@ -419,11 +429,11 @@ window.funwallet.sdk.on('walletNonceUpdated', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   WalletNonceUpdatedResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<WalletNonceUpdatedResponse>(
   MessageListeners.walletNonceUpdated,
@@ -462,11 +472,11 @@ window.funwallet.sdk.on('pendingTransaction', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   PendingTransactionResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<PendingTransactionResponse>(
   MessageListeners.pendingTransaction,
@@ -506,11 +516,11 @@ window.funwallet.sdk.on('completedTransaction', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   CompletedTransactionResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<CompletedTransactionResponse>(
   MessageListeners.completedTransaction,
@@ -550,11 +560,11 @@ window.funwallet.sdk.on('cancelledTransaction', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   CancelledTransactionResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<CancelledTransactionResponse>(
   MessageListeners.cancelledTransaction,
@@ -595,11 +605,11 @@ window.funwallet.sdk.on('failedTransaction', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   FailedTransactionResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<FailedTransactionResponse>(
   MessageListeners.failedTransaction,
@@ -638,11 +648,11 @@ window.funwallet.sdk.on('erc20TokenBalanceChanged', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   ERC20TokenBalanceChangedResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<ERC20TokenBalanceChangedResponse>(
   MessageListeners.erc20TokenBalanceChanged,
@@ -684,11 +694,11 @@ window.funwallet.sdk.on('erc20TokenFiatPriceChanged', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   ERC20FiatPriceChangedResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<ERC20FiatPriceChangedResponse>(
   MessageListeners.erc20TokenFiatPriceChanged,
@@ -728,11 +738,11 @@ window.funwallet.sdk.on('ethBalanceChanged', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   ETHBalanceChangedResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<ETHBalanceChangedResponse>(
   MessageListeners.ethBalanceChanged,
@@ -773,11 +783,11 @@ window.funwallet.sdk.on('ethFiatPriceChanged', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   ETHFiatPriceChangedResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<ETHFiatPriceChangedResponse>(
   MessageListeners.ethFiatPriceChanged,
@@ -816,8 +826,11 @@ window.funwallet.sdk.on('changeCurrency', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
-import { MessageListeners, ChangeCurrencyResponse } from '@funfair/wallet-sdk';
+import window from '@funfair-tech/wallet-sdk/window';
+import {
+  MessageListeners,
+  ChangeCurrencyResponse,
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<ChangeCurrencyResponse>(
   MessageListeners.changeCurrency,
@@ -856,11 +869,11 @@ window.funwallet.sdk.on('isKycVerified', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   IsRegisteredThirdPartySignerResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<IsKycVerifiedResponse>(
   MessageListeners.isKycVerified,
@@ -899,11 +912,11 @@ window.funwallet.sdk.on('kycProcessCancelled', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   IsRegisteredThirdPartySignerResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<KycProcessCancelledResponse>(
   MessageListeners.kycProcessCancelled,
@@ -942,11 +955,11 @@ window.funwallet.sdk.on('websocketConnected', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   WebsocketConnectedResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<WebsocketConnectedResponse>(
   MessageListeners.websocketConnected,
@@ -985,11 +998,11 @@ window.funwallet.sdk.on('websocketDisconnected', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   WebsocketDisconnectedResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<WebsocketDisconnectedResponse>(
   MessageListeners.websocketDisconnected,
@@ -1028,8 +1041,8 @@ window.funwallet.sdk.on('newBlock', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
-import { MessageListeners, NewBlockResponse } from '@funfair/wallet-sdk';
+import window from '@funfair-tech/wallet-sdk/window';
+import { MessageListeners, NewBlockResponse } from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<NewBlockResponse>(
   MessageListeners.newBlock,
@@ -1057,7 +1070,7 @@ window.funwallet.sdk.on<NewBlockResponse>(
 
 ## newBlockBloomMatchUser
 
-This will fire when the wallet receives a new block alert through the WebSocket it's connected to *and* the bloom filter matches the authenticated user's Ethereum address.
+This will fire when the wallet receives a new block alert through the WebSocket it's connected to _and_ the bloom filter matches the authenticated user's Ethereum address.
 
 `JavaScript`:
 
@@ -1072,11 +1085,11 @@ window.funwallet.sdk.on('newBlockBloomMatchUser', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   NewBlockBloomMatchUserResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<NewBlockBloomMatchUserResponse>(
   MessageListeners.newBlockBloomMatchUser,
@@ -1119,11 +1132,11 @@ window.funwallet.sdk.on('playerProtectionUpdated', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   PlayerProtectionUpdatedResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<PlayerProtectionUpdatedResponse>(
   MessageListeners.playerProtectionUpdated,
@@ -1175,8 +1188,11 @@ window.funwallet.sdk.on('walletTracking', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
-import { MessageListeners, WalletTrackingResponse } from '@funfair/wallet-sdk';
+import window from '@funfair-tech/wallet-sdk/window';
+import {
+  MessageListeners,
+  WalletTrackingResponse,
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<WalletTrackingResponse>(
   MessageListeners.walletTracking,
@@ -1340,11 +1356,11 @@ window.funwallet.sdk.on('authenticationPopUpClosed', (result) => {
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
   AuthenticationPopUpClosedResponse,
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 
 window.funwallet.sdk.on<AuthenticationPopUpClosedResponse>(
   MessageListeners.authenticationPopUpClosed,
@@ -1392,8 +1408,11 @@ listener.cancel();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
-import { MessageListeners, TStronglyTypedResponse } from '@funfair/wallet-sdk';
+import window from '@funfair-tech/wallet-sdk/window';
+import {
+  MessageListeners,
+  TStronglyTypedResponse,
+} from '@funfair-tech/wallet-sdk';
 
 const listener = window.funwallet.sdk.on<TStronglyTypedResponse>(
   MessageListeners.TypeYouWantToUse,
@@ -1426,8 +1445,11 @@ listener.cancel();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
-import { MessageListeners, TStronglyTypedResponse } from '@funfair/wallet-sdk';
+import window from '@funfair-tech/wallet-sdk/window';
+import {
+  MessageListeners,
+  TStronglyTypedResponse,
+} from '@funfair-tech/wallet-sdk';
 
 const listener = window.funwallet.sdk.once<TStronglyTypedResponse>(
   MessageListeners.TypeYouWantToUse,

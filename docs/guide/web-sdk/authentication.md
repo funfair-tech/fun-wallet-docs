@@ -11,7 +11,7 @@ Example:
 ### TypeScript
 
 ```ts
- import window from '@funfair/wallet-sdk/window';
+ import window from '@funfair-tech/wallet-sdk/window';
 
  public openAuthenticationPopUpWindow(): void {
     window.funwallet.sdk.openWalletAuthenticationPopUp();
@@ -35,7 +35,7 @@ Register a click event on the element you want to trigger the logout of the Wall
 ### TypeScript
 
 ```ts
- import window from '@funfair/wallet-sdk/window';
+ import window from '@funfair-tech/wallet-sdk/window';
 
   public async logout(): Promise<void> {
     await window.funwallet.sdk.logout();

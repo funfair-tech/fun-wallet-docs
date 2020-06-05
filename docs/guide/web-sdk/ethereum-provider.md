@@ -28,7 +28,7 @@ const isFunWallet = window.funwallet.sdk.ethereum.isFunWallet;
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 const isFunWallet = window.funwallet.sdk.ethereum.isFunWallet;
 ```
@@ -50,7 +50,7 @@ const isConnected = window.funwallet.sdk.ethereum.isConnected;
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 const isConnected = window.funwallet.sdk.ethereum.isConnected;
 ```
@@ -72,7 +72,7 @@ const initOptions = window.funwallet.sdk.ethereum.initOptions;
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 const initOptions = window.funwallet.sdk.ethereum.initOptions;
 ```
@@ -97,7 +97,7 @@ const web3 = new Web3(window.funwallet.sdk.ethereum);
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 // the web3 typings do not handle certain custom providers in their TS typings
 // so please cast it as any for it to compile with TS
@@ -117,7 +117,7 @@ const provider = new ethers.providers.Web3Provider(
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 const provider = new ethers.providers.Web3Provider(
   window.funwallet.sdk.ethereum as any

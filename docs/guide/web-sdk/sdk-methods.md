@@ -30,7 +30,7 @@ window.funwallet.sdk.init();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 window.funwallet.sdk.init({ ngZone: this._zone });
 ```
@@ -54,7 +54,7 @@ window.funwallet.sdk.openWalletAuthenticationPopUp();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 window.funwallet.sdk.openWalletAuthenticationPopUp();
 ```
@@ -78,7 +78,7 @@ await window.funwallet.sdk.registerFollowerInstance();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 await window.funwallet.sdk.registerFollowerInstance();
 ```
@@ -111,7 +111,7 @@ const versionInfo = await window.funwallet.sdk.versionInfo();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 const versionInfo = await window.funwallet.sdk.versionInfo();
 ```
@@ -135,7 +135,7 @@ const loggedIn = await window.funwallet.sdk.isAuthenticated();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 const loggedIn = await window.funwallet.sdk.isAuthenticated();
 ```
@@ -159,7 +159,7 @@ const ethereumAddress = await window.funwallet.sdk.ethereumAddress();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 const ethereumAddress = await window.funwallet.sdk.ethereumAddress();
 ```
@@ -208,7 +208,7 @@ const networkState = await window.funwallet.sdk.currentNetwork();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 const networkState = await window.funwallet.sdk.currentNetwork();
 ```
@@ -232,7 +232,7 @@ const enabledNetworks = await window.funwallet.sdk.enabledNetworks();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 const enabledNetworks = await window.funwallet.sdk.enabledNetworks();
 ```
@@ -256,7 +256,7 @@ const currentCurrency = await window.funwallet.sdk.currentCurrency();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 const currentCurrency = await window.funwallet.sdk.currentCurrency();
 ```
@@ -289,7 +289,7 @@ export enum FiatCurrencyType {
 `JavaScript`:
 
 ```js
-import { FiatCurrencyType } from '@funfair/wallet-sdk';
+import { FiatCurrencyType } from '@funfair-tech/wallet-sdk';
 
 await window.funwallet.sdk.setCurrency(FiatCurrencyType.USD);
 ```
@@ -297,7 +297,7 @@ await window.funwallet.sdk.setCurrency(FiatCurrencyType.USD);
 `TypeScript`:
 
 ```ts
-import { FiatCurrencyType } from '@funfair/wallet-sdk';
+import { FiatCurrencyType } from '@funfair-tech/wallet-sdk';
 
 await window.funwallet.sdk.setCurrency(FiatCurrencyType.USD);
 ```
@@ -321,7 +321,7 @@ await window.funwallet.sdk.userActive();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 await window.funwallet.sdk.userActive();
 ```
@@ -349,7 +349,7 @@ const result = await window.funwallet.sdk.routeTo('transfer-events');
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 const result = await window.funwallet.sdk.routeTo('transfer-events');
 ```
@@ -373,7 +373,7 @@ await window.funwallet.sdk.logout();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 await window.funwallet.sdk.logout();
 ```
@@ -397,7 +397,7 @@ const result = await window.funwallet.sdk.destroyFollowerInstance();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 const result = await window.funwallet.sdk.destroyFollowerInstance();
 ```
@@ -421,7 +421,7 @@ await window.funwallet.sdk.kycModalOpen();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 await window.funwallet.sdk.kycModalOpen();
 ```
@@ -445,7 +445,7 @@ const isKycVerified = await window.funwallet.sdk.isKycVerified();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 const isKycVerified = await window.funwallet.sdk.isKycVerified();
 ```
@@ -469,7 +469,7 @@ const walletFollowerUrl = window.funwallet.getWalletFollowerURL();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 const walletFollowerUrl = window.funwallet.getWalletFollowerURL();
 ```
@@ -495,7 +495,7 @@ window.funwallet.setLanguage('en');
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 window.funwallet.setLanguage('en');
 ```
@@ -538,7 +538,7 @@ Example usage:
 `JavaScript`:
 
 ```js
-import { SignAndVerifyInterpretedExecutors } from '@funfair/wallet-sdk';
+import { SignAndVerifyInterpretedExecutors } from '@funfair-tech/wallet-sdk';
 
 const signature = await window.funwallet.sdk.signAndVerifyInterpretedBytes(
   SignAndVerifyInterpretedExecutors.openFateChannel,
@@ -568,8 +568,8 @@ const signature = await window.funwallet.sdk.signAndVerifyInterpretedBytes(
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
-import { SignAndVerifyInterpretedExecutors } from '@funfair/wallet-sdk';
+import window from '@funfair-tech/wallet-sdk/window';
+import { SignAndVerifyInterpretedExecutors } from '@funfair-tech/wallet-sdk';
 
 const signature = await window.funwallet.sdk.signAndVerifyInterpretedBytes(
   SignAndVerifyInterpretedExecutors.openFateChannel,
@@ -615,7 +615,7 @@ const appJwtToken = await window.funwallet.sdk.appJwtToken();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 const appJwtToken = await window.funwallet.sdk.appJwtToken();
 ```
@@ -639,7 +639,7 @@ const marketingOptInStatus = await window.funwallet.sdk.getMarketingOptInStatus(
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 const marketingOptInStatus = await window.funwallet.sdk.getMarketingOptInStatus();
 ```
@@ -663,7 +663,7 @@ await window.funwallet.sdk.updateMarketingOptInStatus(true);
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
 await window.funwallet.sdk.updateMarketingOptInStatus(true);
 ```
@@ -700,8 +700,8 @@ const gasRecommendations = await window.funwallet.sdk.gasRecommendations();
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
-import { NetworkGasRecommendationsResponse } from '@funfair/wallet-sdk';
+import window from '@funfair-tech/wallet-sdk/window';
+import { NetworkGasRecommendationsResponse } from '@funfair-tech/wallet-sdk';
 
 const gasRecommendations = await window.funwallet.sdk.gasRecommendations();
 ```

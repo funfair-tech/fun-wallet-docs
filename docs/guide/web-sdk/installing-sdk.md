@@ -3,13 +3,13 @@
 ## NPM
 
 ```bash
-$ npm install @funfair/wallet-sdk
+$ npm install @funfair-tech/wallet-sdk
 ```
 
 ## YARN
 
 ```bash
-$ npm install @funfair/wallet-sdk
+$ npm install @funfair-tech/wallet-sdk
 ```
 
 ## Reference the Web SDK

@@ -5,7 +5,7 @@
 If you're using `TypeScript`, please make sure you use all the typings supplied in the SDK. As the SDK is exposed on the window object, you should use the window object supplied by the SDK. This extends the `Window` object as well, so you can use it for standard window calls.
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 ```
 
 ## Setting it up with Angular CLI
@@ -16,14 +16,14 @@ To get it to build with the Angular CLI compiler, you need to add the `window.ts
  "files": [
     "./main.ts",
     "./polyfills.ts",
-    "../node_modules/@funfair/wallet-sdk/window.ts"
+    "../node_modules/@funfair-tech/wallet-sdk/window.ts"
   ]
 ```
 
 `TypeScript`:
 
 ```ts
-import window from '@funfair/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 ```
 
 All the other typings can be imported directly from the module itself.
@@ -41,7 +41,7 @@ import {
   ChangeNetworkResponse,
   PendingTransactionResponse,
   ... // loads more
-} from '@funfair/wallet-sdk';
+} from '@funfair-tech/wallet-sdk';
 ```
 
 **HINT** it seems `VSCODE` has a mind of its own sometimes, so if it autocompletes with a long path i.e. `sdk/src/type...`, just revert it to SDK and it should sort itself out.
