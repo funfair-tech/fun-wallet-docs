@@ -17,7 +17,7 @@ This will format certain stuff like replace `?` > `_` and `=` > `.` so we can pr
 ## Deep Link Page Routes
 
 ```ts
-export enum DeepLinkRouteTypes {
+{
   settings = '/settings',
   accountSettings = '/settings/account-settings',
   securitySettings = '/settings/security-settings',
@@ -44,4 +44,14 @@ export enum DeepLinkRouteTypes {
   historyTransfers = '/history/transfers',
   historyTransactions = '/history/transactions',
 }
+```
+
+These are exposed to you on `window.funwallet.deepLinkRouteTypes` so you can use that over hard coding the strings. We recommend that as if we ever did change a URL path (which we would not do unless critical), your code would not need any changing.
+
+### Example usage
+
+```ts
+  import window from '@funfair-tech/wallet-sdk/window';
+
+  const url = `https://example-dapp.io/hello-world?walletRouteTo=${window.funwallet.formatRouterToValue(window.funwallet.depositAddress)?symbol=FUN}`
 ```
