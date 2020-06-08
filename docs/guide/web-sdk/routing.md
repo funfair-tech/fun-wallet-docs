@@ -51,7 +51,9 @@ These are exposed to you on `window.funwallet.deepLinkRouteTypes` so you can use
 ### Example usage
 
 ```ts
-  import window from '@funfair-tech/wallet-sdk/window';
+import window from '@funfair-tech/wallet-sdk/window';
 
-  const url = `https://example-dapp.io/hello-world?funWalletRoute=${window.funwallet.formatRouterToValue(window.funwallet.depositAddress)?symbol=FUN}`
+const url = `https://example-dapp.io/hello-world?funWalletRoute=${window.funwallet.formatRouterToValue(
+  window.funwallet.depositAddress
+)}?symbol=FUN`;
 ```
