@@ -306,7 +306,7 @@ await window.funwallet.sdk.setCurrency(FiatCurrencyType.USD);
 
 ## userActive
 
-This needs to be called every 10 minutes to make sure the JWT refreshes. We suggest calling this every 2-3 minutes just to be safe. This will make sure the JWT refreshes when it needs to and it does not fire an inactivity event which logs all instances out of the Wallet.
+The sdk handles all `mouse`, `clicks` and `scroll` events from the dapp window. This method is here if you have a edge case integration where you have another iframe in the dapp which the user has to use. In this case you need to emit messages back from that iframe to your dapp which then should call this sdk method to keep the JWT token refreshing to make sure it does not fire an inactivity event which logs all instances out of the Wallet. We suggest calling this every 30 seconds. If you don't have any edge cases like this in your dapp please ignore.
 
 ```ts
 public async userActive(): Promise<void>
