@@ -17,7 +17,14 @@ public init(options?: InitOptions): void
 ```js
 {
   // the `NgZone` class angular allows you to inject
-  ngZone?: this._zone
+  ngZone?: NgZone | undefined;
+  // The sdk will inject the mobile nav bar at the bottom of the body automatically for you.
+  // Now this should be fine for most dapps we give the flexibility to specify which class you
+  // want it to inject to. It will pick the first class it finds. This can be if you want it to inject in a different place in the DOM
+  // so you can manipulate z-index layouts. For example if you had your own sticky bottom nav, you
+  // may want to handle some css yourself for it and this gives you full flexibility.
+  // Do not need to worry about this if you are happy with how it injects by default.
+  mobileNavInjectToClass?: string | undefined;
 }
 ```
 
