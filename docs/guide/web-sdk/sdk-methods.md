@@ -385,7 +385,7 @@ await window.funwallet.sdk.kycModalOpen();
 
 ## isKycVerified
 
-Returns the kyc verification status of the user on the wallet. Event listeners will fire as well to keep this value updated which is the way we suggest you go with to integrate that (examples in the test wallet app).
+Returns the kyc verification status of the user on the wallet. Event listeners will fire as well to keep this value updated.
 
 ```ts
 public async isKycVerified(): Promise<boolean>

@@ -235,8 +235,32 @@ window.funwallet.sdk.on<ChangeNetworkResponse>(
 
 ```ts
 {
-  // defined above
   network: NetworkDetails,
+}
+```
+
+`NetworkDetails`:
+
+```ts
+{
+  name: string;
+  id: Networks;
+  providerUrl: string;
+  enabled: boolean;
+}
+```
+
+`Networks`:
+
+```ts
+export enum Networks {
+  mainnet = 1,
+  ropsten = 3,
+  rinkeby = 4,
+  kovan = 42,
+  novichok = 1984,
+  bracknell = 1999,
+  unknown = -1,
 }
 ```
 
@@ -279,7 +303,57 @@ window.funwallet.sdk.on<AuthenticationCompletedResponse>(
 
 ```ts
 {
-  authenticationCompleted: boolean,
+  // can just be ignored if your dapp does not care about player protection
+  playerProtection: ExclusionStatusResponse;
+  ethereumAddress: string;
+  currentCurrency: string;
+  currentNetwork: NetworkDetails;
+}
+```
+
+`ExclusionStatusResponse`:
+
+```ts
+{
+    status: ExclusionStatusType;
+    startTimestamp?: number | undefined;
+    durationDays?: number | undefined;
+    activeTimestamp?: number | undefined;
+}
+```
+
+`ExclusionStatusType`:
+
+```ts
+export enum ExclusionStatusType {
+  ACTIVE = 'ACTIVE',
+  ON_BREAK = 'ON_BREAK',
+  EXCLUDED = 'EXCLUDED',
+}
+```
+
+`NetworkDetails`:
+
+```ts
+{
+  name: string;
+  id: Networks;
+  providerUrl: string;
+  enabled: boolean;
+}
+```
+
+`Networks`:
+
+```ts
+export enum Networks {
+  mainnet = 1,
+  ropsten = 3,
+  rinkeby = 4,
+  kovan = 42,
+  novichok = 1984,
+  bracknell = 1999,
+  unknown = -1,
 }
 ```
 
@@ -1032,7 +1106,7 @@ window.funwallet.sdk.on<WebsocketDisconnectedResponse>(
 
 ## newBlock
 
-This will fire when the wallet receives a new block alert through the WebSocket connection. This removes the need for any polling - the dApp can just listen for these events.
+This will fire when the wallet receives a new block alert through the WebSocket connection. This removes the need for any polling - the dApp can just listen for these events. You can hook onto this even if the user is not authenticated.
 
 `JavaScript`:
 
@@ -1076,7 +1150,7 @@ window.funwallet.sdk.on<NewBlockResponse>(
 
 ## newBlockBloomMatchUser
 
-This will fire when the wallet receives a new block alert through the WebSocket it's connected to _and_ the bloom filter matches the authenticated user's Ethereum address.
+This will fire when the wallet receives a new block alert through the WebSocket it's connected to _and_ the bloom filter matches the authenticated user's Ethereum address. This will only fire if the user is authenticated.
 
 `JavaScript`:
 

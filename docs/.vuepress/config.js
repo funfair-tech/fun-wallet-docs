@@ -172,6 +172,7 @@ function getGuideSidebar(
         'web-sdk/ethereum-provider',
         'web-sdk/sdk-methods',
         'web-sdk/sdk-event-listeners',
+        'web-sdk/block-listener',
       ],
     },
     {
