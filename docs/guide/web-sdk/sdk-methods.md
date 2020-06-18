@@ -328,34 +328,6 @@ await window.funwallet.sdk.userActive();
 
 ---
 
-## routeTo
-
-Routes the follower instance `iframe` to another page without having to re-authenticate a new follower instance.
-
-```ts
-public routeTo(path: string): Promise<boolean>
-```
-
-`Parameters`:
-
-- `path` - The path you went the follower instance to route to
-
-`JavaScript`:
-
-```js
-const result = await window.funwallet.sdk.routeTo('transfer-events');
-```
-
-`TypeScript`:
-
-```ts
-import window from '@funfair-tech/wallet-sdk/window';
-
-const result = await window.funwallet.sdk.routeTo('transfer-events');
-```
-
----
-
 ## logout
 
 This logs out all authenticated instances of the wallet including the leader.
