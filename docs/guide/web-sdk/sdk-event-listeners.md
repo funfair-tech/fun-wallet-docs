@@ -672,6 +672,9 @@ window.funwallet.sdk.on<ERC20TokenBalanceChangedResponse>(
   // the balance is pre-formatted
   // to the correct maximum decimal
   tokenBalance: string,
+  // if its the main primary symbol set
+  // on the account
+  primary: boolean,
 }
 ```
 
@@ -716,6 +719,9 @@ window.funwallet.sdk.on<ERC20FiatPriceChangedResponse>(
 {
   symbol: string,
   fiatPrice: number,
+  // if its the main primary symbol set
+  // on the account
+  primary: boolean,
 }
 ```
 
