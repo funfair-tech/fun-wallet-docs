@@ -359,30 +359,6 @@ await window.funwallet.sdk.logout();
 
 ---
 
-## destroyFollowerInstance
-
-This destroys the follower instance killing all subscriptions and communications with the leader. This should be done at all times to avoid memory being taken up for no reason.
-
-```ts
-public async destroyFollowerInstance(): Promise<boolean>
-```
-
-`JavaScript`:
-
-```js
-const result = await window.funwallet.sdk.destroyFollowerInstance();
-```
-
-`TypeScript`:
-
-```ts
-import window from '@funfair-tech/wallet-sdk/window';
-
-const result = await window.funwallet.sdk.destroyFollowerInstance();
-```
-
----
-
 ## kycModalOpen
 
 This manually starts the kyc process which pops up the kyc modal. This can be used if the initial KYC popup got closed and the account now wanted to KYC. If you call this when the account has already been KYC-verified then it will throw a error.
