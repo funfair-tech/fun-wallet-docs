@@ -9,7 +9,7 @@ $ npm install @funfair-tech/wallet-sdk
 ## YARN
 
 ```bash
-$ npm install @funfair-tech/wallet-sdk
+$ yarn add @funfair-tech/wallet-sdk
 ```
 
 ## Reference the Web SDK
