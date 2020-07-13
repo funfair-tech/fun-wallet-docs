@@ -23,7 +23,7 @@ interface RequestArguments {
   params?: unknown[] | object;
 }
 
-public request(args: RequestArguments): Promise<unknown>;
+public async request(args: RequestArguments): Promise<unknown>;
 ```
 
 `JavaScript`:
@@ -59,7 +59,7 @@ This method is superseded by request.
 The send method is intended as a transport- and protocol-agnostic wrapper function for Remote Procedure Calls (RPCs).
 
 ```ts
-public send(method: string, params?: unknown[] | object): Promise<unknown> {}
+public async send(method: string, params?: unknown[] | object): Promise<unknown> {}
 ```
 
 `JavaScript`:
@@ -102,7 +102,7 @@ interface JsonRpcPayload {
 }
 
 
-public sendAsync(request: JsonRpcPayload, callback: (error: ProviderRpcError | null, response: JsonRpcPayload | null) => void): void;
+public async sendAsync(request: JsonRpcPayload, callback: (error: ProviderRpcError | null, response: JsonRpcPayload | null) => void): void;
 ```
 
 `JavaScript`:
