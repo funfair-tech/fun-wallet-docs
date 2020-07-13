@@ -18,7 +18,7 @@ Once installed you need to drop the below script into your `<head>` HTML tag:
 
 ```js
 <script
-  src="https://dev.wallet.funfair.io/assets/sdk/fun-wallet-sdk.js"
+  src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js"
   type="text/JavaScript"
 ></script>
 ```
@@ -30,7 +30,7 @@ Once installed you need to drop the below script into your `<head>` HTML tag:
 <html lang="en">
   <head>
     <script
-      src="https://dev.wallet.funfair.io/assets/sdk/fun-wallet-sdk.js"
+      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js"
       type="text/JavaScript"
     ></script>
   </head>
