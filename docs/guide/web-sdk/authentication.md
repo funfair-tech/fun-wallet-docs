@@ -56,4 +56,4 @@ This will log all the instances out of the Wallet. Also, if the inactivity time 
 
 As the server never sees the private key and all the decryption of it happens on the client side, once you refresh your tab, your private key is no longer in memory, as we got back to it using data the user entered which again is not on the server like password. We have handled a way to restore authentication on a refresh. You will need to make sure you handle the event listener [restoreAuthenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted), which is documented in the [SDK listeners](./sdk-event-listeners.md) documentation.
 
-Read more about how it works [here](http://localhost:8080/fun-wallet-docs/guide/how-does-it-work/re-authentication.html#double-encrypted-localstorage-setup).
+Read more about how it works [here](/guide/how-does-it-work/re-authentication.html#double-encrypted-localstorage-setup).

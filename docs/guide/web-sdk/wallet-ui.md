@@ -1,6 +1,6 @@
 # Show Wallet UI
 
-We call the Wallet UI iframe a `follower`. If you want to read more information about what a `follower` is, please go [here](http://localhost:8080/fun-wallet-docs/guide/how-does-it-work/leader-and-follower-communication.html#what-is-a-follower).
+We call the Wallet UI iframe a `follower`. If you want to read more information about what a `follower` is, please go [here](/guide/how-does-it-work/leader-and-follower-communication.html#what-is-a-follower).
 
 Paste this HTML snippet where you want the Wallet UI to render on your dApp. This example uses an Angular `load` event, but you can register an iframe `onload` event using JavaScript or via functionality exposed by whatever framework you're using. So just change that event accordingly depending on the framework you're using.
 

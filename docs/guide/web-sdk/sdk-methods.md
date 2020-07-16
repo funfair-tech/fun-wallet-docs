@@ -1,6 +1,6 @@
 # SDK Methods
 
-Please note none of the SDK calls will work if the SDK has not been [initialized](http://localhost:8080/fun-wallet-docs/guide/web-sdk/initialising-the-sdk.html). The SDK will throw errors telling you this if you try to do so.
+Please note none of the SDK calls will work if the SDK has not been [initialized](/guide/web-sdk/initialising-the-sdk.html). The SDK will throw errors telling you this if you try to do so.
 
 ## init
 
