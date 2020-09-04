@@ -113,6 +113,7 @@ module.exports = (_ctx) => ({
         },
       },
     ],
+    'tabs',
   ],
 
   extraWatchFiles: ['.vuepress/nav/en.js'],
