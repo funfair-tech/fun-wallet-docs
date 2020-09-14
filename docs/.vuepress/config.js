@@ -163,7 +163,11 @@ function getGuideSidebar(
       collapsable: false,
       children: [
         'web-sdk/installing-sdk',
-        'web-sdk/setting-up-the-sdk-with-project',
+        'web-sdk/react',
+        'web-sdk/angular',
+        'web-sdk/vue',
+        'web-sdk/native-js',
+        'web-sdk/another-framework',
         'web-sdk/initialising-the-sdk',
         'web-sdk/authentication',
         'web-sdk/wallet-ui',
