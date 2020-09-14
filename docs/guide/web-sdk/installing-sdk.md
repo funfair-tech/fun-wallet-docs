@@ -12,33 +12,6 @@ $ npm install @funfair-tech/wallet-sdk
 $ yarn add @funfair-tech/wallet-sdk
 ```
 
-## Reference the Web SDK
-
-Once installed you need to drop the below script into your `<head>` HTML tag:
-
-```js
-<script
-  src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js"
-  type="text/JavaScript"
-></script>
-```
-
-### Example
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <script
-      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js"
-      type="text/JavaScript"
-    ></script>
-  </head>
-
-  <body></body>
-</html>
-```
-
 ## Peer Dependencies
 
 ```json
