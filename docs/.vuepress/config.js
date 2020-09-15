@@ -146,6 +146,7 @@ function getGuideSidebar(
       title: websdk,
       collapsable: false,
       children: [
+        'web-sdk/live-demo',
         'web-sdk/installing-sdk',
         'web-sdk/react',
         'web-sdk/angular',
