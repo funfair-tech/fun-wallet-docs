@@ -1,5 +1,7 @@
 # Integrating with a angular app
 
+Please make sure you have installed the fun wallet sdk before continuing [here](./installing-sdk.html)
+
 ## NPM package
 
 We have created a angular npm package component library this package holds components you can use to hook the wallet into a angular app easier. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-angular-integration-sample)
@@ -227,9 +229,9 @@ Usage:
 
 Type - string
 
-If you want to deep link the into a page on the wallet you can pass any of the routes to this parameter - https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/routing.html#deep-link-page-routes
+If you want to deep link the into a page on the wallet you can pass any of the routes to this parameter which are [here](./routing.html#deep-link-page-routes). If not passed in it will default to the main route page.
 
-If not passed in it will default to the main route page.
+please note you must only show the follower once [restoreAuthenticationTaskCompleted](./sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationcompleted](./sdk-event-listeners.html#authenticationcompleted) has fired, `authenticationcompleted` means they are logged in.
 
 Example - `app.component.html`
 

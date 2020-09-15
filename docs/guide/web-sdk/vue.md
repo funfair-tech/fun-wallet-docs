@@ -1,5 +1,7 @@
 # Integrating with a vue app
 
+Please make sure you have installed the fun wallet sdk before continuing [here](./installing-sdk.html)
+
 ## NPM package
 
 We have created a vue npm package component library this package holds components you can use to hook the wallet into a vue app easier. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-vue-integration-sample-js)
@@ -177,11 +179,11 @@ Usage:
 
 Type - string
 
-If you want to deep link the into a page on the wallet you can pass any of the routes to this parameter - https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/routing.html#deep-link-page-routes
+If you want to deep link the into a page on the wallet you can pass any of the routes to this parameter which are [here](./routing.html#deep-link-page-routes). If not passed in it will default to the main route page.
 
-If not passed in it will default to the main route page.
+Please note you must only show the follower once [restoreAuthenticationTaskCompleted](./sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationcompleted](./sdk-event-listeners.html#authenticationcompleted) has fired, `authenticationcompleted` means they are logged in.
 
-Full Example below, please note you must only show the follower once [restoreAuthenticationTaskCompleted](https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationcompleted](https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted) has fired, `authenticationcompleted` means they are logged in.
+Example:
 
 ```vue
 <template>
