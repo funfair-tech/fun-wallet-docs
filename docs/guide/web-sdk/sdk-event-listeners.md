@@ -941,7 +941,16 @@ This will fire upon initial login, whether the account is KYC-verified or not. T
 ```js
 window.funwallet.sdk.on('isKycVerified', (result) => {
   if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
+    if (!result.data.isVerified) {
+      window.funwallet.sdk.showFunWalletModal();
+    } else {
+      // maybe show some kind of error message as in theory
+      // your client should not be showing ability to popup KYC
+      // when they are already verified
+      console.error(
+        'Your client should not show the kyc logic if already kyced'
+      );
+    }
   }
 });
 ```
@@ -959,7 +968,16 @@ window.funwallet.sdk.on<IsKycVerifiedResponse>(
   MessageListeners.isKycVerified,
   (result: IsKycVerifiedResponse) => {
     if (result.origin === 'https://wallet.funfair.io') {
-      console.log(result.data);
+      if (!result.data.isVerified) {
+        window.funwallet.sdk.showFunWalletModal();
+      } else {
+        // maybe show some kind of error message as in theory
+        // your client should not be showing ability to popup KYC
+        // when they are already verified
+        console.error(
+          'Your client should not show the kyc logic if already kyced'
+        );
+      }
     }
   }
 );
@@ -984,7 +1002,11 @@ This will fire when the authenticated account going through the KYC process canc
 ```js
 window.funwallet.sdk.on('kycProcessCancelled', (result) => {
   if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
+    if (result.data.cancelled) {
+      window.funwallet.sdk.hideFunWalletModal();
+      // you may want to move routes etc here hence why you hook onto this action
+      // and the sdk does not
+    }
   }
 });
 ```
@@ -1002,7 +1024,11 @@ window.funwallet.sdk.on<KycProcessCancelledResponse>(
   MessageListeners.kycProcessCancelled,
   (result: KycProcessCancelledResponse) => {
     if (result.origin === 'https://wallet.funfair.io') {
-      console.log(result.data);
+      if (result.data.cancelled) {
+        window.funwallet.sdk.hideFunWalletModal();
+        // you may want to move routes etc here hence why you hook onto this action
+        // and the sdk does not
+      }
     }
   }
 );
