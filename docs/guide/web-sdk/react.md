@@ -146,6 +146,24 @@ export function registerEventListeners() {
     }
   );
 
+  window.funwallet.sdk.on(
+    MessageListeners.walletInactivityLoggedOut,
+    (result) => {
+      if (result.origin === 'https://wallet.funfair.io') {
+        isAuthenticated$.next(false);
+      }
+    }
+  );
+
+  window.funwallet.sdk.on(
+    MessageListeners.walletDeviceDeletedLoggedOut,
+    (result) => {
+      if (result.origin === 'https://wallet.funfair.io') {
+        isAuthenticated$.next(false);
+      }
+    }
+  );
+
   window.funwallet.sdk.on(MessageListeners.isKycVerified, (result) => {
     if (result.origin === 'https://wallet.funfair.io') {
       if (!result.data.isVerified) {
