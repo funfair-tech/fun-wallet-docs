@@ -633,7 +633,7 @@ Example:
       <div class="App-container">
         <p v-if="loading">Loading please wait</p>
         <!-- These action buttons are just here to show you how to hook in authentication
-             but its up to you  -->
+             but its up to you where/how you display them -->
         <div class="action-buttons">
           <div v-if="!loading && !isLoggedIn" className="logged-out">
             <button @click="login">Login</button>
@@ -977,7 +977,7 @@ Example:
       <div class="App-container">
         <p v-if="loading">Loading please wait</p>
         <!-- These action buttons are just here to show you how to hook in authentication
-             but its up to you  -->
+             but its up to you where/how you display them -->
         <div class="action-buttons">
           <div v-if="!loading && !isLoggedIn" className="logged-out">
             <button @click="login">Login</button>
