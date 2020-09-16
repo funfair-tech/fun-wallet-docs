@@ -4,6 +4,10 @@ You may be using another JS framework or you may want to build your own package 
 
 If your using plain JS full code example is [here](https://github.com/funfair-tech/wallet-vanilla-integration-sample-js) but this guide should help you as well.
 
+## HTTPS
+
+TODO
+
 ## Installing the FunFair Wallet SDK
 
 ### NPM
@@ -16,6 +20,14 @@ $ npm install @funfair-tech/wallet-sdk
 
 ```bash
 $ yarn add @funfair-tech/wallet-sdk
+```
+
+## TypeScript Typings
+
+This guide will be shown in `js` but all the same rules apply for `ts` projects. Make sure you use all the typings supplied in the `SDK`. As the `SDK` is exposed on the window object, you should use the window object supplied by the `SDK`. This extends the `Window` object as well, so you can use it for standard window calls. This will give you full compile time errors on your wallet integration.
+
+```ts
+import window from '@funfair-tech/wallet-sdk/window';
 ```
 
 ## Hooking up the SDK

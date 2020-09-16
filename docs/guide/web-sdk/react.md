@@ -1,37 +1,5 @@
 # Integrating with a react app
 
-## Installing the FunFair Wallet SDK
-
-### NPM
-
-```bash
-$ npm install @funfair-tech/wallet-sdk
-```
-
-### YARN
-
-```bash
-$ yarn add @funfair-tech/wallet-sdk
-```
-
-## React package
-
-We have created a react package component library this package holds components you can use to hook the wallet into a react app easier. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-react-integration-sample-js)
-
-To install run:
-
-### NPM
-
-```bash
-$ npm install @funfair-tech/wallet-react
-```
-
-### YARN
-
-```bash
-$ yarn add @funfair-tech/wallet-react
-```
-
 ## HTTPS
 
 Your domain must ALWAYS run `https` when pointing to the wallet else it will be rejected. This is also required on local development.
@@ -59,6 +27,46 @@ When you serve this now using `react-scripts start` and it will serve it on http
 #### Mac
 
 <img :src="$withBase('/mac-https-install.gif')" >
+
+## Installing the FunFair Wallet SDK
+
+### NPM
+
+```bash
+$ npm install @funfair-tech/wallet-sdk
+```
+
+### YARN
+
+```bash
+$ yarn add @funfair-tech/wallet-sdk
+```
+
+## TypeScript Typings
+
+This guide will be shown in `js` but all the same rules apply for react `ts` projects. Make sure you use all the typings supplied in the `SDK`. As the `SDK` is exposed on the window object, you should use the window object supplied by the `SDK`. This extends the `Window` object as well, so you can use it for standard window calls. This will give you full compile time errors on your wallet integration.
+
+```ts
+import window from '@funfair-tech/wallet-sdk/window';
+```
+
+## React package
+
+We have created a react package component library this package holds components you can use to hook the wallet into a react app easier. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-react-integration-sample-js)
+
+To install run:
+
+### NPM
+
+```bash
+$ npm install @funfair-tech/wallet-react
+```
+
+### YARN
+
+```bash
+$ yarn add @funfair-tech/wallet-react
+```
 
 ## Hooking up the SDK
 

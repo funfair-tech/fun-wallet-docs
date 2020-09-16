@@ -1,37 +1,5 @@
 # Integrating with a angular app
 
-## Installing the FunFair Wallet SDK
-
-### NPM
-
-```bash
-$ npm install @funfair-tech/wallet-sdk
-```
-
-### YARN
-
-```bash
-$ yarn add @funfair-tech/wallet-sdk
-```
-
-## Angular package
-
-We have created a angular package component library this package holds components you can use to hook the wallet into a angular app easier. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-angular-integration-sample)
-
-To install run:
-
-### NPM
-
-```bash
-$ npm install @funfair-tech/wallet-angular
-```
-
-### YARN
-
-```bash
-$ yarn add @funfair-tech/wallet-angular
-```
-
 ## HTTPS
 
 Your domain must ALWAYS run `https` when pointing to the wallet else it will be rejected. This is also required on local development.
@@ -56,9 +24,23 @@ You will need to install the https cert as shown below:
 
 <img :src="$withBase('/mac-https-install.gif')" >
 
+## Installing the FunFair Wallet SDK
+
+### NPM
+
+```bash
+$ npm install @funfair-tech/wallet-sdk
+```
+
+### YARN
+
+```bash
+$ yarn add @funfair-tech/wallet-sdk
+```
+
 ## TypeScript Typings
 
-Make sure you use all the typings supplied in the SDK. As the SDK is exposed on the window object, you should use the window object supplied by the SDK. This extends the `Window` object as well, so you can use it for standard window calls.
+Make sure you use all the typings supplied in the SDK. As the SDK is exposed on the window object, you should use the window object supplied by the SDK. This extends the `Window` object as well, so you can use it for standard window calls. This will give you full compile time errors on your wallet integration.
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -103,6 +85,24 @@ import {
 **HINT** it seems `VSCODE` has a mind of its own sometimes, so if it autocompletes with a long path i.e. `sdk/src/type...`, just revert it to SDK and it should sort itself out.
 
 If you find anything without a type or any issues with it please raise a GitHub issue for us to triage.
+
+## Angular package
+
+We have created a angular package component library this package holds components you can use to hook the wallet into a angular app easier. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-angular-integration-sample)
+
+To install run:
+
+### NPM
+
+```bash
+$ npm install @funfair-tech/wallet-angular
+```
+
+### YARN
+
+```bash
+$ yarn add @funfair-tech/wallet-angular
+```
 
 ## Hooking up the SDK
 
