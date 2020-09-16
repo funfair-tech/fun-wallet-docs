@@ -952,7 +952,12 @@ export class AppComponent {
           if (!result.data.isVerified) {
             window.funwallet.sdk.showFunWalletModal();
           } else {
-            window.funwallet.sdk.hideFunWalletModal();
+            // maybe show some kind of error message as in theory
+            // your client should not be showing ability to popup KYC
+            // when they are already verified
+            console.error(
+              'Your client should not show the kyc logic if already kyced'
+            );
           }
         }
       }
@@ -964,7 +969,10 @@ export class AppComponent {
       (result: KycProcessCancelledResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
           if (result.data.cancelled) {
+            // MUST CALL
             window.funwallet.sdk.hideFunWalletModal();
+            // you may want to move routes etc here hence why you hook onto this action
+            // and the sdk does not
           }
         }
       }
