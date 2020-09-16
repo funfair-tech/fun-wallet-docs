@@ -1,10 +1,22 @@
 # Integrating with a react app
 
-Please make sure you have installed the fun wallet sdk before continuing [here](./installing-sdk.html)
+## Installing the FunFair Wallet SDK
 
-## NPM package
+### NPM
 
-We have created a react npm package component library this package holds components you can use to hook the wallet into a react app easier. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-react-integration-sample-js)
+```bash
+$ npm install @funfair-tech/wallet-sdk
+```
+
+### YARN
+
+```bash
+$ yarn add @funfair-tech/wallet-sdk
+```
+
+## React package
+
+We have created a react package component library this package holds components you can use to hook the wallet into a react app easier. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-react-integration-sample-js)
 
 To install run:
 

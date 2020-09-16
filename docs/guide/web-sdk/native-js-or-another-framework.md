@@ -1,10 +1,22 @@
 # Integrating with native JS or another framework
 
-Please make sure you have installed the fun wallet sdk before continuing if you are using a package manager [here](./installing-sdk.html)
-
 You may be using another JS framework or you may want to build your own package which is fine. We highly recommend using our packages for react, vue and angular but this guide shows you the raw code which those packages abstract away for you. If you have a request for any popular javascript frameworks which you would like a integrated code with reusable components packages to install built for it, please do let us know and we try our best to get it up here for you.
 
 If your using plain JS full code example is [here](https://github.com/funfair-tech/wallet-vanilla-integration-sample-js) but this guide should help you as well.
+
+## Installing the FunFair Wallet SDK
+
+### NPM
+
+```bash
+$ npm install @funfair-tech/wallet-sdk
+```
+
+### YARN
+
+```bash
+$ yarn add @funfair-tech/wallet-sdk
+```
 
 ## Hooking up the SDK
 

@@ -131,7 +131,6 @@ function getGuideSidebar(
       collapsable: false,
       children: [
         '',
-        'information/getting-started',
         'information/browser-support',
         'information/testing',
         'information/layouts',
@@ -147,7 +146,6 @@ function getGuideSidebar(
       collapsable: false,
       children: [
         'web-sdk/live-demo',
-        'web-sdk/installing-sdk',
         'web-sdk/react',
         'web-sdk/angular',
         'web-sdk/vue',

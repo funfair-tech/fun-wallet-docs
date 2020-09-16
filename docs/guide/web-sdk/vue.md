@@ -1,10 +1,22 @@
 # Integrating with a vue app
 
-Please make sure you have installed the fun wallet sdk before continuing [here](./installing-sdk.html)
+## Installing the FunFair Wallet SDK
 
-## NPM package
+### NPM
 
-We have created a vue npm package component library this package holds components you can use to hook the wallet into a vue app easier. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-vue-integration-sample-js)
+```bash
+$ npm install @funfair-tech/wallet-sdk
+```
+
+### YARN
+
+```bash
+$ yarn add @funfair-tech/wallet-sdk
+```
+
+## Vue package
+
+We have created a vue package component library this package holds components you can use to hook the wallet into a vue app easier. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-vue-integration-sample-js)
 
 To install run:
 
