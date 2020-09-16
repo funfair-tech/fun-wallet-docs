@@ -136,8 +136,8 @@ import { MessageListeners } from '@funfair-tech/wallet-sdk';
 // If not and this is your first state storing feel free to use `BehaviorSubject` like the below.
 import { BehaviorSubject } from 'rxjs';
 
-export const isAuthenticated$ = new BehaviorSubject(false);
-export const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
+const isAuthenticated$ = new BehaviorSubject(false);
+const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
 
 export default {
   name: 'App',
@@ -245,8 +245,8 @@ import { MessageListeners } from '@funfair-tech/wallet-sdk';
 // If not and this is your first state storing feel free to use `BehaviorSubject` like the below.
 import { BehaviorSubject } from 'rxjs';
 
-export const isAuthenticated$ = new BehaviorSubject(false);
-export const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
+const isAuthenticated$ = new BehaviorSubject(false);
+const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
 
 export default {
   name: 'App',
@@ -361,8 +361,8 @@ import { MessageListeners } from '@funfair-tech/wallet-sdk';
 // If not and this is your first state storing feel free to use `BehaviorSubject` like the below.
 import { BehaviorSubject } from 'rxjs';
 
-export const isAuthenticated$ = new BehaviorSubject(false);
-export const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
+const isAuthenticated$ = new BehaviorSubject(false);
+const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
 
 export default {
   name: 'App',
@@ -482,8 +482,8 @@ import { MessageListeners } from '@funfair-tech/wallet-sdk';
 // If not and this is your first state storing feel free to use `BehaviorSubject` like the below.
 import { BehaviorSubject } from 'rxjs';
 
-export const isAuthenticated$ = new BehaviorSubject(false);
-export const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
+const isAuthenticated$ = new BehaviorSubject(false);
+const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
 
 export default {
   name: 'App',
@@ -627,8 +627,8 @@ import { MessageListeners } from '@funfair-tech/wallet-sdk';
 // If not and this is your first state storing feel free to use `BehaviorSubject` like the below.
 import { BehaviorSubject } from 'rxjs';
 
-export const isAuthenticated$ = new BehaviorSubject(false);
-export const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
+const isAuthenticated$ = new BehaviorSubject(false);
+const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
 
 export default {
   name: 'App',
@@ -845,8 +845,8 @@ import { MessageListeners } from '@funfair-tech/wallet-sdk';
 // If not and this is your first state storing feel free to use `BehaviorSubject` like the below.
 import { BehaviorSubject } from 'rxjs';
 
-export const isAuthenticated$ = new BehaviorSubject(false);
-export const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
+const isAuthenticated$ = new BehaviorSubject(false);
+const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
 
 export default {
   name: 'App',
@@ -1210,8 +1210,8 @@ import { sendTransaction, signAMessage } from './ethereum.service';
 // If not and this is your first state storing feel free to use `BehaviorSubject` like the below.
 import { BehaviorSubject } from 'rxjs';
 
-export const isAuthenticated$ = new BehaviorSubject(false);
-export const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
+const isAuthenticated$ = new BehaviorSubject(false);
+const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
 
 export default {
   name: 'App',
