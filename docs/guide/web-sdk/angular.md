@@ -54,7 +54,7 @@ To get it to build with the Angular CLI compiler, you need to add the `window.ts
  "files": [
     "./main.ts",
     "./polyfills.ts",
-    "../node_modules/@funfair-tech/wallet-sdk/window.ts"
+    "./node_modules/@funfair-tech/wallet-sdk/window.ts"
   ]
 ```
 
@@ -196,11 +196,6 @@ app.component.ts
 
 ```ts
 import { Component } from '@angular/core';
-// For ease of the example we have just used subjects here.
-// A bigger more complex app should probably use a store framework like redux.
-// If your hooking this into a big app you probably have your own state management anyway.
-// If not and this is your first state storing feel free to use `BehaviorSubject` like the below.
-import { BehaviorSubject } from 'rxjs';
 import { StoreService } from './store.service';
 // for this to not give compile time errors please add "./node_modules/@funfair-tech/wallet-sdk/window.ts"
 // to your files object in tsconfig.app.json
@@ -221,13 +216,13 @@ import {
 export class AppComponent {
   constructor() {}
 
-  public walletLoaded() {
+  public walletLoaded(): void {
     // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
     window.funwallet.sdk.on<AuthenticationCompletedResponse>(
       MessageListeners.authenticationCompleted,
       (result: AuthenticationCompletedResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(true);
+          StoreService.isAuthenticationCompleted.next(true);
         }
       }
     );
@@ -248,7 +243,7 @@ export class AppComponent {
       MessageListeners.walletInactivityLoggedOut,
       (result: WalletInactivityLoggedOutResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(false);
+          StoreService.isAuthenticationCompleted.next(false);
         }
       }
     );
@@ -259,7 +254,7 @@ export class AppComponent {
       MessageListeners.walletDeviceDeletedLoggedOut,
       (result: WalletDeviceDeletedLoggedOutResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(false);
+          StoreService.isAuthenticationCompleted.next(false);
         }
       }
     );
@@ -312,11 +307,6 @@ app.component.ts
 
 ```ts
 import { Component } from '@angular/core';
-// For ease of the example we have just used subjects here.
-// A bigger more complex app should probably use a store framework like redux.
-// If your hooking this into a big app you probably have your own state management anyway.
-// If not and this is your first state storing feel free to use `BehaviorSubject` like the below.
-import { BehaviorSubject } from 'rxjs';
 import { StoreService } from './store.service';
 // for this to not give compile time errors please add "./node_modules/@funfair-tech/wallet-sdk/window.ts"
 // to your files object in tsconfig.app.json
@@ -341,13 +331,13 @@ export class AppComponent {
 
   constructor() {}
 
-  public walletLoaded() {
+  public walletLoaded(): void {
     // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
     window.funwallet.sdk.on<AuthenticationCompletedResponse>(
       MessageListeners.authenticationCompleted,
       (result: AuthenticationCompletedResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(true);
+          StoreService.isAuthenticationCompleted.next(true);
         }
       }
     );
@@ -368,7 +358,7 @@ export class AppComponent {
       MessageListeners.walletInactivityLoggedOut,
       (result: WalletInactivityLoggedOutResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(false);
+          StoreService.isAuthenticationCompleted.next(false);
         }
       }
     );
@@ -379,7 +369,7 @@ export class AppComponent {
       MessageListeners.walletDeviceDeletedLoggedOut,
       (result: WalletDeviceDeletedLoggedOutResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(false);
+          StoreService.isAuthenticationCompleted.next(false);
         }
       }
     );
@@ -433,11 +423,6 @@ app.component.ts
 
 ```ts
 import { Component } from '@angular/core';
-// For ease of the example we have just used subjects here.
-// A bigger more complex app should probably use a store framework like redux.
-// If your hooking this into a big app you probably have your own state management anyway.
-// If not and this is your first state storing feel free to use `BehaviorSubject` like the below.
-import { BehaviorSubject } from 'rxjs';
 import { StoreService } from './store.service';
 // for this to not give compile time errors please add "./node_modules/@funfair-tech/wallet-sdk/window.ts"
 // to your files object in tsconfig.app.json
@@ -462,13 +447,13 @@ export class AppComponent {
 
   constructor() {}
 
-  public walletLoaded() {
+  public walletLoaded(): void {
     // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
     window.funwallet.sdk.on<AuthenticationCompletedResponse>(
       MessageListeners.authenticationCompleted,
       (result: AuthenticationCompletedResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(true);
+          StoreService.isAuthenticationCompleted.next(true);
         }
       }
     );
@@ -489,7 +474,7 @@ export class AppComponent {
       MessageListeners.walletInactivityLoggedOut,
       (result: WalletInactivityLoggedOutResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(false);
+          StoreService.isAuthenticationCompleted.next(false);
         }
       }
     );
@@ -500,7 +485,7 @@ export class AppComponent {
       MessageListeners.walletDeviceDeletedLoggedOut,
       (result: WalletDeviceDeletedLoggedOutResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(false);
+          StoreService.isAuthenticationCompleted.next(false);
         }
       }
     );
@@ -567,11 +552,6 @@ app.component.ts
 
 ```ts
 import { Component } from '@angular/core';
-// For ease of the example we have just used subjects here.
-// A bigger more complex app should probably use a store framework like redux.
-// If your hooking this into a big app you probably have your own state management anyway.
-// If not and this is your first state storing feel free to use `BehaviorSubject` like the below.
-import { BehaviorSubject } from 'rxjs';
 import { StoreService } from './store.service';
 // for this to not give compile time errors please add "./node_modules/@funfair-tech/wallet-sdk/window.ts"
 // to your files object in tsconfig.app.json
@@ -600,13 +580,13 @@ export class AppComponent {
 
   constructor() {}
 
-  public walletLoaded() {
+  public walletLoaded(): void {
     // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
     window.funwallet.sdk.on<AuthenticationCompletedResponse>(
       MessageListeners.authenticationCompleted,
       (result: AuthenticationCompletedResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(true);
+          StoreService.isAuthenticationCompleted.next(true);
         }
       }
     );
@@ -627,7 +607,7 @@ export class AppComponent {
       MessageListeners.walletInactivityLoggedOut,
       (result: WalletInactivityLoggedOutResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(false);
+          StoreService.isAuthenticationCompleted.next(false);
         }
       }
     );
@@ -638,7 +618,7 @@ export class AppComponent {
       MessageListeners.walletDeviceDeletedLoggedOut,
       (result: WalletDeviceDeletedLoggedOutResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(false);
+          StoreService.isAuthenticationCompleted.next(false);
         }
       }
     );
@@ -719,11 +699,6 @@ app.component.ts
 
 ```ts
 import { Component } from '@angular/core';
-// For ease of the example we have just used subjects here.
-// A bigger more complex app should probably use a store framework like redux.
-// If your hooking this into a big app you probably have your own state management anyway.
-// If not and this is your first state storing feel free to use `BehaviorSubject` like the below.
-import { BehaviorSubject } from 'rxjs';
 import { StoreService } from './store.service';
 // for this to not give compile time errors please add "./node_modules/@funfair-tech/wallet-sdk/window.ts"
 // to your files object in tsconfig.app.json
@@ -752,13 +727,13 @@ export class AppComponent {
 
   constructor() {}
 
-  public walletLoaded() {
+  public walletLoaded(): void {
     // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
     window.funwallet.sdk.on<AuthenticationCompletedResponse>(
       MessageListeners.authenticationCompleted,
       (result: AuthenticationCompletedResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(true);
+          StoreService.isAuthenticationCompleted.next(true);
         }
       }
     );
@@ -779,7 +754,7 @@ export class AppComponent {
       MessageListeners.walletInactivityLoggedOut,
       (result: WalletInactivityLoggedOutResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(false);
+          StoreService.isAuthenticationCompleted.next(false);
         }
       }
     );
@@ -790,7 +765,7 @@ export class AppComponent {
       MessageListeners.walletDeviceDeletedLoggedOut,
       (result: WalletDeviceDeletedLoggedOutResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(false);
+          StoreService.isAuthenticationCompleted.next(false);
         }
       }
     );
@@ -876,11 +851,6 @@ app.component.ts
 
 ```ts
 import { Component } from '@angular/core';
-// For ease of the example we have just used subjects here.
-// A bigger more complex app should probably use a store framework like redux.
-// If your hooking this into a big app you probably have your own state management anyway.
-// If not and this is your first state storing feel free to use `BehaviorSubject` like the below.
-import { BehaviorSubject } from 'rxjs';
 import { StoreService } from './store.service';
 // for this to not give compile time errors please add "./node_modules/@funfair-tech/wallet-sdk/window.ts"
 // to your files object in tsconfig.app.json
@@ -911,13 +881,13 @@ export class AppComponent {
 
   constructor() {}
 
-  public walletLoaded() {
+  public walletLoaded(): void {
     // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
     window.funwallet.sdk.on<AuthenticationCompletedResponse>(
       MessageListeners.authenticationCompleted,
       (result: AuthenticationCompletedResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(true);
+          StoreService.isAuthenticationCompleted.next(true);
         }
       }
     );
@@ -938,7 +908,7 @@ export class AppComponent {
       MessageListeners.walletInactivityLoggedOut,
       (result: WalletInactivityLoggedOutResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(false);
+          StoreService.isAuthenticationCompleted.next(false);
         }
       }
     );
@@ -949,7 +919,7 @@ export class AppComponent {
       MessageListeners.walletDeviceDeletedLoggedOut,
       (result: WalletDeviceDeletedLoggedOutResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(false);
+          StoreService.isAuthenticationCompleted.next(false);
         }
       }
     );
@@ -1130,7 +1100,7 @@ export class EthereumService {
    * Sign a message
    * @param messageText The message text
    */
-  public async signAMessage(messageText: string) {
+  public async signAMessage(messageText: string): Promise<string> {
     const ethereumAddress = await window.funwallet.sdk.ethereumAddress();
 
     const result = await this.web3Instance.eth.personal.sign(
@@ -1146,7 +1116,7 @@ export class EthereumService {
    * Send transaction
    * @param tx The transaction
    */
-  public async sendTransaction(tx: TransactionConfig) {
+  public async sendTransaction(tx: TransactionConfig): Promise<void> {
     const ethereumAddress = await window.funwallet.sdk.ethereumAddress();
     tx.from = ethereumAddress;
 
@@ -1209,11 +1179,6 @@ app.component.ts
 
 ```ts
 import { Component } from '@angular/core';
-// For ease of the example we have just used subjects here.
-// A bigger more complex app should probably use a store framework like redux.
-// If your hooking this into a big app you probably have your own state management anyway.
-// If not and this is your first state storing feel free to use `BehaviorSubject` like the below.
-import { BehaviorSubject } from 'rxjs';
 import { StoreService } from './store.service';
 // for this to not give compile time errors please add "./node_modules/@funfair-tech/wallet-sdk/window.ts"
 // to your files object in tsconfig.app.json
@@ -1243,13 +1208,13 @@ export class AppComponent {
 
   constructor(private _ethereumService: EthereumService) {}
 
-  public walletLoaded() {
+  public walletLoaded(): void {
     // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
     window.funwallet.sdk.on<AuthenticationCompletedResponse>(
       MessageListeners.authenticationCompleted,
       (result: AuthenticationCompletedResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(true);
+          StoreService.isAuthenticationCompleted.next(true);
         }
       }
     );
@@ -1270,7 +1235,7 @@ export class AppComponent {
       MessageListeners.walletInactivityLoggedOut,
       (result: WalletInactivityLoggedOutResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(false);
+          StoreService.isAuthenticationCompleted.next(false);
         }
       }
     );
@@ -1281,7 +1246,7 @@ export class AppComponent {
       MessageListeners.walletDeviceDeletedLoggedOut,
       (result: WalletDeviceDeletedLoggedOutResponse) => {
         if (result.origin === 'https://wallet.funfair.io') {
-          StoreService.isAuthenticated.next(false);
+          StoreService.isAuthenticationCompleted.next(false);
         }
       }
     );
@@ -1305,13 +1270,13 @@ export class AppComponent {
     StoreService.isAuthenticationCompleted.next(false);
   }
 
-  public async signAMessage() {
+  public async signAMessage(): Promise<void> {
     // hard coded data for this example
     const signature = await this._ethereumService.signAMessage('TESTME');
     console.log('Sign message complete. sig -', signature);
   }
 
-  public async sendSignedTransaction() {
+  public async sendSignedTransaction(): Promise<void> {
     // hard coded data for this example
     const signature = await this._ethereumService.sendTransaction({
       to: '0x45Cd08334aeedd8a06265B2Ae302E3597d8fAA28',
