@@ -128,7 +128,7 @@ Usage:
 
 Type - Function
 
-This will fire when the wallet leader has loaded and this will be a function you register all your event listeners you want to attach to the wallet - https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#registering-an-event-listener
+This will fire when the wallet leader has loaded and this will be a function you register all your event listeners you want to attach to the wallet, list of them [here](https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#registering-an-event-listener)
 
 Example:
 
@@ -159,7 +159,7 @@ export class AppComponent {
 
 ```js
 import { MessageListeners } from '@funfair-tech/wallet-sdk';
-// we suggest people using redux to store state in this example we just did a basic store using subjects
+// we suggest developers to use redux to store state in this example we just did a basic store using subjects
 import { isAuthenticated$, restoreAuthenticationTaskCompleted$ } from './store';
 
 export function registerEventListeners() {
