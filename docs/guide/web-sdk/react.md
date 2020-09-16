@@ -231,7 +231,6 @@ Chrome and other browsers can block popups if triggered without a genuine user c
 App.js
 
 ```js
-import { WalletFollower } from '@funfair-tech/wallet-react';
 import React, { Component } from 'react';
 import './App.css';
 import { isAuthenticated$ } from './store';
@@ -251,6 +250,10 @@ class App extends Component {
     });
   }
 
+  login() {
+    window.funwallet.sdk.openWalletAuthenticationPopUp();
+  }
+
   render() {
     return (
       <div className="App">
@@ -265,10 +268,6 @@ class App extends Component {
         </div>
       </div>
     );
-  }
-
-  login() {
-    window.funwallet.sdk.openWalletAuthenticationPopUp();
   }
 }
 
@@ -288,7 +287,6 @@ Example:
 App.js
 
 ```js
-import { WalletFollower } from '@funfair-tech/wallet-react';
 import React, { Component } from 'react';
 import './App.css';
 import { isAuthenticated$ } from './store';
@@ -306,6 +304,15 @@ class App extends Component {
       });
       this.forceUpdate();
     });
+  }
+
+  login() {
+    window.funwallet.sdk.openWalletAuthenticationPopUp();
+  }
+
+  async logout() {
+    await window.funwallet.sdk.logout();
+    isAuthenticated$.next(false);
   }
 
   render() {
@@ -328,14 +335,6 @@ class App extends Component {
       </div>
     );
   }
-
-  login() {
-    window.funwallet.sdk.openWalletAuthenticationPopUp();
-  }
-
-  async login() {
-    await window.funwallet.sdk.logout();
-  }
 }
 
 export default App;
@@ -354,7 +353,6 @@ Example:
 App.js
 
 ```js
-import { WalletFollower } from '@funfair-tech/wallet-react';
 import React, { Component } from 'react';
 import './App.css';
 import { isAuthenticated$, restoreAuthenticationTaskCompleted$ } from './store';
@@ -382,6 +380,15 @@ class App extends Component {
     });
   }
 
+  login() {
+    window.funwallet.sdk.openWalletAuthenticationPopUp();
+  }
+
+  async logout() {
+    await window.funwallet.sdk.logout();
+    isAuthenticated$.next(false);
+  }
+
   render() {
     return (
       <div className="App">
@@ -403,14 +410,6 @@ class App extends Component {
       </div>
     );
   }
-
-  login() {
-    window.funwallet.sdk.openWalletAuthenticationPopUp();
-  }
-
-  async login() {
-    await window.funwallet.sdk.logout();
-  }
 }
 
 export default App;
@@ -418,7 +417,7 @@ export default App;
 
 ## Show wallet UI
 
-Import the wallet follower react shared component into your main index.js of your react app:
+To get the `WalletFollower` you have to import it from the sdk.
 
 ```js
 import { WalletFollower } from '@funfair-tech/wallet-react';
@@ -473,11 +472,19 @@ class App extends Component {
     });
   }
 
+  login() {
+    window.funwallet.sdk.openWalletAuthenticationPopUp();
+  }
+
+  async logout() {
+    await window.funwallet.sdk.logout();
+    isAuthenticated$.next(false);
+  }
+
   render() {
     return (
       <div className="App">
         <div className="App-container">
-          <img src={logo} className="App-logo" alt="logo" />
           {this.state.loading ? <p>Loading please wait</p> : null}
           <div className="action-buttons">
             {!this.state.isLoggedIn && !this.state.loading ? (
@@ -492,21 +499,13 @@ class App extends Component {
             ) : null}
           </div>
           {this.state.isLoggedIn ? (
-            <div class="wallet-follower">
+            <div className="wallet-follower">
               <WalletFollower page="/funds" />
             </div>
           ) : null}
         </div>
       </div>
     );
-  }
-
-  login() {
-    window.funwallet.sdk.openWalletAuthenticationPopUp();
-  }
-
-  async login() {
-    await window.funwallet.sdk.logout();
   }
 }
 
@@ -521,7 +520,7 @@ To read more about our providers and countries we cover please read [here](../in
 
 It is up to the dApp to decide if they want to use our KYC feature or not. The events get fired regardless but its up to the dApp to listen to them to know when to trigger the KYC modal.
 
-The dApp needs to listen to [isKycVerified](./sdk-event-listeners.html#iskycverified) event which will fire when you try to open to KYC modal and allows you to work out if you show the modal or not.
+The dApp needs to listen to [isKycVerified](./sdk-event-listeners.html#iskycverified) event which will fire when you try to open the KYC modal and allows you to work out if you show the modal or not.
 
 It also needs to listen to [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event which will fire when the user cancels or closes the KYC modal.
 
@@ -675,11 +674,23 @@ class App extends Component {
     });
   }
 
+  login() {
+    window.funwallet.sdk.openWalletAuthenticationPopUp();
+  }
+
+  async logout() {
+    await window.funwallet.sdk.logout();
+    isAuthenticated$.next(false);
+  }
+
+  async openKycProcess() {
+    await window.funwallet.sdk.kycModalOpen();
+  }
+
   render() {
     return (
       <div className="App">
         <div className="App-container">
-          <img src={logo} className="App-logo" alt="logo" />
           {this.state.loading ? <p>Loading please wait</p> : null}
           <div className="action-buttons">
             {!this.state.isLoggedIn && !this.state.loading ? (
@@ -695,25 +706,13 @@ class App extends Component {
             ) : null}
           </div>
           {this.state.isLoggedIn ? (
-            <div class="wallet-follower">
+            <div className="wallet-follower">
               <WalletFollower page="/funds" />
             </div>
           ) : null}
         </div>
       </div>
     );
-  }
-
-  login() {
-    window.funwallet.sdk.openWalletAuthenticationPopUp();
-  }
-
-  async login() {
-    await window.funwallet.sdk.logout();
-  }
-
-  async openKycProcess() {
-    await window.funwallet.sdk.kycModalOpen();
   }
 }
 
@@ -722,9 +721,7 @@ export default App;
 
 ## Speaking to the blockchain (web3/etherjs)
 
-Now you have the wallet all hooked up you can start speaking to the blockchain. Most developers use `web3` and `etherjs` to interact with the blockchain, the SDK exposed our own [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) compatible ethereum provider.
-
-This lives:
+Now you have the wallet all hooked up you can start speaking to the blockchain. Most developers use `web3` and `etherjs` to interact with the blockchain, the SDK exposes our own [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) compatible ethereum provider.
 
 ```js
 // provider lives here in the FunFair Wallet SDK object
@@ -882,11 +879,35 @@ class App extends Component {
     });
   }
 
+  login() {
+    window.funwallet.sdk.openWalletAuthenticationPopUp();
+  }
+
+  async logout() {
+    await window.funwallet.sdk.logout();
+    isAuthenticated$.next(false);
+  }
+
+  async signAMessage() {
+    // hard coded data for this example
+    const signature = await signAMessage('TESTME');
+    console.log('Sign message complete. sig -', signature);
+  }
+
+  async sendSignedTransaction() {
+    // hard coded data for this example
+    const signature = await sendTransaction({
+      to: '0x45Cd08334aeedd8a06265B2Ae302E3597d8fAA28',
+      value: '0x00', // 0x38d7ea4c68000 if you want to add some value 0.002 ETH
+    });
+
+    console.log('Send signed transaction complete. sig -', signature);
+  }
+
   render() {
     return (
       <div className="App">
         <div className="App-container">
-          <img src={logo} className="App-logo" alt="logo" />
           {this.state.loading ? <p>Loading please wait</p> : null}
           <div className="action-buttons">
             {!this.state.isLoggedIn && !this.state.loading ? (
@@ -906,37 +927,13 @@ class App extends Component {
             ) : null}
           </div>
           {this.state.isLoggedIn ? (
-            <div class="wallet-follower">
+            <div className="wallet-follower">
               <WalletFollower page="/funds" />
             </div>
           ) : null}
         </div>
       </div>
     );
-  }
-
-  login() {
-    window.funwallet.sdk.openWalletAuthenticationPopUp();
-  }
-
-  async login() {
-    await window.funwallet.sdk.logout();
-  }
-
-  async signAMessage() {
-    // hard coded data for this example
-    const signature = await signAMessage('TESTME');
-    console.log('Sign message complete. sig -', signature);
-  }
-
-  async sendSignedTransaction() {
-    // hard coded data for this example
-    const signature = await sendTransaction({
-      to: '0x45Cd08334aeedd8a06265B2Ae302E3597d8fAA28',
-      value: '0x00', // 0x38d7ea4c68000 if you want to add some value 0.002 ETH
-    });
-
-    console.log('Send signed transaction complete. sig -', signature);
   }
 }
 

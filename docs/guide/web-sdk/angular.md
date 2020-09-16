@@ -812,7 +812,7 @@ To read more about our providers and countries we cover please read [here](../in
 
 It is up to the dApp to decide if they want to use our KYC feature or not. The events get fired regardless but its up to the dApp to listen to them to know when to trigger the KYC modal.
 
-The dApp needs to listen to [isKycVerified](./sdk-event-listeners.html#iskycverified) event which will fire when you try to open to KYC modal and allows you to work out if you show the modal or not.
+The dApp needs to listen to [isKycVerified](./sdk-event-listeners.html#iskycverified) event which will fire when you try to open the KYC modal and allows you to work out if you show the modal or not.
 
 It also needs to listen to [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event which will fire when the user cancels or closes the KYC modal.
 
@@ -1008,9 +1008,7 @@ export class AppComponent {
 
 ## Speaking to the blockchain (web3/etherjs)
 
-Now you have the wallet all hooked up you can start speaking to the blockchain. Most developers use `web3` and `etherjs` to interact with the blockchain, the SDK exposed our own [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) compatible ethereum provider.
-
-This lives:
+Now you have the wallet all hooked up you can start speaking to the blockchain. Most developers use `web3` and `etherjs` to interact with the blockchain, the SDK exposes our own [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) compatible ethereum provider.
 
 ```js
 // provider lives here in the FunFair Wallet SDK object
