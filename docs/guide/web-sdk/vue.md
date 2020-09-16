@@ -20,6 +20,52 @@ $ npm install @funfair-tech/wallet-vue
 $ yarn add @funfair-tech/wallet-vue
 ```
 
+## HTTPS
+
+Your domain must ALWAYS run `https` when pointing to the wallet else it will be rejected. This is also required on local development.
+
+### Setup https on localhost
+
+Firstly please grab the `ssl` folder with all the files from [here](https://github.com/funfair-tech/wallet-vue-integration-sample-js/tree/master/ssl) and drop it into the root of your project.
+
+You then need to config the `vue.config.js` to map the `key` and `cert`. If you do not have a `vue.config.js` please create one in the main root.
+
+Paste the `https` object under the `devServer` object:
+
+```js
+devServer: {
+  https: {
+    key: fs.readFileSync('./ssl/server.key'),
+    cert: fs.readFileSync('./ssl/server.crt'),
+  },
+}
+```
+
+Full example:
+
+```js
+const fs = require('fs');
+
+module.exports = {
+  devServer: {
+    https: {
+      key: fs.readFileSync('./ssl/server.key'),
+      cert: fs.readFileSync('./ssl/server.crt'),
+    },
+  },
+};
+```
+
+When you serve this now it will serve it on https. You will need to install the https cert as shown below:
+
+#### Windows
+
+<img :src="$withBase('/windows-https-install.PNG')" >
+
+#### Mac
+
+<img :src="$withBase('/mac-https-install.gif')" >
+
 ## Hooking up the SDK
 
 Firstly you need to drop the below script into your `<head>` HTML tag in your main index.html (public > index.html):
