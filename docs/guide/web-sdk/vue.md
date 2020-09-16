@@ -103,6 +103,8 @@ export default {
       // like in our github example https://github.com/funfair-tech/wallet-vue-integration-sample-js
       // it would be nicer code if you extracted this into its own file and called in within here.
       // for ease of understanding it is all in this file.
+
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
       window.funwallet.sdk.on(
         MessageListeners.authenticationCompleted,
         (result) => {
@@ -112,6 +114,7 @@ export default {
         }
       );
 
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
       window.funwallet.sdk.on(
         MessageListeners.restoreAuthenticationCompleted,
         (result) => {
@@ -121,6 +124,8 @@ export default {
         }
       );
 
+      // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletinactivityloggedout
       window.funwallet.sdk.on(
         MessageListeners.walletInactivityLoggedOut,
         (result) => {
@@ -130,39 +135,13 @@ export default {
         }
       );
 
+      // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletdevicedeletedloggedout
       window.funwallet.sdk.on(
         MessageListeners.walletDeviceDeletedLoggedOut,
         (result) => {
           if (result.origin === 'https://wallet.funfair.io') {
             isAuthenticated$.next(false);
-          }
-        }
-      );
-
-      window.funwallet.sdk.on(MessageListeners.isKycVerified, (result) => {
-        if (result.origin === 'https://wallet.funfair.io') {
-          if (!result.data.isVerified) {
-            window.funwallet.sdk.showFunWalletModal();
-          } else {
-            // maybe show some kind of error message as in theory
-            // your client should not be showing ability to popup KYC
-            // when they are already verified
-            console.error(
-              'Your client should not show the kyc logic if already kyced'
-            );
-          }
-        }
-      });
-
-      window.funwallet.sdk.on(
-        MessageListeners.kycProcessCancelled,
-        (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
-            if (result.data.cancelled) {
-              window.funwallet.sdk.hideFunWalletModal();
-              // you may want to move routes etc here hence why you hook onto this action
-              // and the sdk does not
-            }
           }
         }
       );
@@ -234,6 +213,8 @@ export default {
       // like in our github example https://github.com/funfair-tech/wallet-vue-integration-sample-js
       // it would be nicer code if you extracted this into its own file and called in within here.
       // for ease of understanding it is all in this file.
+
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
       window.funwallet.sdk.on(
         MessageListeners.authenticationCompleted,
         (result) => {
@@ -243,6 +224,7 @@ export default {
         }
       );
 
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
       window.funwallet.sdk.on(
         MessageListeners.restoreAuthenticationCompleted,
         (result) => {
@@ -252,6 +234,8 @@ export default {
         }
       );
 
+      // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletinactivityloggedout
       window.funwallet.sdk.on(
         MessageListeners.walletInactivityLoggedOut,
         (result) => {
@@ -261,39 +245,13 @@ export default {
         }
       );
 
+      // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletdevicedeletedloggedout
       window.funwallet.sdk.on(
         MessageListeners.walletDeviceDeletedLoggedOut,
         (result) => {
           if (result.origin === 'https://wallet.funfair.io') {
             isAuthenticated$.next(false);
-          }
-        }
-      );
-
-      window.funwallet.sdk.on(MessageListeners.isKycVerified, (result) => {
-        if (result.origin === 'https://wallet.funfair.io') {
-          if (!result.data.isVerified) {
-            window.funwallet.sdk.showFunWalletModal();
-          } else {
-            // maybe show some kind of error message as in theory
-            // your client should not be showing ability to popup KYC
-            // when they are already verified
-            console.error(
-              'Your client should not show the kyc logic if already kyced'
-            );
-          }
-        }
-      });
-
-      window.funwallet.sdk.on(
-        MessageListeners.kycProcessCancelled,
-        (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
-            if (result.data.cancelled) {
-              window.funwallet.sdk.hideFunWalletModal();
-              // you may want to move routes etc here hence why you hook onto this action
-              // and the sdk does not
-            }
           }
         }
       );
@@ -369,6 +327,8 @@ export default {
       // like in our github example https://github.com/funfair-tech/wallet-vue-integration-sample-js
       // it would be nicer code if you extracted this into its own file and called in within here.
       // for ease of understanding it is all in this file.
+
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
       window.funwallet.sdk.on(
         MessageListeners.authenticationCompleted,
         (result) => {
@@ -378,6 +338,7 @@ export default {
         }
       );
 
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
       window.funwallet.sdk.on(
         MessageListeners.restoreAuthenticationCompleted,
         (result) => {
@@ -387,6 +348,8 @@ export default {
         }
       );
 
+      // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletinactivityloggedout
       window.funwallet.sdk.on(
         MessageListeners.walletInactivityLoggedOut,
         (result) => {
@@ -396,39 +359,13 @@ export default {
         }
       );
 
+      // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletdevicedeletedloggedout
       window.funwallet.sdk.on(
         MessageListeners.walletDeviceDeletedLoggedOut,
         (result) => {
           if (result.origin === 'https://wallet.funfair.io') {
             isAuthenticated$.next(false);
-          }
-        }
-      );
-
-      window.funwallet.sdk.on(MessageListeners.isKycVerified, (result) => {
-        if (result.origin === 'https://wallet.funfair.io') {
-          if (!result.data.isVerified) {
-            window.funwallet.sdk.showFunWalletModal();
-          } else {
-            // maybe show some kind of error message as in theory
-            // your client should not be showing ability to popup KYC
-            // when they are already verified
-            console.error(
-              'Your client should not show the kyc logic if already kyced'
-            );
-          }
-        }
-      });
-
-      window.funwallet.sdk.on(
-        MessageListeners.kycProcessCancelled,
-        (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
-            if (result.data.cancelled) {
-              window.funwallet.sdk.hideFunWalletModal();
-              // you may want to move routes etc here hence why you hook onto this action
-              // and the sdk does not
-            }
           }
         }
       );
@@ -509,6 +446,8 @@ export default {
       // like in our github example https://github.com/funfair-tech/wallet-vue-integration-sample-js
       // it would be nicer code if you extracted this into its own file and called in within here.
       // for ease of understanding it is all in this file.
+
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
       window.funwallet.sdk.on(
         MessageListeners.authenticationCompleted,
         (result) => {
@@ -518,6 +457,7 @@ export default {
         }
       );
 
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
       window.funwallet.sdk.on(
         MessageListeners.restoreAuthenticationCompleted,
         (result) => {
@@ -527,6 +467,8 @@ export default {
         }
       );
 
+      // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletinactivityloggedout
       window.funwallet.sdk.on(
         MessageListeners.walletInactivityLoggedOut,
         (result) => {
@@ -536,39 +478,13 @@ export default {
         }
       );
 
+      // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletdevicedeletedloggedout
       window.funwallet.sdk.on(
         MessageListeners.walletDeviceDeletedLoggedOut,
         (result) => {
           if (result.origin === 'https://wallet.funfair.io') {
             isAuthenticated$.next(false);
-          }
-        }
-      );
-
-      window.funwallet.sdk.on(MessageListeners.isKycVerified, (result) => {
-        if (result.origin === 'https://wallet.funfair.io') {
-          if (!result.data.isVerified) {
-            window.funwallet.sdk.showFunWalletModal();
-          } else {
-            // maybe show some kind of error message as in theory
-            // your client should not be showing ability to popup KYC
-            // when they are already verified
-            console.error(
-              'Your client should not show the kyc logic if already kyced'
-            );
-          }
-        }
-      });
-
-      window.funwallet.sdk.on(
-        MessageListeners.kycProcessCancelled,
-        (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
-            if (result.data.cancelled) {
-              window.funwallet.sdk.hideFunWalletModal();
-              // you may want to move routes etc here hence why you hook onto this action
-              // and the sdk does not
-            }
           }
         }
       );
@@ -676,6 +592,8 @@ export default {
       // like in our github example https://github.com/funfair-tech/wallet-vue-integration-sample-js
       // it would be nicer code if you extracted this into its own file and called in within here.
       // for ease of understanding it is all in this file.
+
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
       window.funwallet.sdk.on(
         MessageListeners.authenticationCompleted,
         (result) => {
@@ -685,6 +603,7 @@ export default {
         }
       );
 
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
       window.funwallet.sdk.on(
         MessageListeners.restoreAuthenticationCompleted,
         (result) => {
@@ -694,6 +613,8 @@ export default {
         }
       );
 
+      // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletinactivityloggedout
       window.funwallet.sdk.on(
         MessageListeners.walletInactivityLoggedOut,
         (result) => {
@@ -703,6 +624,8 @@ export default {
         }
       );
 
+      // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletdevicedeletedloggedout
       window.funwallet.sdk.on(
         MessageListeners.walletDeviceDeletedLoggedOut,
         (result) => {
@@ -712,9 +635,227 @@ export default {
         }
       );
 
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#list-of-all-available-listeners
+      // register all the other events your interested in here...
+    },
+    login: function () {
+      window.funwallet.sdk.openWalletAuthenticationPopUp();
+    },
+    logout: async function () {
+      await window.funwallet.sdk.logout();
+    },
+  },
+  created: function () {
+    const _this = this;
+    isAuthenticated$.subscribe((value) => {
+      _this.$data.isLoggedIn = value;
+    });
+
+    restoreAuthenticationTaskCompleted$.subscribe((value) => {
+      if (value) {
+        _this.$data.loading = false;
+      }
+    });
+  },
+};
+</script>
+
+<style>
+body {
+  margin: 0px;
+}
+.App {
+  text-align: center;
+  padding-bottom: 75px;
+  background-color: #242424;
+}
+
+.App-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.wallet-follower {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.action-buttons button {
+  margin-left: 10px;
+}
+
+.action-buttons {
+  margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 510px) {
+  .action-buttons .logged-in {
+    display: grid;
+  }
+
+  .action-buttons button {
+    margin-bottom: 10px;
+  }
+}
+
+button {
+  background: linear-gradient(to bottom, #f7a2c6 0%, #ea166f 2px, #bc1159 100%);
+  color: #fff;
+  box-sizing: border-box;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  display: inline-block;
+  white-space: nowrap;
+  text-decoration: none;
+  vertical-align: baseline;
+  text-align: center;
+  margin: 0;
+  min-width: 64px;
+  line-height: 36px;
+  padding: 0 16px;
+  border-radius: 4px;
+  overflow: visible;
+  transform: translate3d(0, 0, 0);
+  transition: background 400ms cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow
+      280ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+</style>
+```
+
+## KYC
+
+If you do not want to have KYC as a feature on your dApp please ignore this section completely.
+
+It is up to the dApp to decide if they want to use our KYC feature or not. The events get fired regardless but its up to the dApp to listen to them to know when to trigger the KYC modal.
+
+The dApp needs to listen to [isKycVerified](./sdk-event-listeners.html#iskycverified) event which will fire when you try to open to KYC modal and allows you to work out if you show the modal or not.
+
+It also needs to listen to [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event which will fire when the user cancels or closes the KYC modal.
+
+The reason we made the dApp handle it to give you greater flexibility on when you showed it and what you did after it was cancelled.
+
+To trigger the KYC modal to open you have to call [kycModalOpen](./sdk-methods.html#kycmodalopen) SDK method:
+
+```js
+await window.funwallet.sdk.kycModalOpen();
+```
+
+This will then do the lookup on the wallet side and fire the result to `isKycVerified` event.
+
+Example:
+
+```vue
+<template>
+  <div id="app">
+    <WalletLeader :registerEventListeners="this.registerEventListeners" />
+    <div class="App">
+      <div class="App-container">
+        <p v-if="loading">Loading please wait</p>
+        <!-- These action buttons are just here to show you how to hook in authentication
+             but its up to you where/how you display them -->
+        <div class="action-buttons">
+          <div v-if="!loading && !isLoggedIn" className="logged-out">
+            <button @click="login">Login</button>
+          </div>
+          <div v-if="!loading && isLoggedIn" className="logged-in">
+            <button @click="openKycProcess">Start KYC</button>
+            <button @click="logout">Logout</button>
+          </div>
+        </div>
+        <div class="wallet-follower" v-if="!loading && isLoggedIn">
+          <WalletFollower />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { WalletLeader, WalletFollower } from '@funfair-tech/wallet-vue';
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+// For ease of the example we have just used subjects here.
+// A bigger more complex app should probably use a store framework like redux.
+// If your hooking this into a big app you probably have your own state management anyway.
+// If not and this is your first state storing feel free to use `BehaviorSubject` like the below.
+import { BehaviorSubject } from 'rxjs';
+
+export const isAuthenticated$ = new BehaviorSubject(false);
+export const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
+
+export default {
+  name: 'App',
+  components: {
+    WalletLeader,
+    WalletFollower,
+  },
+  data: () => {
+    return { isLoggedIn: false, loading: true };
+  },
+  methods: {
+    registerEventListeners: function () {
+      // like in our github example https://github.com/funfair-tech/wallet-vue-integration-sample-js
+      // it would be nicer code if you extracted this into its own file and called in within here.
+      // for ease of understanding it is all in this file.
+
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
+      window.funwallet.sdk.on(
+        MessageListeners.authenticationCompleted,
+        (result) => {
+          if (result.origin === 'https://wallet.funfair.io') {
+            isAuthenticated$.next(true);
+          }
+        }
+      );
+
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
+      window.funwallet.sdk.on(
+        MessageListeners.restoreAuthenticationCompleted,
+        (result) => {
+          if (result.origin === 'https://wallet.funfair.io') {
+            restoreAuthenticationTaskCompleted$.next(true);
+          }
+        }
+      );
+
+      // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletinactivityloggedout
+      window.funwallet.sdk.on(
+        MessageListeners.walletInactivityLoggedOut,
+        (result) => {
+          if (result.origin === 'https://wallet.funfair.io') {
+            isAuthenticated$.next(false);
+          }
+        }
+      );
+
+      // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletdevicedeletedloggedout
+      window.funwallet.sdk.on(
+        MessageListeners.walletDeviceDeletedLoggedOut,
+        (result) => {
+          if (result.origin === 'https://wallet.funfair.io') {
+            isAuthenticated$.next(false);
+          }
+        }
+      );
+
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#iskycverified
       window.funwallet.sdk.on(MessageListeners.isKycVerified, (result) => {
         if (result.origin === 'https://wallet.funfair.io') {
           if (!result.data.isVerified) {
+            // MUST CALL
             window.funwallet.sdk.showFunWalletModal();
           } else {
             // maybe show some kind of error message as in theory
@@ -727,11 +868,13 @@ export default {
         }
       });
 
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#kycprocesscancelled
       window.funwallet.sdk.on(
         MessageListeners.kycProcessCancelled,
         (result) => {
           if (result.origin === 'https://wallet.funfair.io') {
             if (result.data.cancelled) {
+              // MUST CALL
               window.funwallet.sdk.hideFunWalletModal();
               // you may want to move routes etc here hence why you hook onto this action
               // and the sdk does not
@@ -748,6 +891,9 @@ export default {
     },
     logout: async function () {
       await window.funwallet.sdk.logout();
+    },
+    openKycProcess: async function () {
+      await window.funwallet.sdk.kycModalOpen();
     },
   },
   created: function () {
@@ -1025,6 +1171,8 @@ export default {
       // like in our github example https://github.com/funfair-tech/wallet-vue-integration-sample-js
       // it would be nicer code if you extracted this into its own file and called in within here.
       // for ease of understanding it is all in this file.
+
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
       window.funwallet.sdk.on(
         MessageListeners.authenticationCompleted,
         (result) => {
@@ -1034,6 +1182,7 @@ export default {
         }
       );
 
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
       window.funwallet.sdk.on(
         MessageListeners.restoreAuthenticationCompleted,
         (result) => {
@@ -1043,6 +1192,8 @@ export default {
         }
       );
 
+      // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletinactivityloggedout
       window.funwallet.sdk.on(
         MessageListeners.walletInactivityLoggedOut,
         (result) => {
@@ -1052,39 +1203,13 @@ export default {
         }
       );
 
+      // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletdevicedeletedloggedout
       window.funwallet.sdk.on(
         MessageListeners.walletDeviceDeletedLoggedOut,
         (result) => {
           if (result.origin === 'https://wallet.funfair.io') {
             isAuthenticated$.next(false);
-          }
-        }
-      );
-
-      window.funwallet.sdk.on(MessageListeners.isKycVerified, (result) => {
-        if (result.origin === 'https://wallet.funfair.io') {
-          if (!result.data.isVerified) {
-            window.funwallet.sdk.showFunWalletModal();
-          } else {
-            // maybe show some kind of error message as in theory
-            // your client should not be showing ability to popup KYC
-            // when they are already verified
-            console.error(
-              'Your client should not show the kyc logic if already kyced'
-            );
-          }
-        }
-      });
-
-      window.funwallet.sdk.on(
-        MessageListeners.kycProcessCancelled,
-        (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
-            if (result.data.cancelled) {
-              window.funwallet.sdk.hideFunWalletModal();
-              // you may want to move routes etc here hence why you hook onto this action
-              // and the sdk does not
-            }
           }
         }
       );
