@@ -56,7 +56,7 @@ module.exports = {
 };
 ```
 
-When you serve this now it will serve it on https. You will need to install the https cert as shown below:
+When you serve this now using `vue-cli-service serve` and it will serve it on https. You will need to install the https cert as shown below:
 
 #### Windows
 
@@ -225,9 +225,11 @@ Example:
     <WalletLeader :registerEventListeners="this.registerEventListeners" />
     <div class="App">
       <div class="App-container">
-        <!-- should only show this if the user is NOT logged in -->
-        <div v-if="!isLoggedIn" className="logged-out">
-          <button @click="login">Login</button>
+        <div className="action-buttons">
+          <!-- should only show this if the user is NOT logged in -->
+          <div v-if="!isLoggedIn" className="logged-out">
+            <button @click="login">Login</button>
+          </div>
         </div>
       </div>
     </div>
@@ -335,13 +337,15 @@ Example:
     <WalletLeader :registerEventListeners="this.registerEventListeners" />
     <div class="App">
       <div class="App-container">
-        <!-- should only show this if the user is NOT logged in -->
-        <div v-if="!isLoggedIn" className="logged-out">
-          <button @click="login">Login</button>
-        </div>
-        <!-- should only show this if the user is logged in -->
-        <div v-if="isLoggedIn" className="logged-in">
-          <button @click="logout">Logout</button>
+        <div className="action-buttons">
+          <!-- should only show this if the user is NOT logged in -->
+          <div v-if="!isLoggedIn" className="logged-out">
+            <button @click="login">Login</button>
+          </div>
+          <!-- should only show this if the user is logged in -->
+          <div v-if="isLoggedIn" className="logged-in">
+            <button @click="logout">Logout</button>
+          </div>
         </div>
       </div>
     </div>
@@ -454,13 +458,15 @@ Example:
       <div class="App-container">
         <!-- in this example we just have a simple message you can config your loading screen to whatever you want -->
         <p v-if="loading">Loading please wait</p>
-        <!-- should only show this if the user is NOT logged in -->
-        <div v-if="!loading && !isLoggedIn" className="logged-out">
-          <button @click="login">Login</button>
-        </div>
-        <!-- should only show this if the user is logged in -->
-        <div v-if="!loading && isLoggedIn" className="logged-in">
-          <button @click="logout">Logout</button>
+        <div className="action-buttons">
+          <!-- should only show this if the user is NOT logged in -->
+          <div v-if="!loading && !isLoggedIn" className="logged-out">
+            <button @click="login">Login</button>
+          </div>
+          <!-- should only show this if the user is logged in -->
+          <div v-if="!loading && isLoggedIn" className="logged-in">
+            <button @click="logout">Logout</button>
+          </div>
         </div>
       </div>
     </div>
@@ -898,6 +904,8 @@ export default {
           }
         }
       );
+
+      // REGISTER THESE EVENTS BELOW FOR KYC
 
       // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#iskycverified
       window.funwallet.sdk.on(MessageListeners.isKycVerified, (result) => {
