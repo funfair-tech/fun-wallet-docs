@@ -666,8 +666,6 @@ export default {
   name: 'App',
   components: {
     WalletLeader,
-    LoggedInActions,
-    LoggedOutActions,
     WalletFollower,
   },
   data: () => {
