@@ -738,6 +738,8 @@ button {
 
 If you do not want to have KYC as a feature on your dApp please ignore this section completely.
 
+To read more about our providers and countries we cover please read [here](../information/kyc)
+
 It is up to the dApp to decide if they want to use our KYC feature or not. The events get fired regardless but its up to the dApp to listen to them to know when to trigger the KYC modal.
 
 The dApp needs to listen to [isKycVerified](./sdk-event-listeners.html#iskycverified) event which will fire when you try to open to KYC modal and allows you to work out if you show the modal or not.
