@@ -858,7 +858,7 @@ Once you the leader has loaded, the SDK will expose the Ethereum provider on the
 
 Example:
 
-## web3
+### web3
 
 `JavaScript`:
 
@@ -876,7 +876,7 @@ import window from '@funfair-tech/wallet-sdk/window';
 const web3 = new Web3(window.funwallet.sdk.ethereum as any);
 ```
 
-## etherjs
+### etherjs
 
 `JavaScript`:
 
