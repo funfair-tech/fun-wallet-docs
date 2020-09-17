@@ -150,7 +150,6 @@ function getGuideSidebar(
         'web-sdk/angular',
         'web-sdk/vue',
         'web-sdk/native-js-or-another-framework.md',
-        'web-sdk/authentication',
         'web-sdk/routing',
         'web-sdk/languages',
         'web-sdk/ethereum-provider',
