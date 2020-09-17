@@ -603,13 +603,7 @@ Usage:
 <WalletFollower />
 ```
 
-### Parameters
-
-#### page - optional
-
-Type - string
-
-If you want to deep link the into a page on the wallet you can pass any of the routes to this parameter which are [here](./routing.html#deep-link-page-routes). If not passed in it will default to the main route page.
+If you want to deep link the into a page on the wallet it is explained how to do that [here](./routing.html#deep-link-page-routes). By default to the main `/funds` page will load.
 
 Please note you must only show the follower once [restoreAuthenticationTaskCompleted](./sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationcompleted](./sdk-event-listeners.html#authenticationcompleted) has fired, `authenticationcompleted` means they are logged in.
 
