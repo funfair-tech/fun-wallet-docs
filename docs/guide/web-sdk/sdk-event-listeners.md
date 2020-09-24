@@ -146,7 +146,6 @@ Please note the SDK does check this as well and only connects messages from the 
   websocketConnected = 'websocketConnected',
   websocketDisconnected = 'websocketDisconnected',
   newBlock = 'newBlock',
-  newBlockBloomMatchUser = 'newBlockBloomMatchUser',
   playerProtectionUpdated = 'playerProtectionUpdated',
   walletTracking = 'walletTracking',
   authenticationPopUpClosed = 'authenticationPopUpClosed',
@@ -1153,53 +1152,6 @@ import { MessageListeners, NewBlockResponse } from '@funfair-tech/wallet-sdk';
 window.funwallet.sdk.on<NewBlockResponse>(
   MessageListeners.newBlock,
   (result: NewBlockResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
-      console.log(result.data);
-    }
-  }
-);
-```
-
-`result.data` returns:
-
-```ts
-{
-  networkId: Networks;
-  blockNumber: number;
-  blockHash: string;
-  bloomFilter: string;
-  timestamp: number;
-}
-```
-
----
-
-## newBlockBloomMatchUser
-
-This will fire when the wallet receives a new block alert through the WebSocket it's connected to _and_ the bloom filter matches the authenticated user's Ethereum address. This will only fire if the user is authenticated.
-
-`JavaScript`:
-
-```js
-window.funwallet.sdk.on('newBlockBloomMatchUser', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
-
-```ts
-import window from '@funfair-tech/wallet-sdk/window';
-import {
-  MessageListeners,
-  NewBlockBloomMatchUserResponse,
-} from '@funfair-tech/wallet-sdk';
-
-window.funwallet.sdk.on<NewBlockBloomMatchUserResponse>(
-  MessageListeners.newBlockBloomMatchUser,
-  (result: NewBlockBloomMatchUserResponse) => {
     if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
