@@ -88,7 +88,7 @@ $ yarn add @funfair-tech/wallet-vue
 
 ## Hooking up the SDK
 
-Firstly you need to drop the below script into your `<head>` HTML tag in your main index.html (public > index.html):
+Firstly you need to drop the below script into your `<head>` HTML tag in your main index.html (public > index.html). Please replace the `YOUR_APP_ID` with the appId we have supplied you:
 
 ```html
 <!DOCTYPE html>
@@ -100,7 +100,7 @@ Firstly you need to drop the below script into your `<head>` HTML tag in your ma
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title><%= htmlWebpackPlugin.options.title %></title>
     <script
-      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js"
+      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js?appId=YOUR_APP_ID"
       type="text/JavaScript"
     ></script>
   </head>

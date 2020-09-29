@@ -50,7 +50,7 @@ import window from '@funfair-tech/wallet-sdk/window';
 
 ## Hooking up the SDK
 
-Firstly you need to drop the below script into your `<head>` HTML tag in the main index.html:
+Firstly you need to drop the below script into your `<head>` HTML tag in the main index.html. Please replace the `YOUR_APP_ID` with the appId we have supplied you:
 
 ```html
 <!DOCTYPE html>
@@ -62,7 +62,7 @@ Firstly you need to drop the below script into your `<head>` HTML tag in the mai
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <script
-      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js"
+      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js?appId=YOUR_APP_ID"
       type="text/JavaScript"
     ></script>
   </head>
@@ -107,7 +107,7 @@ Example:
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.1.0/rxjs.umd.js"></script>
     <script
-      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js"
+      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js?appId=YOUR_APP_ID"
       type="text/JavaScript"
     ></script>
 
@@ -210,7 +210,7 @@ Example:
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.1.0/rxjs.umd.js"></script>
     <script
-      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js"
+      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js?appId=YOUR_APP_ID"
       type="text/JavaScript"
     ></script>
 
@@ -331,7 +331,7 @@ Example:
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.1.0/rxjs.umd.js"></script>
     <script
-      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js"
+      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js?appId=YOUR_APP_ID"
       type="text/JavaScript"
     ></script>
 
@@ -463,7 +463,7 @@ Example:
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.1.0/rxjs.umd.js"></script>
     <script
-      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js"
+      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js?appId=YOUR_APP_ID"
       type="text/JavaScript"
     ></script>
 
@@ -619,7 +619,7 @@ Example:
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.1.0/rxjs.umd.js"></script>
     <script
-      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js"
+      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js?appId=YOUR_APP_ID"
       type="text/JavaScript"
     ></script>
 
@@ -789,7 +789,7 @@ Example:
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.1.0/rxjs.umd.js"></script>
     <script
-      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js"
+      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js?appId=YOUR_APP_ID"
       type="text/JavaScript"
     ></script>
 
@@ -1050,7 +1050,7 @@ Example:
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.2.11/dist/web3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.1.0/rxjs.umd.js"></script>
     <script
-      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js"
+      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js?appId=YOUR_APP_ID"
       type="text/JavaScript"
     ></script>
 
