@@ -131,7 +131,6 @@ Please note the SDK does check this as well and only connects messages from the 
   followerAuthenticationCompleted = 'followerAuthenticationCompleted',
   walletInactivityLoggedOut = 'walletInactivityLoggedOut',
   walletDeviceDeletedLoggedOut = 'walletDeviceDeletedLoggedOut',
-  walletNonceUpdated = 'walletNonceUpdated',
   pendingTransaction = 'pendingTransaction',
   completedTransaction = 'completedTransaction',
   cancelledTransaction = 'cancelledTransaction',
@@ -479,49 +478,6 @@ window.funwallet.sdk.on<WalletDeviceDeletedLoggedOutResponse>(
 ```ts
 {
   loggedOut: boolean,
-}
-```
-
----
-
-## walletNonceUpdated
-
-This will fire when the Wallet nonce is updated. The Wallet nonce is incremented as transactions are signed and sent, making it possible for your dApp to remain aware of these changes.
-
-`JavaScript`:
-
-```js
-window.funwallet.sdk.on('walletNonceUpdated', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
-
-```ts
-import window from '@funfair-tech/wallet-sdk/window';
-import {
-  MessageListeners,
-  WalletNonceUpdatedResponse,
-} from '@funfair-tech/wallet-sdk';
-
-window.funwallet.sdk.on<WalletNonceUpdatedResponse>(
-  MessageListeners.walletNonceUpdated,
-  (result: WalletNonceUpdatedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
-      console.log(result.data);
-    }
-  }
-);
-```
-
-`result.data` returns:
-
-```
-{
-  nonce: number,
 }
 ```
 
