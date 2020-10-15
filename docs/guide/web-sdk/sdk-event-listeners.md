@@ -135,7 +135,6 @@ Please note the SDK does check this as well and only connects messages from the 
   pendingTransaction = 'pendingTransaction',
   completedTransaction = 'completedTransaction',
   cancelledTransaction = 'cancelledTransaction',
-  failedTransaction = 'failedTransaction',
   erc20TokenBalanceChanged = 'erc20TokenBalanceChanged',
   erc20TokenFiatPriceChanged = 'erc20TokenFiatPriceChanged',
   ethBalanceChanged = 'ethBalanceChanged',
@@ -530,7 +529,7 @@ window.funwallet.sdk.on<WalletNonceUpdatedResponse>(
 
 ## pendingTransaction
 
-This will fire when a pending transaction has occurred on the Wallet. We suggest if your dApp sends the transaction and wants to hook onto certain notifications, e.g. the transaction hash, then use [web3 promise events](https://web3js.readthedocs.io/en/1.0/callbacks-promises-events.html).
+This will fire when a pending transaction has occurred on the Wallet. We suggest if your dApp has sent this transaction and wants to hook onto certain notifications, e.g. the transaction hash, receipt etc just use the framework your using to get that data (ethers/web3).
 
 `JavaScript`:
 
@@ -566,7 +565,16 @@ window.funwallet.sdk.on<PendingTransactionResponse>(
 ```ts
 {
   transactionHash: string,
-  transaction: Transaction,
+  transaction: {
+    to: string;
+    from: string;
+    nonce: string;
+    gasLimit: string;
+    gasPrice: string;
+    data: string;
+    value: string;
+    chainId: number;
+  }
 }
 ```
 
@@ -574,7 +582,7 @@ window.funwallet.sdk.on<PendingTransactionResponse>(
 
 ## completedTransaction
 
-This will fire when a completed transaction has occurred on the Wallet (i.e. upon the first confirmation). We suggest if your dApp sends the transaction and wants to hook onto certain notifications, e.g. the transaction hash, then use [web3 promise events](https://web3js.readthedocs.io/en/1.0/callbacks-promises-events.html).
+This will fire when a completed transaction has occurred on the Wallet (i.e. upon the first confirmation). We suggest if your dApp has sent this transaction and wants to hook onto certain notifications, e.g. the transaction hash, receipt etc just use the framework your using to get that data (ethers/web3).
 
 `JavaScript`:
 
@@ -609,7 +617,33 @@ window.funwallet.sdk.on<CompletedTransactionResponse>(
 
 ```ts
 {
-  transactionReceipt: TransactionReceipt,
+  transactionReceipt: {
+    to: string;
+    from: string;
+    contractAddress: string;
+    transactionIndex: number;
+    root?: string;
+    gasUsed: string;
+    logsBloom: string;
+    blockHash: string;
+    transactionHash: string;
+    logs: Array<{
+      blockNumber: number;
+      blockHash: string;
+      transactionIndex: number;
+      removed: boolean;
+      address: string;
+      data: string;
+      topics: Array<string>;
+      transactionHash: string;
+      logIndex: number;
+    }>;
+    blockNumber: number;
+    confirmations: number;
+    cumulativeGasUsed: string;
+    byzantium: boolean;
+    status?: number;
+  },
   blockTimestamp: number,
 }
 ```
@@ -618,7 +652,7 @@ window.funwallet.sdk.on<CompletedTransactionResponse>(
 
 ## cancelledTransaction
 
-This will fire when a cancelled transaction has occurred on the Wallet.
+This will fire when a cancelled transaction has occurred on the Wallet. We suggest if your dApp has sent this transaction and wants to hook onto certain notifications, e.g. the transaction hash, receipt etc just use the framework your using to get that data (ethers/web3). If the transaction your dapp sent was cancelled by the user then it will throw an error in your providers code as long as your listening out for the receipt.
 
 `JavaScript`:
 
@@ -654,51 +688,17 @@ window.funwallet.sdk.on<CancelledTransactionResponse>(
 ```ts
 {
   transactionHash: string,
-  transaction: Transaction,
+  transaction: {
+    to: string;
+    from: string;
+    nonce: string;
+    gasLimit: string;
+    gasPrice: string;
+    data: string;
+    value: string;
+    chainId: number;
+  },
   blockTimestamp: number,
-}
-```
-
----
-
-## failedTransaction
-
-This will fire when a failed transaction has occurred on the Wallet (based on first confirmation). We suggest if your app sends the transaction and wants to hook onto certain notifications, e.g. the transaction hash, then use [web3 promise events](https://web3js.readthedocs.io/en/1.0/callbacks-promises-events.html).
-
-`JavaScript`:
-
-```js
-window.funwallet.sdk.on('failedTransaction', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
-
-```ts
-import window from '@funfair-tech/wallet-sdk/window';
-import {
-  MessageListeners,
-  FailedTransactionResponse,
-} from '@funfair-tech/wallet-sdk';
-
-window.funwallet.sdk.on<FailedTransactionResponse>(
-  MessageListeners.failedTransaction,
-  (result: FailedTransactionResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
-      console.log(result.data);
-    }
-  }
-);
-```
-
-`result.data` returns:
-
-```ts
-{
-  transactionHash: string,
 }
 ```
 
@@ -1437,14 +1437,6 @@ window.funwallet.sdk.on<AuthenticationPopUpClosedResponse>(
   isAuthenticated: boolean;
 }
 ```
-
----
-
-## Definitions:
-
-[Transaction](https://github.com/ethereum/web3.js/blob/1.0/packages/web3-core/types/index.d.ts#L133) - now called `TransactionConfig` (I will change the data responses to reflect this when I get a chance).
-<br>
-[TransactionReceipt](https://github.com/ethereum/web3.js/blob/1.0/packages/web3-core/types/index.d.ts#L137)
 
 ---
 
