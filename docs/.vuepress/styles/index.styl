@@ -44,3 +44,46 @@ pre.vue-container
 .greenBtn {
   background-color: #4caf50;
 }
+
+html,
+body {
+  background-color: #d3dbdf;
+}
+
+.sidebar {
+  background-color: #e3e7e9;
+  border-right: 2px solid #bbc5ca;
+}
+
+.navbar {
+  background: linear-gradient(105deg, rgb(137,16,67) 0%, rgb(15,43,70) 25%, rgb(31,35,38) 50%);
+
+  .site-name,
+  nav.nav-links a {
+    color: white !important;
+  }
+
+  .links {
+    background-color: rgb(31,35,38)  !important;
+  }
+}
+
+ul li:not(.sidebar-sub-header) > a.sidebar-link.active {
+  background: #333a3e;
+  color: white !important;
+  border-left: none;
+  position: relative;
+  width: calc(100% - 32px);
+
+  &:after {
+    content: '';
+    position: absolute;
+    right: -32px;
+    top: 0;
+    width: 32px;
+    height: 100%;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    background-color: inherit;
+  }
+}

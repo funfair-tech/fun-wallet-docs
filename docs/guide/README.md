@@ -1,7 +1,5 @@
 # Introduction
 
-## Welcome to FunFair Wallet Documentation.
-
 The FunFair Wallet is the only white-label wallet service, which is secure, user-focused, and built for seamless integration into third-party apps, in any browser and on any device.
 
 ### Features include:
