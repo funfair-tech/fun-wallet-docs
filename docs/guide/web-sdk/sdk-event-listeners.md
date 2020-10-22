@@ -133,7 +133,6 @@ Please note the SDK does check this as well and only connects messages from the 
   walletDeviceDeletedLoggedOut = 'walletDeviceDeletedLoggedOut',
   pendingTransaction = 'pendingTransaction',
   completedTransaction = 'completedTransaction',
-  cancelledTransaction = 'cancelledTransaction',
   erc20TokenBalanceChanged = 'erc20TokenBalanceChanged',
   erc20TokenFiatPriceChanged = 'erc20TokenFiatPriceChanged',
   ethBalanceChanged = 'ethBalanceChanged',
@@ -147,6 +146,7 @@ Please note the SDK does check this as well and only connects messages from the 
   playerProtectionUpdated = 'playerProtectionUpdated',
   walletTracking = 'walletTracking',
   authenticationPopUpClosed = 'authenticationPopUpClosed',
+  transactionReplaced = 'transactionReplaced',
 }
 ```
 
@@ -606,14 +606,14 @@ window.funwallet.sdk.on<CompletedTransactionResponse>(
 
 ---
 
-## cancelledTransaction
+## transactionReplaced
 
-This will fire when a cancelled transaction has occurred on the Wallet. We suggest if your dApp has sent this transaction and wants to hook onto certain notifications, e.g. the transaction hash, receipt etc just use the framework your using to get that data (ethers/web3). If the transaction your dapp sent was cancelled by the user then it will throw an error in your providers code as long as your listening out for the receipt.
+This will fire when the user cancels the transaction or speeds it up within the wallet itself. Most wallets do not handle this meaning your dapp polls forever but if it happens when using the funwallet we will throw an error if your waiting for the receipt, also we will emit this event which tells you the `oldHash` the `newHash` and the reason it got replaced allowing you to link the old transaction to the new one without having to monitor events.
 
 `JavaScript`:
 
 ```js
-window.funwallet.sdk.on('cancelledTransaction', (result) => {
+window.funwallet.sdk.on('transactionReplaced', (result) => {
   if (result.origin === 'https://wallet.funfair.io') {
     console.log(result.data);
   }
@@ -626,12 +626,12 @@ window.funwallet.sdk.on('cancelledTransaction', (result) => {
 import window from '@funfair-tech/wallet-sdk/window';
 import {
   MessageListeners,
-  CancelledTransactionResponse,
+  TransactionReplacedResponse,
 } from '@funfair-tech/wallet-sdk';
 
-window.funwallet.sdk.on<CancelledTransactionResponse>(
-  MessageListeners.cancelledTransaction,
-  (result: CancelledTransactionResponse) => {
+window.funwallet.sdk.on<TransactionReplacedResponse>(
+  MessageListeners.transactionReplaced,
+  (result: TransactionReplacedResponse) => {
     if (result.origin === 'https://wallet.funfair.io') {
       console.log(result.data);
     }
@@ -643,18 +643,9 @@ window.funwallet.sdk.on<CancelledTransactionResponse>(
 
 ```ts
 {
-  transactionHash: string,
-  transaction: {
-    to: string;
-    from: string;
-    nonce: string;
-    gasLimit: string;
-    gasPrice: string;
-    data: string;
-    value: string;
-    chainId: number;
-  },
-  blockTimestamp: number,
+  oldHash: string,
+  newHash: string,
+  replacedReason: 'gasIncreased' | 'cancelled',
 }
 ```
 
