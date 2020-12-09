@@ -68,6 +68,30 @@ window.funwallet.sdk.openWalletAuthenticationPopUp();
 
 ---
 
+## userAccountId
+
+This gets the fun wallet user account id for that user. This will be the same whatever dApp they login to, it's a global ID.
+
+```ts
+public userAccountId(): void
+```
+
+`JavaScript`:
+
+```js
+window.funwallet.sdk.userAccountId();
+```
+
+`TypeScript`:
+
+```ts
+import window from '@funfair-tech/wallet-sdk/window';
+
+window.funwallet.sdk.userAccountId();
+```
+
+---
+
 ## registerFollowerInstance
 
 This initializes an authenticated follower instance for you to display Wallet UI with. If the leader is not authenticated this will throw an error.

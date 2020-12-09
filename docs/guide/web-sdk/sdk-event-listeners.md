@@ -305,6 +305,8 @@ window.funwallet.sdk.on<AuthenticationCompletedResponse>(
   ethereumAddress: string;
   currentCurrency: string;
   currentNetwork: NetworkDetails;
+  // the fun wallets id for this user
+  userAccountId: string;
 }
 ```
 
@@ -688,13 +690,13 @@ window.funwallet.sdk.on<ERC20TokenBalanceChangedResponse>(
 
 ```ts
 {
-  symbol: string,
+  symbol: string;
+  contractAddress: string;
+  networkId: number;
   // the balance is pre-formatted
   // to the correct maximum decimal
-  tokenBalance: string,
-  // if its the main primary symbol set
-  // on the account
-  primary: boolean,
+  tokenBalance: string;
+  tokenIndex: number;
 }
 ```
 
@@ -737,11 +739,11 @@ window.funwallet.sdk.on<ERC20FiatPriceChangedResponse>(
 
 ```ts
 {
-  symbol: string,
-  fiatPrice: number,
-  // if its the main primary symbol set
-  // on the account
-  primary: boolean,
+  symbol: string;
+  contractAddress: string;
+  networkId: number;
+  fiatPrice: number;
+  tokenIndex: number;
 }
 ```
 
