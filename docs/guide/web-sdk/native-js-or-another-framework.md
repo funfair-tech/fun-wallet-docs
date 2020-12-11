@@ -189,7 +189,7 @@ It's up to the integration to show the user the login and logout buttons, which 
 Method to pop up the authentication modal.
 
 ```js
-window.funwallet.sdk.openWalletAuthenticationPopUp();
+window.funwallet.sdk.auth.login();
 ```
 
 This will load a window popup for the user to enter their login details. Once logged in it will fire [authenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted), which you will need to have registered to so you can listen out for success. If the user closes the authentication popup it will fire [authenticationPopUpClosed](/guide/web-sdk/sdk-event-listeners.html#authenticationpopupclosed), which you can listen out for if you want to know when that happens.
@@ -282,7 +282,7 @@ Example:
       }
 
       function login() {
-        window.funwallet.sdk.openWalletAuthenticationPopUp();
+        window.funwallet.sdk.auth.login();
       }
     </script>
   </head>
@@ -315,7 +315,7 @@ Example:
 Method to logout the authenticated user.
 
 ```js
-await window.funwallet.sdk.logout();
+await window.funwallet.sdk.auth.logout();
 ```
 
 Example:
@@ -403,11 +403,11 @@ Example:
       }
 
       function login() {
-        window.funwallet.sdk.openWalletAuthenticationPopUp();
+        window.funwallet.sdk.auth.login();
       }
 
       function logout() {
-        window.funwallet.sdk.logout();
+        window.funwallet.sdk.auth.logout();
         isAuthenticated$.next(false);
       }
     </script>
@@ -547,11 +547,11 @@ Example:
       }
 
       function login() {
-        window.funwallet.sdk.openWalletAuthenticationPopUp();
+        window.funwallet.sdk.auth.login();
       }
 
       function logout() {
-        window.funwallet.sdk.logout();
+        window.funwallet.sdk.auth.logout();
         isAuthenticated$.next(false);
       }
     </script>
@@ -707,11 +707,11 @@ Example:
       }
 
       function login() {
-        window.funwallet.sdk.openWalletAuthenticationPopUp();
+        window.funwallet.sdk.auth.login();
       }
 
       function logout() {
-        window.funwallet.sdk.logout();
+        window.funwallet.sdk.auth.logout();
         isAuthenticated$.next(false);
       }
     </script>
@@ -754,7 +754,9 @@ Example:
 </html>
 ```
 
-## KYC
+## KYC - feature request only!
+
+KYC is a billable feature due to costs we have to pay the third party KYC provider. You will have to get in contact with funfair if you want this feature turned on. - josh.stevens@funfair.io
 
 If you do not want to have KYC as a feature on your dApp please ignore this section completely.
 
@@ -768,10 +770,10 @@ It also needs to listen to [kycProcessCancelled](./sdk-event-listeners.html#kycp
 
 The reason we made the dApp handle it to give you greater flexibility on when you showed it and what you did after it was cancelled.
 
-To trigger the KYC modal to open you have to call [kycModalOpen](./sdk-methods.html#kycmodalopen) SDK method:
+To trigger the KYC modal to open you have to call [sdk.kyc.start()](./sdk-methods/kyc.html#start-kyc) SDK method:
 
 ```js
-await window.funwallet.sdk.kycModalOpen();
+await window.funwallet.sdk.kyc.start();
 ```
 
 This will then do the lookup on the wallet side and fire the result to `isKycVerified` event.
@@ -906,16 +908,16 @@ Example:
       }
 
       function login() {
-        window.funwallet.sdk.openWalletAuthenticationPopUp();
+        window.funwallet.sdk.auth.login();
       }
 
       function logout() {
-        window.funwallet.sdk.logout();
+        window.funwallet.sdk.auth.logout();
         isAuthenticated$.next(false);
       }
 
       async function openKycProcess() {
-        await window.funwallet.sdk.kycModalOpen();
+        await window.funwallet.sdk.kyc.start();
       }
     </script>
   </head>
@@ -1138,11 +1140,11 @@ Example:
       }
 
       function login() {
-        window.funwallet.sdk.openWalletAuthenticationPopUp();
+        window.funwallet.sdk.auth.login();
       }
 
       function logout() {
-        window.funwallet.sdk.logout();
+        window.funwallet.sdk.auth.logout();
         isAuthenticated$.next(false);
       }
 
