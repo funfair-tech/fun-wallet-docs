@@ -17,16 +17,24 @@ public async versionInfo(options?: InitOptions): Promise<VersionInfo>
 }
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const versionInfo = await window.funwallet.sdk.versionInfo();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
 
 const versionInfo = await window.funwallet.sdk.versionInfo();
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+const versionInfo = await window.funwallet.sdk.versionInfo();
+```
+
+:::
+
+::::

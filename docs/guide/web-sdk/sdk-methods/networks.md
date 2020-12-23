@@ -34,13 +34,9 @@ enabled(): Promise<NetworkDetails[]>
 }
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const enabledNetworks = await window.funwallet.sdk.networks.enabled();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -48,7 +44,17 @@ import window from '@funfair-tech/wallet-sdk/window';
 const enabledNetworks = await window.funwallet.sdk.networks.enabled();
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+const enabledNetworks = await window.funwallet.sdk.networks.enabled();
+```
+
+:::
+
+::::
 
 ## Current network
 
@@ -84,13 +90,9 @@ current(): Promise<NetworkDetails>
 }
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const networkState = await window.funwallet.sdk.networks.current();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -98,7 +100,17 @@ import window from '@funfair-tech/wallet-sdk/window';
 const networkState = await window.funwallet.sdk.networks.current();
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+const networkState = await window.funwallet.sdk.networks.current();
+```
+
+:::
+
+::::
 
 ## Gas recommendations
 
@@ -121,13 +133,9 @@ export interface NetworkGasRecommendationsResponse {
 }
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const gasRecommendations = await window.funwallet.sdk.networks.gasRecommendations();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -135,3 +143,15 @@ import { NetworkGasRecommendationsResponse } from '@funfair-tech/wallet-sdk';
 
 const gasRecommendations = await window.funwallet.sdk.networks.gasRecommendations();
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+const gasRecommendations = await window.funwallet.sdk.networks.gasRecommendations();
+```
+
+:::
+
+::::

@@ -16,27 +16,43 @@ Then edit your `start` script in the package.json to pass in `ssl` and `ssl-cert
 
 You will need to install the https cert as shown below:
 
-#### Windows
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab Windows
 
 <img :src="$withBase('/windows-https-install.PNG')" >
 
-#### Mac
+:::
+
+::: tab Mac
 
 <img :src="$withBase('/mac-https-install.gif')" >
 
+:::
+
+::::
+
 ## Installing the FunFair Wallet SDK
 
-### NPM
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab NPM
 
 ```bash
 $ npm install @funfair-tech/wallet-sdk
 ```
 
-### YARN
+:::
+
+::: tab YARN
 
 ```bash
 $ yarn add @funfair-tech/wallet-sdk
 ```
+
+:::
+
+::::
 
 ## TypeScript Typings
 
@@ -58,15 +74,7 @@ To get it to build with the Angular CLI compiler, you need to add the `window.ts
   ]
 ```
 
-`TypeScript`:
-
-```ts
-import window from '@funfair-tech/wallet-sdk/window';
-```
-
 All the other typings can be imported directly from the module itself.
-
-Example:
 
 `TypeScript`:
 
@@ -90,23 +98,40 @@ If you find anything without a type or any issues with it please raise a GitHub 
 
 We have created a angular package component library this package holds components you can use to hook the wallet into a angular app easier. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-angular-integration-sample)
 
-To install run:
+:::: tabs :options="{ useUrlFragment: false }"
 
-### NPM
+::: tab NPM
 
 ```bash
 $ npm install @funfair-tech/wallet-angular
 ```
 
-### YARN
+:::
+
+::: tab YARN
 
 ```bash
 $ yarn add @funfair-tech/wallet-angular
 ```
 
+:::
+
+::::
+
 ## Hooking up the SDK
 
-Firstly you need to drop the below script into your `<head>` HTML tag in the main index.html (app > index.html). Please replace the `YOUR_APP_ID` with the appId we have supplied you:
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab src/index.html
+
+Firstly you need to drop the wallet script into your `<head>` HTML tag within your main index.html (public > index.html). Please replace the `YOUR_APP_ID` with the your appId:
+
+```js
+<script
+  src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js?appId=YOUR_APP_ID"
+  type="text/JavaScript"
+></script>
+```
 
 ```html
 <!DOCTYPE html>
@@ -128,11 +153,11 @@ Firstly you need to drop the below script into your `<head>` HTML tag in the mai
 </html>
 ```
 
-Next import the `WalletModule` into your `app.module` or in another module you will be using the wallet components. This should be imported in the `imports` array:
+:::
 
-Example:
+::: tab src/app.module.ts
 
-app.module.ts
+Next import the `WalletModule` into your `app.module` or in another module you will be using the wallet components. This should be imported in the `imports` array.
 
 ```ts
 import { NgModule } from '@angular/core';
@@ -150,7 +175,11 @@ import { AppComponent } from './app.component';
 export class AppModule {}
 ```
 
-Insert the wallet leader at the top of the `app.component.html`
+:::
+
+::: tab src/app.component.html
+
+Insert the wallet leader at the top of the `app.component.html`:
 
 Usage:
 
@@ -168,31 +197,15 @@ Type - Function
 
 This will fire when the wallet leader has loaded and this will be a function you register all your event listeners you want to attach to the wallet, list of them [here](https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#registering-an-event-listener)
 
-Example:
-
-app.component.html
-
 ```html
 <lib-wallet-leader (loaded)="walletLoaded()"></lib-wallet-leader>
 ```
 
-store.service.ts
+:::
 
-```ts
-// for ease of the example i have just used subjects here, a bigger more complex app should probably use a store framework like redux
-import { BehaviorSubject } from 'rxjs';
+::: tab src/app.component.ts
 
-export class StoreService {
-  constructor() {}
-
-  public static restoreAuthenticationTaskCompleted = new BehaviorSubject<
-    boolean
-  >(false);
-  public static isAuthenticationCompleted = new BehaviorSubject<boolean>(false);
-}
-```
-
-app.component.ts
+Register all the event listeners you want to listen to, The ones below are mandtory for the integration to work properly.
 
 ```ts
 import { Component } from '@angular/core';
@@ -221,7 +234,7 @@ export class AppComponent {
     window.funwallet.sdk.on<AuthenticationCompletedResponse>(
       MessageListeners.authenticationCompleted,
       (result: AuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(true);
         }
       }
@@ -231,7 +244,7 @@ export class AppComponent {
     window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
       MessageListeners.restoreAuthenticationCompleted,
       (result: RestoreAuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.restoreAuthenticationTaskCompleted.next(true);
         }
       }
@@ -242,7 +255,7 @@ export class AppComponent {
     window.funwallet.sdk.on<WalletInactivityLoggedOutResponse>(
       MessageListeners.walletInactivityLoggedOut,
       (result: WalletInactivityLoggedOutResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(false);
         }
       }
@@ -253,7 +266,7 @@ export class AppComponent {
     window.funwallet.sdk.on<WalletDeviceDeletedLoggedOutResponse>(
       MessageListeners.walletDeviceDeletedLoggedOut,
       (result: WalletDeviceDeletedLoggedOutResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(false);
         }
       }
@@ -265,9 +278,31 @@ export class AppComponent {
 }
 ```
 
+:::
+
+::: tab src/store.service.ts
+
+```ts
+// for ease of the example i have just used subjects here, a bigger more complex app should probably use a store framework like redux
+import { BehaviorSubject } from 'rxjs';
+
+export class StoreService {
+  constructor() {}
+
+  public static restoreAuthenticationTaskCompleted = new BehaviorSubject<
+    boolean
+  >(false);
+  public static isAuthenticationCompleted = new BehaviorSubject<boolean>(false);
+}
+```
+
+:::
+
+::::
+
 ## Authentication
 
-It's up to the integration to show the user the login and logout buttons, which allows flexibility on designs. This below will show you how you would hook login and logout buttons into your app.
+It's up to the integration to show the user the login and logout buttons, which allows flexibility on designs.
 
 ### Login
 
@@ -282,9 +317,9 @@ This will load a window popup for the user to enter their login details. Once lo
 **NOTE**
 Chrome and other browsers can block popups if triggered without a genuine user click. Make sure whenever you pop this modal up its from a click event from the user to avoid any cross browser issues.
 
-Example:
+:::: tabs :options="{ useUrlFragment: false }"
 
-app.component.html
+::: tab src/app.component.html
 
 ```html
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
@@ -303,7 +338,9 @@ app.component.html
 </div>
 ```
 
-app.component.ts
+:::
+
+::: tab src/app.component.ts
 
 ```ts
 import { Component } from '@angular/core';
@@ -336,7 +373,7 @@ export class AppComponent {
     window.funwallet.sdk.on<AuthenticationCompletedResponse>(
       MessageListeners.authenticationCompleted,
       (result: AuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(true);
         }
       }
@@ -346,7 +383,7 @@ export class AppComponent {
     window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
       MessageListeners.restoreAuthenticationCompleted,
       (result: RestoreAuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.restoreAuthenticationTaskCompleted.next(true);
         }
       }
@@ -357,7 +394,7 @@ export class AppComponent {
     window.funwallet.sdk.on<WalletInactivityLoggedOutResponse>(
       MessageListeners.walletInactivityLoggedOut,
       (result: WalletInactivityLoggedOutResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(false);
         }
       }
@@ -368,7 +405,7 @@ export class AppComponent {
     window.funwallet.sdk.on<WalletDeviceDeletedLoggedOutResponse>(
       MessageListeners.walletDeviceDeletedLoggedOut,
       (result: WalletDeviceDeletedLoggedOutResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(false);
         }
       }
@@ -387,6 +424,10 @@ export class AppComponent {
 }
 ```
 
+:::
+
+::::
+
 ### Logout
 
 Method to logout the authenticated user.
@@ -395,9 +436,9 @@ Method to logout the authenticated user.
 await window.funwallet.sdk.auth.logout();
 ```
 
-Example:
+:::: tabs :options="{ useUrlFragment: false }"
 
-app.component.html
+::: tab src/app.component.html
 
 ```html
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
@@ -419,7 +460,9 @@ app.component.html
 </div>
 ```
 
-app.component.ts
+:::
+
+::: tab src/app.component.ts
 
 ```ts
 import { Component } from '@angular/core';
@@ -452,7 +495,7 @@ export class AppComponent {
     window.funwallet.sdk.on<AuthenticationCompletedResponse>(
       MessageListeners.authenticationCompleted,
       (result: AuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(true);
         }
       }
@@ -462,7 +505,7 @@ export class AppComponent {
     window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
       MessageListeners.restoreAuthenticationCompleted,
       (result: RestoreAuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.restoreAuthenticationTaskCompleted.next(true);
         }
       }
@@ -473,7 +516,7 @@ export class AppComponent {
     window.funwallet.sdk.on<WalletInactivityLoggedOutResponse>(
       MessageListeners.walletInactivityLoggedOut,
       (result: WalletInactivityLoggedOutResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(false);
         }
       }
@@ -484,7 +527,7 @@ export class AppComponent {
     window.funwallet.sdk.on<WalletDeviceDeletedLoggedOutResponse>(
       MessageListeners.walletDeviceDeletedLoggedOut,
       (result: WalletDeviceDeletedLoggedOutResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(false);
         }
       }
@@ -511,6 +554,10 @@ export class AppComponent {
 }
 ```
 
+:::
+
+::::
+
 ### Authentication refresh
 
 As the server never sees the private key and all the decryption of it happens on the client side, once you refresh your tab, your private key is no longer in memory. We have handled a way to restore authentication on refresh and keep the user logged in. What this means for the developer is they must wait for [restoreAuthenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted) to complete before they show any UI, this is super fast but needed to avoid showing login buttons then flashing to logout buttons. Lets walk you through how you would do this.
@@ -519,9 +566,9 @@ If you want to read more about how this works and keeps your PK safe read [here]
 
 We just add a loading state to our data which is default true, this will then turn to false once the restoreAuthenticationCompleted has completed. We then in the template just add some loading state to hide and show the buttons.
 
-Example:
+:::: tabs :options="{ useUrlFragment: false }"
 
-app.component.html
+::: tab src/app.component.html
 
 ```html
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
@@ -548,7 +595,9 @@ app.component.html
 </div>
 ```
 
-app.component.ts
+:::
+
+::: tab src/app.component.ts
 
 ```ts
 import { Component } from '@angular/core';
@@ -585,7 +634,7 @@ export class AppComponent {
     window.funwallet.sdk.on<AuthenticationCompletedResponse>(
       MessageListeners.authenticationCompleted,
       (result: AuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(true);
         }
       }
@@ -595,7 +644,7 @@ export class AppComponent {
     window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
       MessageListeners.restoreAuthenticationCompleted,
       (result: RestoreAuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.restoreAuthenticationTaskCompleted.next(true);
         }
       }
@@ -606,7 +655,7 @@ export class AppComponent {
     window.funwallet.sdk.on<WalletInactivityLoggedOutResponse>(
       MessageListeners.walletInactivityLoggedOut,
       (result: WalletInactivityLoggedOutResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(false);
         }
       }
@@ -617,7 +666,7 @@ export class AppComponent {
     window.funwallet.sdk.on<WalletDeviceDeletedLoggedOutResponse>(
       MessageListeners.walletDeviceDeletedLoggedOut,
       (result: WalletDeviceDeletedLoggedOutResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(false);
         }
       }
@@ -644,6 +693,10 @@ export class AppComponent {
 }
 ```
 
+:::
+
+::::
+
 ## Show wallet UI
 
 Usage:
@@ -652,13 +705,13 @@ Usage:
 <lib-wallet-follower></lib-wallet-follower>
 ```
 
-If you want to deep link the into a page on the wallet it is explained how to do that [here](./routing.html#deep-link-page-routes). By default to the main `/funds` page will load.
+If you want to deep link into a page on the wallet that is explained [here](./routing.html#deep-link-page-routes). By default the main `/funds` page will load.
 
-please note you must only show the follower once [restoreAuthenticationTaskCompleted](./sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationcompleted](./sdk-event-listeners.html#authenticationcompleted) has fired, `authenticationcompleted` means they are logged in.
+please note you must only show the follower once [restoreAuthenticationTaskCompleted](./sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationCompleted](./sdk-event-listeners.html#authenticationcompleted) has fired, `authenticationCompleted` means they are logged in.
 
-Example:
+:::: tabs :options="{ useUrlFragment: false }"
 
-app.component.html
+::: tab src/app.component.html
 
 ```html
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
@@ -689,7 +742,9 @@ app.component.html
 </div>
 ```
 
-app.component.ts
+:::
+
+::: tab src/app.component.ts
 
 ```ts
 import { Component } from '@angular/core';
@@ -726,7 +781,7 @@ export class AppComponent {
     window.funwallet.sdk.on<AuthenticationCompletedResponse>(
       MessageListeners.authenticationCompleted,
       (result: AuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(true);
         }
       }
@@ -736,7 +791,7 @@ export class AppComponent {
     window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
       MessageListeners.restoreAuthenticationCompleted,
       (result: RestoreAuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.restoreAuthenticationTaskCompleted.next(true);
         }
       }
@@ -747,7 +802,7 @@ export class AppComponent {
     window.funwallet.sdk.on<WalletInactivityLoggedOutResponse>(
       MessageListeners.walletInactivityLoggedOut,
       (result: WalletInactivityLoggedOutResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(false);
         }
       }
@@ -758,7 +813,7 @@ export class AppComponent {
     window.funwallet.sdk.on<WalletDeviceDeletedLoggedOutResponse>(
       MessageListeners.walletDeviceDeletedLoggedOut,
       (result: WalletDeviceDeletedLoggedOutResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(false);
         }
       }
@@ -785,6 +840,10 @@ export class AppComponent {
 }
 ```
 
+:::
+
+::::
+
 ## KYC - feature request only!
 
 KYC is a billable feature due to costs we have to pay the third party KYC provider. You will have to get in contact with funfair if you want this feature turned on. - josh.stevens@funfair.io
@@ -793,25 +852,25 @@ If you do not want to have KYC as a feature on your dApp please ignore this sect
 
 To read more about our providers and countries we cover please read [here](../information/kyc)
 
-It is up to the dApp to decide if they want to use our KYC feature or not. The events get fired regardless but its up to the dApp to listen to them to know when to trigger the KYC modal.
+It is up to the dApp to decide if they want to use our KYC feature or not and at what stage. The events get fired regardless but its up to the dApp to listen to them if they want to use it. The dApp needs to listen to [isKycVerified](./sdk-event-listeners.html#iskycverified) event which will fire when the user has successfully passed or failed KYC'ed, it also fires on initial login with the status of that logged in users KYC status. You can listen to [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event which will fire when the user cancels or closes the KYC modal. The reason we made the dApp handle this is to give them greater flexibility on when you show the KYC stage and what your client does after it was cancelled.
 
-The dApp needs to listen to [isKycVerified](./sdk-event-listeners.html#iskycverified) event which will fire when you try to open the KYC modal and allows you to work out if you show the modal or not.
+To check if the user has KYC'ed or not you can call [isKycVerified](./sdk-methods/kyc.html#kyc-verified-status-for-the-logged-in-user)
 
-It also needs to listen to [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event which will fire when the user cancels or closes the KYC modal.
+```js
+const isKycVerified = await window.funwallet.sdk.kyc.isVerified();
+```
 
-The reason we made the dApp handle it to give you greater flexibility on when you showed it and what you did after it was cancelled.
-
-To trigger the KYC modal to open you have to call [sdk.kyc.start()](./sdk-methods/kyc.html#start-kyc) SDK method:
+If that returns false (aka they are not KYC'ed) you can trigger the KYC modal to open by calling [sdk.kyc.start()](./sdk-methods/kyc.html#start-kyc) SDK method:
 
 ```js
 await window.funwallet.sdk.kyc.start();
 ```
 
-This will then do the lookup on the wallet side and fire the result to `isKycVerified` event.
+Once completed you will get the status of the pass/fail through [isKycVerified](./sdk-event-listeners.html#iskycverified) event. Obviously if they do not complete the KYC you will see them cancel it with the [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event.
 
-Example:
+:::: tabs :options="{ useUrlFragment: false }"
 
-app.component.html
+::: tab src/app.component.html
 
 ```html
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
@@ -843,7 +902,9 @@ app.component.html
 </div>
 ```
 
-app.component.ts
+:::
+
+::: tab src/app.component.ts
 
 ```ts
 import { Component } from '@angular/core';
@@ -882,7 +943,7 @@ export class AppComponent {
     window.funwallet.sdk.on<AuthenticationCompletedResponse>(
       MessageListeners.authenticationCompleted,
       (result: AuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(true);
         }
       }
@@ -892,7 +953,7 @@ export class AppComponent {
     window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
       MessageListeners.restoreAuthenticationCompleted,
       (result: RestoreAuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.restoreAuthenticationTaskCompleted.next(true);
         }
       }
@@ -903,7 +964,7 @@ export class AppComponent {
     window.funwallet.sdk.on<WalletInactivityLoggedOutResponse>(
       MessageListeners.walletInactivityLoggedOut,
       (result: WalletInactivityLoggedOutResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(false);
         }
       }
@@ -914,7 +975,7 @@ export class AppComponent {
     window.funwallet.sdk.on<WalletDeviceDeletedLoggedOutResponse>(
       MessageListeners.walletDeviceDeletedLoggedOut,
       (result: WalletDeviceDeletedLoggedOutResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(false);
         }
       }
@@ -926,7 +987,7 @@ export class AppComponent {
     window.funwallet.sdk.on<IsKycVerifiedResponse>(
       MessageListeners.isKycVerified,
       (result: IsKycVerifiedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           if (!result.data.isVerified) {
             window.funwallet.sdk.showFunWalletModal();
           } else {
@@ -945,7 +1006,7 @@ export class AppComponent {
     window.funwallet.sdk.on<KycProcessCancelledResponse>(
       MessageListeners.kycProcessCancelled,
       (result: KycProcessCancelledResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           if (result.data.cancelled) {
             // MUST CALL
             window.funwallet.sdk.hideFunWalletModal();
@@ -984,6 +1045,10 @@ export class AppComponent {
 }
 ```
 
+:::
+
+::::
+
 ## Speaking to the blockchain (web3/etherjs)
 
 Now you have the wallet all hooked up you can start speaking to the blockchain. Most developers use `web3` and `etherjs` to interact with the blockchain, the SDK exposes our own [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) compatible ethereum provider.
@@ -1003,13 +1068,9 @@ Example:
 
 ### web3
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const web3 = new Web3(window.funwallet.sdk.ethereum);
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -1019,17 +1080,23 @@ import window from '@funfair-tech/wallet-sdk/window';
 const web3 = new Web3(window.funwallet.sdk.ethereum as any);
 ```
 
-### etherjs
+:::
 
-`JavaScript`:
+::: tab JavaScript
 
 ```js
-const provider = new ethers.providers.Web3Provider(
-  window.funwallet.sdk.ethereum
-);
+const web3 = new Web3(window.funwallet.sdk.ethereum);
 ```
 
-`TypeScript`:
+:::
+
+::::
+
+### etherjs
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -1038,6 +1105,20 @@ const provider = new ethers.providers.Web3Provider(
   window.funwallet.sdk.ethereum as any
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+const provider = new ethers.providers.Web3Provider(
+  window.funwallet.sdk.ethereum
+);
+```
+
+:::
+
+::::
 
 <strong>All your web3 or ethers calls now will work as normal but proxy through to the Wallet. Use the library to now send transaction and do all things blockchain.</strong>
 
@@ -1049,22 +1130,35 @@ We don't support `eth_sign`, `eth_signTransaction` and `eth_sendRawTransaction` 
 
 First you need to make sure web3 is installed:
 
-#### NPM
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab NPM
 
 ```bash
 $ npm i web3
 ```
 
-#### YARN
+:::
+
+::: tab YARN
 
 ```bash
 $ yarn add web3
 ```
 
-We will create a new `ts` file in the `src` which will hold our web3 logic. This example we are going to call it `ethereum.service.ts`.
-Please note you can structure this code as you want but for us a new angular service makes the code nice and clean.
+:::
 
-`ethereum.service.ts`
+::::
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab src/ethereum.service.ts
+
+We will create a new `ts` file in the `src` which will hold our web3 logic. This example we are going to call it `ethereum.service.ts`. Please note you can structure this code as you want but for us a new angular service makes the code nice and clean.
+
+We then have written 2 common `web3` methods to send a transaction and sign a message. All the `web3` methods work the same as normal and you can just use the standard interface to call them.
+
+When you sign anything an approval modal will appear for the user automatically, read [here](../information/approval-modal) for more info about them.
 
 ```ts
 import { Injectable } from '@angular/core';
@@ -1128,13 +1222,9 @@ export class EthereumService {
 }
 ```
 
-We have wrote common `web3` methods to send a transaction and sign a message. All the other `web3` methods work the same and you can just use the standard interface to call them.
+:::
 
-Below shows how you would call them in the code samples we have been doing.
-
-Example:
-
-app.component.html
+::: tab src/app.component.html
 
 ```html
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
@@ -1171,7 +1261,9 @@ app.component.html
 </div>
 ```
 
-app.component.ts
+:::
+
+::: tab src/app.component.ts
 
 ```ts
 import { Component } from '@angular/core';
@@ -1209,7 +1301,7 @@ export class AppComponent {
     window.funwallet.sdk.on<AuthenticationCompletedResponse>(
       MessageListeners.authenticationCompleted,
       (result: AuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(true);
         }
       }
@@ -1219,7 +1311,7 @@ export class AppComponent {
     window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
       MessageListeners.restoreAuthenticationCompleted,
       (result: RestoreAuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.restoreAuthenticationTaskCompleted.next(true);
         }
       }
@@ -1230,7 +1322,7 @@ export class AppComponent {
     window.funwallet.sdk.on<WalletInactivityLoggedOutResponse>(
       MessageListeners.walletInactivityLoggedOut,
       (result: WalletInactivityLoggedOutResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(false);
         }
       }
@@ -1241,7 +1333,7 @@ export class AppComponent {
     window.funwallet.sdk.on<WalletDeviceDeletedLoggedOutResponse>(
       MessageListeners.walletDeviceDeletedLoggedOut,
       (result: WalletDeviceDeletedLoggedOutResponse) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.isAuthenticationCompleted.next(false);
         }
       }
@@ -1284,4 +1376,6 @@ export class AppComponent {
 }
 ```
 
-When you sign anything an approval modal will appear for the user automatically, read [here](../information/approval-modal) for more info about them.
+:::
+
+::::

@@ -8,19 +8,27 @@ This opens the authentication pop up for you and can be called on any click even
 login(): void
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.auth.login();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
 
 window.funwallet.sdk.auth.login();
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+window.funwallet.sdk.auth.login();
+```
+
+:::
+
+::::
 
 ## Authenticated
 
@@ -30,13 +38,9 @@ Returns the authenticated status of the user on the Wallet.
 authenticated(): Promise<boolean>
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const loggedIn = await window.funwallet.sdk.auth.authenticated();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -44,7 +48,17 @@ import window from '@funfair-tech/wallet-sdk/window';
 const loggedIn = await window.funwallet.sdk.auth.authenticated();
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+const loggedIn = await window.funwallet.sdk.auth.authenticated();
+```
+
+:::
+
+::::
 
 ## Logout
 
@@ -54,13 +68,9 @@ This logs out all authenticated instances of the wallet including the leader.
 logout(): Promise<void>
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-await window.funwallet.sdk.auth.logout();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -68,7 +78,17 @@ import window from '@funfair-tech/wallet-sdk/window';
 await window.funwallet.sdk.auth.logout();
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+await window.funwallet.sdk.auth.logout();
+```
+
+:::
+
+::::
 
 ## User
 
@@ -80,13 +100,9 @@ This gets the fun wallet user account id for that user. This will be the same wh
 id(): Promise<string>
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const userAccountId = await window.funwallet.sdk.auth.user.id();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -94,7 +110,17 @@ import window from '@funfair-tech/wallet-sdk/window';
 const userAccountId = await window.funwallet.sdk.auth.user.id();
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+const userAccountId = await window.funwallet.sdk.auth.user.id();
+```
+
+:::
+
+::::
 
 ### User active
 
@@ -104,13 +130,9 @@ The sdk handles all `mouse`, `clicks` and `scroll` events from the dapp window. 
 active(): Promise<void>
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-await window.funwallet.sdk.auth.user.active();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -118,7 +140,17 @@ import window from '@funfair-tech/wallet-sdk/window';
 await window.funwallet.sdk.auth.user.active();
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+await window.funwallet.sdk.auth.user.active();
+```
+
+:::
+
+::::
 
 ## App
 
@@ -130,16 +162,24 @@ Get the dApp's JWT. This can be used to hook in your own authentication mechanis
 jwt(): Promise<string>
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const appJwtToken = await window.funwallet.sdk.auth.app.jwt();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
 
 const appJwtToken = await window.funwallet.sdk.auth.app.jwt();
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+const appJwtToken = await window.funwallet.sdk.auth.app.jwt();
+```
+
+:::
+
+::::

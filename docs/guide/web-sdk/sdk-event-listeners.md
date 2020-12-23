@@ -13,17 +13,9 @@ Once the SDK is initialized, you should hook onto all the event listeners, as ea
 
 ## Registering an event listener
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('MESSAGE LISTENER NAME', (result) => {
-  // your event-handling logic here
-});
-```
-
-`TypeScript`:
-
-Note: `TStronglyTypedResponse` is a reference to a strongly-typed model - obviously don't use this in your application.
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -32,29 +24,42 @@ import {
   TStronglyTypedResponse,
 } from '@funfair-tech/wallet-sdk';
 
+// `TStronglyTypedResponse` is a reference to a strongly-typed model.
+//  obviously don't use this in your application, import the correct response
+// model from `@funfair-tech/wallet-sdk`
 window.funwallet.sdk.on<TStronglyTypedResponse>(
   MessageListeners.TypeYouWantToUse,
   (result: TStronglyTypedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       // your event-handling logic here
     }
   }
 );
 ```
 
-## Registering a one-off listener
+:::
 
-`JavaScript`:
+::: tab JavaScript
 
 ```js
-window.funwallet.sdk.once('MESSAGE LISTENER NAME', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.TypeYouWantToUse, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
     // your event-handling logic here
   }
 });
 ```
 
-`TypeScript`:
+:::
+
+::::
+
+## Registering a one-off listener
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -63,15 +68,38 @@ import {
   TStronglyTypedResponse,
 } from '@funfair-tech/wallet-sdk';
 
+// `TStronglyTypedResponse` is a reference to a strongly-typed model.
+//  obviously don't use this in your application, import the correct response
+// model from `@funfair-tech/wallet-sdk`
 window.funwallet.sdk.once<TStronglyTypedResponse>(
   MessageListeners.TypeYouWantToUse,
   (result: TStronglyTypedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       // your event-handling logic here
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.once(MessageListeners.TypeYouWantToUse, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    // your event-handling logic here
+  }
+});
+```
+
+:::
+
+::::
+
+## Event listeners response formats
 
 Results are returned to the listener as follows:
 
@@ -91,11 +119,11 @@ As well as indicating the origin and the source of the received data, the return
 The object passed from the other window.
 
 `origin`
-The origin of the window that sent the message at the time `postMessage` was called. This string is the concatenation of the protocol and `"://"`, the host name if one exists, and `":"` followed by a port number if a port is present and differs from the default port for the given protocol. Examples of typical origins are https://example.org (implying port 443), http://example.net (implying port 80), and http://example.com:8080.
+The origin of the window that sent the message at the time `postMessage` was called. This string is the concatenation of the protocol and `"://"`, the host name if one exists, and `":"` followed by a port number if a port is present and differs from the default port for the given protocol. Examples of typical origins are https://example.org/ (implying port 443), http://example.net/ (implying port 80), and http://example.com:8080/. The origin will always put the `/` at the end so make sure you include that in your compare.
 
 Note that this origin is not guaranteed to be the current or future origin of that window, which might have been navigated to a different location since postMessage was called.
 
-In our examples we use a placeholder of `https://wallet.funfair.io` but yours should have the correct, valid origin for the Wallet environment you're pointing to within your iframes.
+You should always check that its `https://wallet.funfair.io/` sending the post messages to be sure its came from us.
 
 `source`
 A reference to the window object that sent the message. You can use this to establish two-way communication between two windows with different origins.
@@ -107,8 +135,8 @@ A reference to the window object that sent the message. You can use this to esta
 💡 To protect your dApp's users from cross-site scripting attacks, make sure you **NEVER** assign the _data_ result from the `postMessage` to any HTML elements:
 
 ```js
-window.funwallet.sdk.once('MESSAGE LISTENER NAME', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
+window.funwallet.sdk.once(MessageListeners.TypeYouWantToUse, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
     // OUCH!! YOU HAVE OPENED YOURSELF UP FOR THE TRUSTED DOMAINS TO
     // INJECT BAD SCRIPTS INTO YOUR PAGE. AS RULE OF THUMB, NEVER, *EVER*
     // DO THIS (DON'T WORRY WE WOULD NEVER DO SOMETHING SO MEAN :D)
@@ -156,17 +184,9 @@ All the examples of code here will use the `on` but in all of these cases, you c
 
 To allow restoring someone to be logged in after they refresh on initial load the Wallet tries to restore a session. Upon success, it will emit `restoreAuthenticationCompleted` telling you if it's restored a user's session or not. You should disable any sign-in/up click button until you get this event (it should happen very fast).
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('restoreAuthenticationCompleted', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -178,12 +198,33 @@ import {
 window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
   MessageListeners.restoreAuthenticationCompleted,
   (result: RestoreAuthenticationCompletedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(
+  MessageListeners.restoreAuthenticationCompleted,
+  (result) => {
+    if (result.origin === 'https://wallet.funfair.io/') {
+      console.log(result.data);
+    }
+  }
+);
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -199,17 +240,9 @@ window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
 
 This will fire when the Wallet network has been changed. _Note: this will always fire upon initial authentication of the leader as networks will update as a result of authentication._
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('changeNetwork', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -221,12 +254,30 @@ import {
 window.funwallet.sdk.on<ChangeNetworkResponse>(
   MessageListeners.changeNetwork,
   (result: ChangeNetworkResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.changeNetwork, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    console.log(result.data);
+  }
+});
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -255,6 +306,7 @@ export enum Networks {
   ropsten = 3,
   rinkeby = 4,
   kovan = 42,
+  xdai = 100,
   novichok = 1984,
   bracknell = 1999,
   unknown = -1,
@@ -267,17 +319,9 @@ export enum Networks {
 
 This will fire when the leader instance has been authenticated by a user. Once (and not until) this event has been received, you can go ahead and inject follower instances to show the UI to the authenticated user.
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('authenticationCompleted', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -289,12 +333,30 @@ import {
 window.funwallet.sdk.on<AuthenticationCompletedResponse>(
   MessageListeners.authenticationCompleted,
   (result: AuthenticationCompletedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.authenticationCompleted, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    console.log(result.data);
+  }
+});
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -350,6 +412,7 @@ export enum Networks {
   ropsten = 3,
   rinkeby = 4,
   kovan = 42,
+  xdai = 100,
   novichok = 1984,
   bracknell = 1999,
   unknown = -1,
@@ -362,17 +425,9 @@ export enum Networks {
 
 This will fire when the follower instance has authenticated itself successfully and indicates that you should re-enable any disabled Wallet buttons.
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('followerAuthenticationCompleted', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -384,12 +439,33 @@ import {
 window.funwallet.sdk.on<FollowerAuthenticationCompletedResponse>(
   MessageListeners.followerAuthenticationCompleted,
   (result: FollowerAuthenticationCompletedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(
+  MessageListeners.followerAuthenticationCompleted,
+  (result) => {
+    if (result.origin === 'https://wallet.funfair.io/') {
+      console.log(result.data);
+    }
+  }
+);
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -405,17 +481,9 @@ window.funwallet.sdk.on<FollowerAuthenticationCompletedResponse>(
 
 This will fire when the inactivity timeout has expired, meaning all authenticated instances have now been logged out.
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('walletInactivityLoggedOut', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -427,12 +495,33 @@ import {
 window.funwallet.sdk.on<WalletInactivityLoggedOutResponse>(
   MessageListeners.walletInactivityLoggedOut,
   (result: WalletInactivityLoggedOutResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(
+  MessageListeners.walletInactivityLoggedOut,
+  (result) => {
+    if (result.origin === 'https://wallet.funfair.io/') {
+      console.log(result.data);
+    }
+  }
+);
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -446,17 +535,9 @@ window.funwallet.sdk.on<WalletInactivityLoggedOutResponse>(
 
 This will fire when the current device the user is using has been deleted, meaning all authenticated instances have now been logged out.
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('walletDeviceDeletedLoggedOut', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -468,12 +549,33 @@ import {
 window.funwallet.sdk.on<WalletDeviceDeletedLoggedOutResponse>(
   MessageListeners.walletDeviceDeletedLoggedOut,
   (result: WalletDeviceDeletedLoggedOutResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(
+  MessageListeners.walletDeviceDeletedLoggedOut,
+  (result) => {
+    if (result.origin === 'https://wallet.funfair.io/') {
+      console.log(result.data);
+    }
+  }
+);
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -489,17 +591,9 @@ window.funwallet.sdk.on<WalletDeviceDeletedLoggedOutResponse>(
 
 This will fire when a pending transaction has occurred on the Wallet. We suggest if your dApp has sent this transaction and wants to hook onto certain notifications, e.g. the transaction hash, receipt etc just use the framework your using to get that data (ethers/web3).
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('pendingTransaction', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -511,12 +605,30 @@ import {
 window.funwallet.sdk.on<PendingTransactionResponse>(
   MessageListeners.pendingTransaction,
   (result: PendingTransactionResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.pendingTransaction, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    console.log(result.data);
+  }
+});
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -542,17 +654,9 @@ window.funwallet.sdk.on<PendingTransactionResponse>(
 
 This will fire when a completed transaction has occurred on the Wallet (i.e. upon the first confirmation). We suggest if your dApp has sent this transaction and wants to hook onto certain notifications, e.g. the transaction hash, receipt etc just use the framework your using to get that data (ethers/web3).
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('completedTransaction', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -564,12 +668,30 @@ import {
 window.funwallet.sdk.on<CompletedTransactionResponse>(
   MessageListeners.completedTransaction,
   (result: CompletedTransactionResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.completedTransaction, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    console.log(result.data);
+  }
+});
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -612,17 +734,9 @@ window.funwallet.sdk.on<CompletedTransactionResponse>(
 
 This will fire when the user cancels the transaction or speeds it up within the wallet itself. Most wallets do not handle this meaning your dapp polls forever but if it happens when using the funwallet we will throw an error if your waiting for the receipt, also we will emit this event which tells you the `oldHash` the `newHash` and the reason it got replaced allowing you to link the old transaction to the new one without having to monitor events.
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('transactionReplaced', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -634,12 +748,30 @@ import {
 window.funwallet.sdk.on<TransactionReplacedResponse>(
   MessageListeners.transactionReplaced,
   (result: TransactionReplacedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.transactionReplaced, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    console.log(result.data);
+  }
+});
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -657,17 +789,9 @@ window.funwallet.sdk.on<TransactionReplacedResponse>(
 
 This will fire when an ERC20 token balance changes for the authenticated user.
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('erc20TokenBalanceChanged', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -679,12 +803,30 @@ import {
 window.funwallet.sdk.on<ERC20TokenBalanceChangedResponse>(
   MessageListeners.erc20TokenBalanceChanged,
   (result: ERC20TokenBalanceChangedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.erc20TokenBalanceChanged, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    console.log(result.data);
+  }
+});
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -706,17 +848,9 @@ window.funwallet.sdk.on<ERC20TokenBalanceChangedResponse>(
 
 This will fire when an ERC20 token's fiat price changes. Fiat prices are monitored by the wallet server and updated regularly. Any change will trigger this event.
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('erc20TokenFiatPriceChanged', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -728,12 +862,33 @@ import {
 window.funwallet.sdk.on<ERC20FiatPriceChangedResponse>(
   MessageListeners.erc20TokenFiatPriceChanged,
   (result: ERC20FiatPriceChangedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(
+  MessageListeners.erc20TokenFiatPriceChanged,
+  (result) => {
+    if (result.origin === 'https://wallet.funfair.io/') {
+      console.log(result.data);
+    }
+  }
+);
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -753,17 +908,9 @@ window.funwallet.sdk.on<ERC20FiatPriceChangedResponse>(
 
 This will fire when the ETH balance changes for the authenticated user.
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('ethBalanceChanged', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -775,12 +922,30 @@ import {
 window.funwallet.sdk.on<ETHBalanceChangedResponse>(
   MessageListeners.ethBalanceChanged,
   (result: ETHBalanceChangedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.ethBalanceChanged, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    console.log(result.data);
+  }
+});
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -798,17 +963,9 @@ window.funwallet.sdk.on<ETHBalanceChangedResponse>(
 
 This will fire when the ETH fiat price changes. Fiat prices are monitored by the Wallet server and updated regularly. Any change will trigger this event.
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('ethFiatPriceChanged', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -820,12 +977,30 @@ import {
 window.funwallet.sdk.on<ETHFiatPriceChangedResponse>(
   MessageListeners.ethFiatPriceChanged,
   (result: ETHFiatPriceChangedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.ethFiatPriceChanged, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    console.log(result.data);
+  }
+});
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -841,17 +1016,9 @@ window.funwallet.sdk.on<ETHFiatPriceChangedResponse>(
 
 This will fire when the authenticated user's selected currency has changed.
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('changeCurrency', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -863,12 +1030,30 @@ import {
 window.funwallet.sdk.on<ChangeCurrencyResponse>(
   MessageListeners.changeCurrency,
   (result: ChangeCurrencyResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.changeCurrency, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    console.log(result.data);
+  }
+});
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -884,26 +1069,9 @@ window.funwallet.sdk.on<ChangeCurrencyResponse>(
 
 This will fire upon initial login, whether the account is KYC-verified or not. This allows you to pop up the KYC modal automatically when a user logs in, if necessary.
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('isKycVerified', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    if (!result.data.isVerified) {
-      window.funwallet.sdk.showFunWalletModal();
-    } else {
-      // maybe show some kind of error message as in theory
-      // your client should not be showing ability to popup KYC
-      // when they are already verified
-      console.error(
-        'Your client should not show the kyc logic if already kyced'
-      );
-    }
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -915,7 +1083,7 @@ import {
 window.funwallet.sdk.on<IsKycVerifiedResponse>(
   MessageListeners.isKycVerified,
   (result: IsKycVerifiedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       if (!result.data.isVerified) {
         window.funwallet.sdk.showFunWalletModal();
       } else {
@@ -931,6 +1099,33 @@ window.funwallet.sdk.on<IsKycVerifiedResponse>(
 );
 ```
 
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.isKycVerified, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    if (!result.data.isVerified) {
+      window.funwallet.sdk.showFunWalletModal();
+    } else {
+      // maybe show some kind of error message as in theory
+      // your client should not be showing ability to popup KYC
+      // when they are already verified
+      console.error(
+        'Your client should not show the kyc logic if already kyced'
+      );
+    }
+  }
+});
+```
+
+:::
+
+::::
+
 `result.data` returns:
 
 ```ts
@@ -945,21 +1140,9 @@ window.funwallet.sdk.on<IsKycVerifiedResponse>(
 
 This will fire when the authenticated account going through the KYC process cancels the modal and goes back to the dApp website.
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('kycProcessCancelled', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    if (result.data.cancelled) {
-      window.funwallet.sdk.hideFunWalletModal();
-      // you may want to move routes etc here hence why you hook onto this action
-      // and the sdk does not
-    }
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -971,7 +1154,7 @@ import {
 window.funwallet.sdk.on<KycProcessCancelledResponse>(
   MessageListeners.kycProcessCancelled,
   (result: KycProcessCancelledResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       if (result.data.cancelled) {
         window.funwallet.sdk.hideFunWalletModal();
         // you may want to move routes etc here hence why you hook onto this action
@@ -981,6 +1164,28 @@ window.funwallet.sdk.on<KycProcessCancelledResponse>(
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.kycProcessCancelled, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    if (result.data.cancelled) {
+      window.funwallet.sdk.hideFunWalletModal();
+      // you may want to move routes etc here hence why you hook onto this action
+      // and the sdk does not
+    }
+  }
+});
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -996,17 +1201,9 @@ window.funwallet.sdk.on<KycProcessCancelledResponse>(
 
 This will fire when a successful WebSocket connection is made, including any time a dApp reconnects after being disconnected. Please keep the WebSocket connected status in memory, and when `websocketDisconnected` is received, update the value of the WebSocket connection status.
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('websocketConnected', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -1018,12 +1215,30 @@ import {
 window.funwallet.sdk.on<WebsocketConnectedResponse>(
   MessageListeners.websocketConnected,
   (result: WebsocketConnectedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.websocketConnected, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    console.log(result.data);
+  }
+});
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -1039,17 +1254,9 @@ window.funwallet.sdk.on<WebsocketConnectedResponse>(
 
 This will fire when the WebSocket disconnects or gets closed.
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('websocketDisconnected', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -1061,12 +1268,30 @@ import {
 window.funwallet.sdk.on<WebsocketDisconnectedResponse>(
   MessageListeners.websocketDisconnected,
   (result: WebsocketDisconnectedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.websocketDisconnected, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    console.log(result.data);
+  }
+});
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -1082,17 +1307,9 @@ window.funwallet.sdk.on<WebsocketDisconnectedResponse>(
 
 This will fire when the wallet receives a new block alert through the WebSocket connection. This removes the need for any polling - the dApp can just listen for these events. You can hook onto this even if the user is not authenticated.
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('newBlock', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -1101,12 +1318,30 @@ import { MessageListeners, NewBlockResponse } from '@funfair-tech/wallet-sdk';
 window.funwallet.sdk.on<NewBlockResponse>(
   MessageListeners.newBlock,
   (result: NewBlockResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.newBlock, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    console.log(result.data);
+  }
+});
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -1126,17 +1361,9 @@ window.funwallet.sdk.on<NewBlockResponse>(
 
 This will fire when the player protection data has been updated, for example if they have self-excluded or changed their exclusion reactivation date.
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('playerProtectionUpdated', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -1148,12 +1375,30 @@ import {
 window.funwallet.sdk.on<PlayerProtectionUpdatedResponse>(
   MessageListeners.playerProtectionUpdated,
   (result: PlayerProtectionUpdatedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.playerProtectionUpdated, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    console.log(result.data);
+  }
+});
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -1182,17 +1427,9 @@ export enum ExclusionStatusType {
 
 Due to the Wallet holding private keys in memory, we don't allow Google analytics scripts in the Wallet itself. However, this event emits tracking data back to the client so the you can pass them to any tracking software you want to use.
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('walletTracking', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -1204,12 +1441,30 @@ import {
 window.funwallet.sdk.on<WalletTrackingResponse>(
   MessageListeners.walletTracking,
   (result: WalletTrackingResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.walletTracking, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    console.log(result.data);
+  }
+});
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -1350,17 +1605,9 @@ export declare enum TrackingEventLabel {
 
 This emits an event when the authentication popup is closed. If `isAuthenticated` in the response is true, it means the close happened after a successful login; if it's false it means the user didn't go through the whole login process (for example, if they closed the popup).
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.on('authenticationPopUpClosed', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -1372,12 +1619,33 @@ import {
 window.funwallet.sdk.on<AuthenticationPopUpClosedResponse>(
   MessageListeners.authenticationPopUpClosed,
   (result: AuthenticationPopUpClosedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(
+  MessageListeners.authenticationPopUpClosed,
+  (result) => {
+    if (result.origin === 'https://wallet.funfair.io/') {
+      console.log(result.data);
+    }
+  }
+);
+```
+
+:::
+
+::::
 
 `result.data` returns:
 
@@ -1391,20 +1659,9 @@ window.funwallet.sdk.on<AuthenticationPopUpClosedResponse>(
 
 ## Cancelling event listeners
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const listener = window.funwallet.sdk.on('MESSAGE LISTENER NAME', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
-  }
-});
-
-// cancel
-listener.cancel();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -1416,7 +1673,7 @@ import {
 const listener = window.funwallet.sdk.on<TStronglyTypedResponse>(
   MessageListeners.TypeYouWantToUse,
   (result: TStronglyTypedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
@@ -1426,22 +1683,35 @@ const listener = window.funwallet.sdk.on<TStronglyTypedResponse>(
 listener.cancel();
 ```
 
-This works the same as `once`:
+:::
 
-`JavaScript`:
+::: tab JavaScript
 
 ```js
-const listener = funwalletsdk.once('MESSAGE LISTENER NAME', (result) => {
-  if (result.origin === 'https://wallet.funfair.io') {
-    console.log(result.data);
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+const listener = window.funwallet.sdk.on(
+  MessageListeners.TypeYouWantToUse,
+  (result) => {
+    if (result.origin === 'https://wallet.funfair.io/') {
+      console.log(result.data);
+    }
   }
-});
+);
 
 // cancel
 listener.cancel();
 ```
 
-`TypeScript`:
+:::
+
+::::
+
+This works the same as `once`:
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -1453,7 +1723,7 @@ import {
 const listener = window.funwallet.sdk.once<TStronglyTypedResponse>(
   MessageListeners.TypeYouWantToUse,
   (result: TStronglyTypedResponse) => {
-    if (result.origin === 'https://wallet.funfair.io') {
+    if (result.origin === 'https://wallet.funfair.io/') {
       console.log(result.data);
     }
   }
@@ -1462,5 +1732,29 @@ const listener = window.funwallet.sdk.once<TStronglyTypedResponse>(
 // cancel
 listener.cancel();
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+const listener = funwalletsdk.once(
+  MessageListeners.TypeYouWantToUse,
+  (result) => {
+    if (result.origin === 'https://wallet.funfair.io/') {
+      console.log(result.data);
+    }
+  }
+);
+
+// cancel
+listener.cancel();
+```
+
+:::
+
+::::
 
 Now if you try to listen to that message listener again it will work, as you have cancelled the other listener. On the `once` calls, once the `once` has been fired you will be able to register a new listener without an error being thrown.

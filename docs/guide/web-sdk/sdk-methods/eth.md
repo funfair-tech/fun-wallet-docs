@@ -8,13 +8,9 @@ Returns the authenticated users Ethereum address. If they're not authenticated i
 address(): Promise<string | null>
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const ethereumAddress = await window.funwallet.sdk.eth.address();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -22,7 +18,17 @@ import window from '@funfair-tech/wallet-sdk/window';
 const ethereumAddress = await window.funwallet.sdk.eth.address();
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+const ethereumAddress = await window.funwallet.sdk.eth.address();
+```
+
+:::
+
+::::
 
 ## Ethereum balance
 
@@ -32,13 +38,9 @@ Returns the authenticated users Ethereum balance. This will be formatted in eth 
 balance(): Promise<string>
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const ethereumBalance = await window.funwallet.sdk.eth.balance();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -46,7 +48,17 @@ import window from '@funfair-tech/wallet-sdk/window';
 const ethereumBalance = await window.funwallet.sdk.eth.balance();
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+const ethereumBalance = await window.funwallet.sdk.eth.balance();
+```
+
+:::
+
+::::
 
 ## Ethereum fiat price
 
@@ -56,16 +68,24 @@ Returns the fiat price that eth is currently at in the users selected currency.
 fiatPrice(): Promise<number>
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const fiatPrice = await window.funwallet.sdk.eth.fiatPrice();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
 
 const fiatPrice = await window.funwallet.sdk.eth.fiatPrice();
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+const fiatPrice = await window.funwallet.sdk.eth.fiatPrice();
+```
+
+:::
+
+::::

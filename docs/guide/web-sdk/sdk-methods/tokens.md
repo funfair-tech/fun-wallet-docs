@@ -21,13 +21,9 @@ getAll(): Promise<EnabledERC20TokenResponse[]>
 }
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const allErc20Tokens = await window.funwallet.sdk.tokens.getAll();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -35,7 +31,17 @@ import window from '@funfair-tech/wallet-sdk/window';
 const allErc20Tokens = await window.funwallet.sdk.tokens.getAll();
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+const allErc20Tokens = await window.funwallet.sdk.tokens.getAll();
+```
+
+:::
+
+::::
 
 ## Get ERC20 tokens
 
@@ -58,15 +64,9 @@ get(contractAddress: string): Promise<EnabledERC20TokenResponse | null>
 }
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const erc20Token = await window.funwallet.sdk.tokens.get(
-  '0x419D0d8BdD9aF5e606Ae2232ed285Aff190E711b'
-);
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -76,7 +76,19 @@ const erc20Token = await window.funwallet.sdk.tokens.get(
 );
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+const erc20Token = await window.funwallet.sdk.tokens.get(
+  '0x419D0d8BdD9aF5e606Ae2232ed285Aff190E711b'
+);
+```
+
+:::
+
+::::
 
 ## Get all ERC20 tokens balances
 
@@ -101,13 +113,9 @@ getAllBalances(): Promise<BalanceResponse[]>
 }
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const allErc20TokenBalances = await window.funwallet.sdk.tokens.getAllBalances();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -115,7 +123,17 @@ import window from '@funfair-tech/wallet-sdk/window';
 const allErc20TokenBalances = await window.funwallet.sdk.tokens.getAllBalances();
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+const allErc20TokenBalances = await window.funwallet.sdk.tokens.getAllBalances();
+```
+
+:::
+
+::::
 
 ## Get ERC20 token balance
 
@@ -140,15 +158,9 @@ balance(): Promise<BalanceResponse | null>
 }
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const erc20TokenBalance = await window.funwallet.sdk.tokens.balance(
-  '0x419D0d8BdD9aF5e606Ae2232ed285Aff190E711b'
-);
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -158,7 +170,19 @@ const erc20TokenBalance = await window.funwallet.sdk.tokens.balance(
 );
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+const erc20TokenBalance = await window.funwallet.sdk.tokens.balance(
+  '0x419D0d8BdD9aF5e606Ae2232ed285Aff190E711b'
+);
+```
+
+:::
+
+::::
 
 ## Get ERC20 token icon
 
@@ -168,15 +192,9 @@ Get the erc20 token icon. Will return null if it can not match the contract addr
 icon(): string | null
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const erc20TokenIcon = await window.funwallet.sdk.tokens.icon(
-  '0x419D0d8BdD9aF5e606Ae2232ed285Aff190E711b'
-);
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -186,7 +204,19 @@ const erc20TokenIcon = await window.funwallet.sdk.tokens.icon(
 );
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+const erc20TokenIcon = await window.funwallet.sdk.tokens.icon(
+  '0x419D0d8BdD9aF5e606Ae2232ed285Aff190E711b'
+);
+```
+
+:::
+
+::::
 
 ## Get ERC20 token fiat price
 
@@ -196,15 +226,9 @@ Get the erc20 token fiat price. Will return null if it can not match the contrac
 fiatPrice(): number | null
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const erc20TokenFiatPrice = await window.funwallet.sdk.tokens.fiatPrice(
-  '0x419D0d8BdD9aF5e606Ae2232ed285Aff190E711b'
-);
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -213,3 +237,17 @@ const erc20TokenFiatPrice = await window.funwallet.sdk.tokens.fiatPrice(
   '0x419D0d8BdD9aF5e606Ae2232ed285Aff190E711b'
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+const erc20TokenFiatPrice = await window.funwallet.sdk.tokens.fiatPrice(
+  '0x419D0d8BdD9aF5e606Ae2232ed285Aff190E711b'
+);
+```
+
+:::
+
+::::

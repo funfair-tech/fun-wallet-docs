@@ -1,4 +1,4 @@
-# SDK Methods Lanaguge
+# SDK Methods Language
 
 ## setLanguage
 
@@ -8,16 +8,24 @@ Build the language for the wallet (default is en). This needs to be called on in
 public setLanguage(lang: string): string
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.setLanguage('en');
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
 
 window.funwallet.setLanguage('en');
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+window.funwallet.setLanguage('en');
+```
+
+:::
+
+::::

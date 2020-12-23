@@ -4,7 +4,7 @@ Please note none of the SDK calls will work if the SDK has called this. The SDK 
 
 ## init
 
-This initializes the SDK and sets up communicate with the leader instance and the Wallet. If using react, vue or angular wallet packages you do not need to worry about this.
+This initializes the SDK and sets up communicate with the leader instance and the Wallet. If you're using 1 of our react, vue or angular wallet packages you do not need to worry doing this it is handled for you.
 
 ```ts
 public init(options?: InitOptions): void
@@ -28,16 +28,24 @@ public init(options?: InitOptions): void
 }
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-window.funwallet.sdk.init();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
 
 window.funwallet.sdk.init({ ngZone: this._zone });
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+window.funwallet.sdk.init();
+```
+
+:::
+
+::::

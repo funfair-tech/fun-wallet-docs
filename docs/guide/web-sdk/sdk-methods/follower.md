@@ -8,13 +8,9 @@ This initializes an authenticated follower instance for you to display Wallet UI
 public async registerFollowerInstance(): Promise<void>
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-await window.funwallet.sdk.registerFollowerInstance();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -22,7 +18,17 @@ import window from '@funfair-tech/wallet-sdk/window';
 await window.funwallet.sdk.registerFollowerInstance();
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+await window.funwallet.sdk.registerFollowerInstance();
+```
+
+:::
+
+::::
 
 ## getWalletFollowerURL
 
@@ -32,16 +38,24 @@ Build up the follower URL for you and adds all the context in the query string s
 public getWalletFollowerURL(): string
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const walletFollowerUrl = window.funwallet.getWalletFollowerURL();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
 
 const walletFollowerUrl = window.funwallet.getWalletFollowerURL();
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+const walletFollowerUrl = window.funwallet.getWalletFollowerURL();
+```
+
+:::
+
+::::

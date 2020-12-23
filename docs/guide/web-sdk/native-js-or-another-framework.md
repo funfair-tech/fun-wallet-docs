@@ -18,27 +18,43 @@ webpack-dev-server --https --key ssl/server.key --cert ssl/server.crt
 
 You will need to install the https cert as shown below:
 
-#### Windows
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab Windows
 
 <img :src="$withBase('/windows-https-install.PNG')" >
 
-#### Mac
+:::
+
+::: tab Mac
 
 <img :src="$withBase('/mac-https-install.gif')" >
 
+:::
+
+::::
+
 ## Installing the FunFair Wallet SDK
 
-### NPM
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab NPM
 
 ```bash
 $ npm install @funfair-tech/wallet-sdk
 ```
 
-### YARN
+:::
+
+::: tab YARN
 
 ```bash
 $ yarn add @funfair-tech/wallet-sdk
 ```
+
+:::
+
+::::
 
 ## TypeScript Typings
 
@@ -125,14 +141,14 @@ Example:
 
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
         window.funwallet.sdk.on('authenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(true);
           }
         });
 
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
         window.funwallet.sdk.on('restoreAuthenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
           }
         });
@@ -140,7 +156,7 @@ Example:
         // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletinactivityloggedout
         window.funwallet.sdk.on('walletInactivityLoggedOut', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         });
@@ -148,7 +164,7 @@ Example:
         // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletdevicedeletedloggedout
         window.funwallet.sdk.on('walletDeviceDeletedLoggedOut', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         });
@@ -249,14 +265,14 @@ Example:
 
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
         window.funwallet.sdk.on('authenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(true);
           }
         });
 
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
         window.funwallet.sdk.on('restoreAuthenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
           }
         });
@@ -264,7 +280,7 @@ Example:
         // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletinactivityloggedout
         window.funwallet.sdk.on('walletInactivityLoggedOut', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         });
@@ -272,7 +288,7 @@ Example:
         // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletdevicedeletedloggedout
         window.funwallet.sdk.on('walletDeviceDeletedLoggedOut', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         });
@@ -370,14 +386,14 @@ Example:
 
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
         window.funwallet.sdk.on('authenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(true);
           }
         });
 
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
         window.funwallet.sdk.on('restoreAuthenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
           }
         });
@@ -385,7 +401,7 @@ Example:
         // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletinactivityloggedout
         window.funwallet.sdk.on('walletInactivityLoggedOut', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         });
@@ -393,7 +409,7 @@ Example:
         // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletdevicedeletedloggedout
         window.funwallet.sdk.on('walletDeviceDeletedLoggedOut', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         });
@@ -514,14 +530,14 @@ Example:
 
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
         window.funwallet.sdk.on('authenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(true);
           }
         });
 
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
         window.funwallet.sdk.on('restoreAuthenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
           }
         });
@@ -529,7 +545,7 @@ Example:
         // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletinactivityloggedout
         window.funwallet.sdk.on('walletInactivityLoggedOut', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         });
@@ -537,7 +553,7 @@ Example:
         // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletdevicedeletedloggedout
         window.funwallet.sdk.on('walletDeviceDeletedLoggedOut', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         });
@@ -670,14 +686,14 @@ Example:
 
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
         window.funwallet.sdk.on('authenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(true);
           }
         });
 
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
         window.funwallet.sdk.on('restoreAuthenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
           }
         });
@@ -685,7 +701,7 @@ Example:
         // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletinactivityloggedout
         window.funwallet.sdk.on('walletInactivityLoggedOut', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         });
@@ -693,7 +709,7 @@ Example:
         // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletdevicedeletedloggedout
         window.funwallet.sdk.on('walletDeviceDeletedLoggedOut', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         });
@@ -762,21 +778,21 @@ If you do not want to have KYC as a feature on your dApp please ignore this sect
 
 To read more about our providers and countries we cover please read [here](../information/kyc)
 
-It is up to the dApp to decide if they want to use our KYC feature or not. The events get fired regardless but its up to the dApp to listen to them to know when to trigger the KYC modal.
+It is up to the dApp to decide if they want to use our KYC feature or not and at what stage. The events get fired regardless but its up to the dApp to listen to them if they want to use it. The dApp needs to listen to [isKycVerified](./sdk-event-listeners.html#iskycverified) event which will fire when the user has successfully passed or failed KYC'ed, it also fires on initial login with the status of that logged in users KYC status. You can listen to [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event which will fire when the user cancels or closes the KYC modal. The reason we made the dApp handle this is to give them greater flexibility on when you show the KYC stage and what your client does after it was cancelled.
 
-The dApp needs to listen to [isKycVerified](./sdk-event-listeners.html#iskycverified) event which will fire when you try to open the KYC modal and allows you to work out if you show the modal or not.
+To check if the user has KYC'ed or not you can call [isKycVerified](./sdk-methods/kyc.html#kyc-verified-status-for-the-logged-in-user)
 
-It also needs to listen to [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event which will fire when the user cancels or closes the KYC modal.
+```js
+const isKycVerified = await window.funwallet.sdk.kyc.isVerified();
+```
 
-The reason we made the dApp handle it to give you greater flexibility on when you showed it and what you did after it was cancelled.
-
-To trigger the KYC modal to open you have to call [sdk.kyc.start()](./sdk-methods/kyc.html#start-kyc) SDK method:
+If that returns false (aka they are not KYC'ed) you can trigger the KYC modal to open by calling [sdk.kyc.start()](./sdk-methods/kyc.html#start-kyc) SDK method:
 
 ```js
 await window.funwallet.sdk.kyc.start();
 ```
 
-This will then do the lookup on the wallet side and fire the result to `isKycVerified` event.
+Once completed you will get the status of the pass/fail through [isKycVerified](./sdk-event-listeners.html#iskycverified) event. Obviously if they do not complete the KYC you will see them cancel it with the [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event.
 
 Example:
 
@@ -842,14 +858,14 @@ Example:
 
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
         window.funwallet.sdk.on('authenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(true);
           }
         });
 
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
         window.funwallet.sdk.on('restoreAuthenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
           }
         });
@@ -857,7 +873,7 @@ Example:
         // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletinactivityloggedout
         window.funwallet.sdk.on('walletInactivityLoggedOut', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         });
@@ -865,7 +881,7 @@ Example:
         // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletdevicedeletedloggedout
         window.funwallet.sdk.on('walletDeviceDeletedLoggedOut', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         });
@@ -874,7 +890,7 @@ Example:
 
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#iskycverified
         window.funwallet.sdk.on('isKycVerified', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             if (!result.data.isVerified) {
               window.funwallet.sdk.showFunWalletModal();
             } else {
@@ -890,7 +906,7 @@ Example:
 
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#kycprocesscancelled
         window.funwallet.sdk.on('kycProcessCancelled', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             if (result.data.cancelled) {
               window.funwallet.sdk.hideFunWalletModal();
               // you may want to move routes etc here hence why you hook onto this action
@@ -975,17 +991,11 @@ This can be injected into any new `web3` or `ethers` instance. This means you ca
 
 Once you the leader has loaded, the SDK will expose the Ethereum provider on the window, which can be used as the provider you inject when you create a new `web3` or `ethers` instance.
 
-Example:
-
 ### web3
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const web3 = new Web3(window.funwallet.sdk.ethereum);
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -995,17 +1005,23 @@ import window from '@funfair-tech/wallet-sdk/window';
 const web3 = new Web3(window.funwallet.sdk.ethereum as any);
 ```
 
-### etherjs
+:::
 
-`JavaScript`:
+::: tab JavaScript
 
 ```js
-const provider = new ethers.providers.Web3Provider(
-  window.funwallet.sdk.ethereum
-);
+const web3 = new Web3(window.funwallet.sdk.ethereum);
 ```
 
-`TypeScript`:
+:::
+
+::::
+
+### etherjs
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -1014,6 +1030,20 @@ const provider = new ethers.providers.Web3Provider(
   window.funwallet.sdk.ethereum as any
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+const provider = new ethers.providers.Web3Provider(
+  window.funwallet.sdk.ethereum
+);
+```
+
+:::
+
+::::
 
 <strong>All your web3 or ethers calls now will work as normal but proxy through to the Wallet. Use the library to now send transaction and do all things blockchain.</strong>
 
@@ -1025,17 +1055,25 @@ We don't support `eth_sign`, `eth_signTransaction` and `eth_sendRawTransaction` 
 
 First you need to make sure web3 is installed:
 
-#### NPM
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab NPM
 
 ```bash
 $ npm i web3
 ```
 
-#### YARN
+:::
+
+::: tab YARN
 
 ```bash
 $ yarn add web3
 ```
+
+:::
+
+::::
 
 Example:
 
@@ -1103,14 +1141,14 @@ Example:
 
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
         window.funwallet.sdk.on('authenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(true);
           }
         });
 
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
         window.funwallet.sdk.on('restoreAuthenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
           }
         });
@@ -1118,7 +1156,7 @@ Example:
         // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletinactivityloggedout
         window.funwallet.sdk.on('walletInactivityLoggedOut', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         });
@@ -1126,7 +1164,7 @@ Example:
         // MUST HAVE TO KEEP YOUR APPS AUTHENTICATION STATE IN SYNC
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#walletdevicedeletedloggedout
         window.funwallet.sdk.on('walletDeviceDeletedLoggedOut', (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         });

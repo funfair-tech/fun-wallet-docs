@@ -8,13 +8,9 @@ This manually starts the kyc process which pops up the kyc modal. This can be us
 start(): Promise<void>
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-await window.funwallet.sdk.kyc.start();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -22,7 +18,17 @@ import window from '@funfair-tech/wallet-sdk/window';
 await window.funwallet.sdk.kyc.start();
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+await window.funwallet.sdk.kyc.start();
+```
+
+:::
+
+::::
 
 ## KYC verified status for the logged in user
 
@@ -32,16 +38,24 @@ Returns the kyc verification status of the user on the wallet. Event listeners w
 isVerified(): Promise<boolean>
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const isKycVerified = await window.funwallet.sdk.kyc.isVerified();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
 
 const isKycVerified = await window.funwallet.sdk.kyc.isVerified();
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+const isKycVerified = await window.funwallet.sdk.kyc.isVerified();
+```
+
+:::
+
+::::

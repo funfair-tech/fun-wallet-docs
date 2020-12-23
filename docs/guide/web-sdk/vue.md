@@ -38,27 +38,43 @@ module.exports = {
 
 When you serve this now using `vue-cli-service serve` and it will serve it on https. You will need to install the https cert as shown below:
 
-#### Windows
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab Windows
 
 <img :src="$withBase('/windows-https-install.PNG')" >
 
-#### Mac
+:::
+
+::: tab Mac
 
 <img :src="$withBase('/mac-https-install.gif')" >
 
+:::
+
+::::
+
 ## Installing the FunFair Wallet SDK
 
-### NPM
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab NPM
 
 ```bash
 $ npm install @funfair-tech/wallet-sdk
 ```
 
-### YARN
+:::
+
+::: tab YARN
 
 ```bash
 $ yarn add @funfair-tech/wallet-sdk
 ```
+
+:::
+
+::::
 
 ## TypeScript Typings
 
@@ -72,23 +88,40 @@ import window from '@funfair-tech/wallet-sdk/window';
 
 We have created a vue package component library this package holds components you can use to hook the wallet into a vue app easier. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-vue-integration-sample-js)
 
-To install run:
+:::: tabs :options="{ useUrlFragment: false }"
 
-### NPM
+::: tab NPM
 
 ```bash
 $ npm install @funfair-tech/wallet-vue
 ```
 
-### YARN
+:::
+
+::: tab YARN
 
 ```bash
 $ yarn add @funfair-tech/wallet-vue
 ```
 
+:::
+
+::::
+
 ## Hooking up the SDK
 
-Firstly you need to drop the below script into your `<head>` HTML tag in your main index.html (public > index.html). Please replace the `YOUR_APP_ID` with the appId we have supplied you:
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab public/index.html
+
+Firstly you need to drop the wallet script into your `<head>` HTML tag within your main index.html (public > index.html). Please replace the `YOUR_APP_ID` with the your appId:
+
+```js
+<script
+  src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js?appId=YOUR_APP_ID"
+  type="text/JavaScript"
+></script>
+```
 
 ```html
 <!DOCTYPE html>
@@ -118,11 +151,11 @@ Firstly you need to drop the below script into your `<head>` HTML tag in your ma
 </html>
 ```
 
-Import the wallet leader vue shared component into your main App.vue:
+:::
 
-```js
-import { WalletLeader } from '@funfair-tech/wallet-vue';
-```
+::: tab src/App.vue
+
+Import the wallet leader vue shared component into your main App.vue:
 
 Usage:
 
@@ -137,8 +170,6 @@ Usage:
 Type - Function
 
 This will fire when the wallet leader has loaded and this will be a function you register all your event listeners you want to attach to the wallet, list of them [here](https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#registering-an-event-listener)
-
-Example:
 
 ```vue
 <template>
@@ -174,7 +205,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.authenticationCompleted,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(true);
           }
         }
@@ -184,7 +215,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.restoreAuthenticationCompleted,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
           }
         }
@@ -195,7 +226,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.walletInactivityLoggedOut,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         }
@@ -206,7 +237,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.walletDeviceDeletedLoggedOut,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         }
@@ -220,11 +251,17 @@ export default {
 </script>
 ```
 
+:::
+
+::::
+
 ## Authentication
 
-It's up to the integration to show the user the login and logout buttons, which allows flexibility on designs. This below will show you how you would hook login and logout buttons into your app.
+It's up to the integration to show the user the login and logout buttons, which allows flexibility on designs.
 
-### Login
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab Login
 
 Method to pop up the authentication modal.
 
@@ -237,7 +274,7 @@ This will load a window popup for the user to enter their login details. Once lo
 **NOTE**
 Chrome and other browsers can block popups if triggered without a genuine user click. Make sure whenever you pop this modal up its from a click event from the user to avoid any cross browser issues.
 
-Example:
+src/App.vue
 
 ```vue
 <template>
@@ -286,7 +323,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.authenticationCompleted,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(true);
           }
         }
@@ -296,7 +333,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.restoreAuthenticationCompleted,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
           }
         }
@@ -307,7 +344,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.walletInactivityLoggedOut,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         }
@@ -318,7 +355,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.walletDeviceDeletedLoggedOut,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         }
@@ -341,7 +378,9 @@ export default {
 </script>
 ```
 
-### Logout
+:::
+
+::: tab Logout
 
 Method to logout the authenticated user.
 
@@ -349,7 +388,7 @@ Method to logout the authenticated user.
 await window.funwallet.sdk.auth.logout();
 ```
 
-Example:
+src/App.vue
 
 ```vue
 <template>
@@ -402,7 +441,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.authenticationCompleted,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(true);
           }
         }
@@ -412,7 +451,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.restoreAuthenticationCompleted,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
           }
         }
@@ -423,7 +462,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.walletInactivityLoggedOut,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         }
@@ -434,7 +473,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.walletDeviceDeletedLoggedOut,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         }
@@ -461,7 +500,9 @@ export default {
 </script>
 ```
 
-### Authentication refresh
+:::
+
+::: tab Authentication-Refresh
 
 As the server never sees the private key and all the decryption of it happens on the client side, once you refresh your tab, your private key is no longer in memory. We have handled a way to restore authentication on refresh and keep the user logged in. What this means for the developer is they must wait for [restoreAuthenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted) to complete before they show any UI, this is super fast but needed to avoid showing login buttons then flashing to logout buttons. Lets walk you through how you would do this.
 
@@ -469,7 +510,7 @@ If you want to read more about how this works and keeps your PK safe read [here]
 
 We just add a loading state to our data which is default true, this will then turn to false once the restoreAuthenticationCompleted has completed. We then in the template just add some loading state to hide and show the buttons.
 
-Example:
+src/App.vue
 
 ```vue
 <template>
@@ -524,7 +565,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.authenticationCompleted,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(true);
           }
         }
@@ -534,7 +575,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.restoreAuthenticationCompleted,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
           }
         }
@@ -545,7 +586,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.walletInactivityLoggedOut,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         }
@@ -556,7 +597,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.walletDeviceDeletedLoggedOut,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         }
@@ -589,9 +630,13 @@ export default {
 </script>
 ```
 
+:::
+
+::::
+
 ## Show wallet UI
 
-Import the wallet follower vue shared component into the vue you want it to go in, in this example we just put it all in the App.vue but same applies for putting it in different .vue files:
+To show any wallet UI you have to import the `WalletFollower` from the sdk.
 
 ```js
 import { WalletFollower } from '@funfair-tech/wallet-vue';
@@ -603,11 +648,13 @@ Usage:
 <WalletFollower />
 ```
 
-If you want to deep link the into a page on the wallet it is explained how to do that [here](./routing.html#deep-link-page-routes). By default to the main `/funds` page will load.
+If you want to deep link the into a page on the wallet it is explained how to do that [here](./routing.html#deep-link-page-routes). By default the main `/funds` page will load.
 
-Please note you must only show the follower once [restoreAuthenticationTaskCompleted](./sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationcompleted](./sdk-event-listeners.html#authenticationcompleted) has fired, `authenticationcompleted` means they are logged in.
+Please note you must only show the follower once [restoreAuthenticationTaskCompleted](./sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationCompleted](./sdk-event-listeners.html#authenticationcompleted) has fired, `authenticationCompleted` means they are logged in.
 
-Example:
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab src/App.vue
 
 ```vue
 <template>
@@ -665,7 +712,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.authenticationCompleted,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(true);
           }
         }
@@ -675,7 +722,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.restoreAuthenticationCompleted,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
           }
         }
@@ -686,7 +733,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.walletInactivityLoggedOut,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         }
@@ -697,7 +744,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.walletDeviceDeletedLoggedOut,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         }
@@ -803,6 +850,10 @@ button {
 </style>
 ```
 
+:::
+
+::::
+
 ## KYC - feature request only!
 
 KYC is a billable feature due to costs we have to pay the third party KYC provider. You will have to get in contact with funfair if you want this feature turned on. - josh.stevens@funfair.io
@@ -811,23 +862,25 @@ If you do not want to have KYC as a feature on your dApp please ignore this sect
 
 To read more about our providers and countries we cover please read [here](../information/kyc)
 
-It is up to the dApp to decide if they want to use our KYC feature or not. The events get fired regardless but its up to the dApp to listen to them to know when to trigger the KYC modal.
+It is up to the dApp to decide if they want to use our KYC feature or not and at what stage. The events get fired regardless but its up to the dApp to listen to them if they want to use it. The dApp needs to listen to [isKycVerified](./sdk-event-listeners.html#iskycverified) event which will fire when the user has successfully passed or failed KYC'ed, it also fires on initial login with the status of that logged in users KYC status. You can listen to [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event which will fire when the user cancels or closes the KYC modal. The reason we made the dApp handle this is to give them greater flexibility on when you show the KYC stage and what your client does after it was cancelled.
 
-The dApp needs to listen to [isKycVerified](./sdk-event-listeners.html#iskycverified) event which will fire when you try to open the KYC modal and allows you to work out if you show the modal or not.
+To check if the user has KYC'ed or not you can call [isKycVerified](./sdk-methods/kyc.html#kyc-verified-status-for-the-logged-in-user)
 
-It also needs to listen to [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event which will fire when the user cancels or closes the KYC modal.
+```js
+const isKycVerified = await window.funwallet.sdk.kyc.isVerified();
+```
 
-The reason we made the dApp handle it to give you greater flexibility on when you showed it and what you did after it was cancelled.
-
-To trigger the KYC modal to open you have to call [sdk.kyc.start()](./sdk-methods/kyc.html#start-kyc) SDK method:
+If that returns false (aka they are not KYC'ed) you can trigger the KYC modal to open by calling [sdk.kyc.start()](./sdk-methods/kyc.html#start-kyc) SDK method:
 
 ```js
 await window.funwallet.sdk.kyc.start();
 ```
 
-This will then do the lookup on the wallet side and fire the result to `isKycVerified` event.
+Once completed you will get the status of the pass/fail through [isKycVerified](./sdk-event-listeners.html#iskycverified) event. Obviously if they do not complete the KYC you will see them cancel it with the [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event.
 
-Example:
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab src/App.vue
 
 ```vue
 <template>
@@ -886,7 +939,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.authenticationCompleted,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(true);
           }
         }
@@ -896,7 +949,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.restoreAuthenticationCompleted,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
           }
         }
@@ -907,7 +960,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.walletInactivityLoggedOut,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         }
@@ -918,7 +971,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.walletDeviceDeletedLoggedOut,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         }
@@ -928,7 +981,7 @@ export default {
 
       // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#iskycverified
       window.funwallet.sdk.on(MessageListeners.isKycVerified, (result) => {
-        if (result.origin === 'https://wallet.funfair.io') {
+        if (result.origin === 'https://wallet.funfair.io/') {
           if (!result.data.isVerified) {
             // MUST CALL
             window.funwallet.sdk.showFunWalletModal();
@@ -947,7 +1000,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.kycProcessCancelled,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             if (result.data.cancelled) {
               // MUST CALL
               window.funwallet.sdk.hideFunWalletModal();
@@ -1061,6 +1114,10 @@ button {
 </style>
 ```
 
+:::
+
+::::
+
 ## Speaking to the blockchain (web3/etherjs)
 
 Now you have the wallet all hooked up you can start speaking to the blockchain. Most developers use `web3` and `etherjs` to interact with the blockchain, the SDK exposes our own [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) compatible ethereum provider.
@@ -1080,13 +1137,9 @@ Example:
 
 ### web3
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const web3 = new Web3(window.funwallet.sdk.ethereum);
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -1096,17 +1149,23 @@ import window from '@funfair-tech/wallet-sdk/window';
 const web3 = new Web3(window.funwallet.sdk.ethereum as any);
 ```
 
-### etherjs
+:::
 
-`JavaScript`:
+::: tab JavaScript
 
 ```js
-const provider = new ethers.providers.Web3Provider(
-  window.funwallet.sdk.ethereum
-);
+const web3 = new Web3(window.funwallet.sdk.ethereum);
 ```
 
-`TypeScript`:
+:::
+
+::::
+
+### etherjs
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -1115,6 +1174,20 @@ const provider = new ethers.providers.Web3Provider(
   window.funwallet.sdk.ethereum as any
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+const provider = new ethers.providers.Web3Provider(
+  window.funwallet.sdk.ethereum
+);
+```
+
+:::
+
+::::
 
 <strong>All your web3 or ethers calls now will work as normal but proxy through to the Wallet. Use the library to now send transaction and do all things blockchain.</strong>
 
@@ -1126,22 +1199,35 @@ We don't support `eth_sign`, `eth_signTransaction` and `eth_sendRawTransaction` 
 
 First you need to make sure web3 is installed:
 
-#### NPM
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab NPM
 
 ```bash
 $ npm i web3
 ```
 
-#### YARN
+:::
+
+::: tab YARN
 
 ```bash
 $ yarn add web3
 ```
 
-We will create a new `js` file in the `src` which will hold our web3 logic. This example we are going to call it `ethereum.service.js`.
-Please note you can structure this code as you want but for us a new `.js` file makes the code nice and clean.
+:::
 
-`ethereum.service.js`
+::::
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab src/ethereum.service.js
+
+We will create a new `js` file in the `src` which will hold our web3 logic. In this example we are going to call it `ethereum.service.js`. Please note you can structure this code as you want but for us a new `.js` file makes the code nice and clean.
+
+We have wrote common `web3` methods to send a transaction and sign a message. All the other `web3` methods work the same and you can just use the standard interface to call them.
+
+When you sign anything an approval modal will appear for the user automatically, read [here](../information/approval-modal) for more info about them.
 
 ```js
 import Web3 from 'web3';
@@ -1183,11 +1269,11 @@ export async function sendTransaction(tx) {
 }
 ```
 
-We have wrote common `web3` methods to send a transaction and sign a message. All the other `web3` methods work the same and you can just use the standard interface to call them.
+:::
 
-Below shows how you would call them in the code samples we have been doing.
+::: tab src/App.vue
 
-Example:
+All hooked together:
 
 ```vue
 <template>
@@ -1250,7 +1336,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.authenticationCompleted,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(true);
           }
         }
@@ -1260,7 +1346,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.restoreAuthenticationCompleted,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
           }
         }
@@ -1271,7 +1357,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.walletInactivityLoggedOut,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         }
@@ -1282,7 +1368,7 @@ export default {
       window.funwallet.sdk.on(
         MessageListeners.walletDeviceDeletedLoggedOut,
         (result) => {
-          if (result.origin === 'https://wallet.funfair.io') {
+          if (result.origin === 'https://wallet.funfair.io/') {
             isAuthenticated$.next(false);
           }
         }
@@ -1401,4 +1487,6 @@ button {
 </style>
 ```
 
-When you sign anything an approval modal will appear for the user automatically, read [here](../information/approval-modal) for more info about them.
+:::
+
+::::

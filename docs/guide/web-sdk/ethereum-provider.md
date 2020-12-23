@@ -26,19 +26,9 @@ interface RequestArguments {
 public async request(args: RequestArguments): Promise<unknown>;
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const accounts = await window.funwallet.sdk.ethereum.request({
-  method: 'eth_accounts',
-});
-const block = await window.funwallet.sdk.ethereum.request({
-  method: 'eth_getBlockByNumber',
-  params: ['latest', 'true'],
-});
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -51,6 +41,24 @@ const block = await window.funwallet.sdk.ethereum.request({
   params: ['latest', 'true'],
 });
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+const accounts = await window.funwallet.sdk.ethereum.request({
+  method: 'eth_accounts',
+});
+const block = await window.funwallet.sdk.ethereum.request({
+  method: 'eth_getBlockByNumber',
+  params: ['latest', 'true'],
+});
+```
+
+:::
+
+::::
 
 ### send (DEPRECATED)
 
@@ -62,17 +70,9 @@ The send method is intended as a transport- and protocol-agnostic wrapper functi
 public async send(method: string, params?: unknown[] | object): Promise<unknown> {}
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const accounts = await window.funwallet.sdk.ethereum.send('eth_accounts');
-const block = await window.funwallet.sdk.ethereum.send('eth_getBlockByNumber', [
-  'latest',
-  'true',
-]);
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -83,6 +83,22 @@ const block = await window.funwallet.sdk.ethereum.send('eth_getBlockByNumber', [
   'true',
 ]);
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+const accounts = await window.funwallet.sdk.ethereum.send('eth_accounts');
+const block = await window.funwallet.sdk.ethereum.send('eth_getBlockByNumber', [
+  'latest',
+  'true',
+]);
+```
+
+:::
+
+::::
 
 ### sendAsync (DEPRECATED)
 
@@ -105,26 +121,9 @@ interface JsonRpcPayload {
 public async sendAsync(request: JsonRpcPayload, callback: (error: ProviderRpcError | null, response: JsonRpcPayload | null) => void): void;
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const jsonRpcPayload = {
-  id: '1',
-  jsonrpc: '2.0',
-  method: MessageExecutors.eth_gasPrice,
-  result: undefined,
-  params: [],
-};
-
-window.funwallet.sdk.ethereum.sendAsync(
-  jsonRpcPayload,
-  (error: ProviderRpcError | null, response: JsonRpcPayload | null) => {
-    console.log(response);
-  }
-);
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -144,6 +143,31 @@ window.funwallet.sdk.ethereum.sendAsync(
   }
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+const jsonRpcPayload = {
+  id: '1',
+  jsonrpc: '2.0',
+  method: MessageExecutors.eth_gasPrice,
+  result: undefined,
+  params: [],
+};
+
+window.funwallet.sdk.ethereum.sendAsync(
+  jsonRpcPayload,
+  (error: ProviderRpcError | null, response: JsonRpcPayload | null) => {
+    console.log(response);
+  }
+);
+```
+
+:::
+
+::::
 
 ### on and removeListener
 
@@ -157,6 +181,10 @@ This will fire when the user logs in and then if the ethereum account ever chang
 public on('accountsChanged', listener: (accounts: string[]) => void): this;
 ```
 
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab TypeScript
+
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
 
@@ -168,6 +196,23 @@ window.funwallet.sdk.ethereum.on('accountsChanged', logAccounts);
 window.funwallet.sdk.ethereum.removeListener('accountsChanged', logAccounts);
 ```
 
+:::
+
+::: tab JavaScript
+
+```js
+const logAccounts = (accounts) => {
+  console.log(`Accounts:\n${accounts.join('\n')}`);
+};
+window.funwallet.sdk.ethereum.on('accountsChanged', logAccounts);
+// to unsubscribe
+window.funwallet.sdk.ethereum.removeListener('accountsChanged', logAccounts);
+```
+
+:::
+
+::::
+
 #### chainChanged
 
 This will fire when the user logs in and then if the network changes going forward.
@@ -175,6 +220,10 @@ This will fire when the user logs in and then if the network changes going forwa
 ```ts
 public on('chainChanged', listener: (chainId: string) => void): this;
 ```
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -187,6 +236,23 @@ window.funwallet.sdk.ethereum.on('chainChanged', logChainId);
 window.funwallet.sdk.ethereum.removeListener('chainChanged', logChainId);
 ```
 
+:::
+
+::: tab JavaScript
+
+```js
+const logChainId = (chainId) => {
+  console.log(`Chain id changed: ${chainId}`);
+};
+window.funwallet.sdk.ethereum.on('chainChanged', logChainId);
+// to unsubscribe
+window.funwallet.sdk.ethereum.removeListener('chainChanged', logChainId);
+```
+
+:::
+
+::::
+
 #### networkChanged (DEPRECATED)
 
 The event `networkChanged` is superseded by `chainChanged`.
@@ -196,6 +262,10 @@ This will fire when the user logs in and then if the network changes going forwa
 ```ts
 public on('networkChanged', listener: (netId: string) => void): this;
 ```
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -208,6 +278,23 @@ window.funwallet.sdk.ethereum.on('networkChanged', logNetworkId);
 window.funwallet.sdk.ethereum.removeListener('networkChanged', logNetworkId);
 ```
 
+:::
+
+::: tab JavaScript
+
+```js
+const logNetworkId = (netId) => {
+  console.log(`Network id changed: ${netId}`);
+};
+window.funwallet.sdk.ethereum.on('networkChanged', logNetworkId);
+// to unsubscribe
+window.funwallet.sdk.ethereum.removeListener('networkChanged', logNetworkId);
+```
+
+:::
+
+::::
+
 ### isFunWallet
 
 This will return true if the provider is a FunFair Wallet.
@@ -216,19 +303,27 @@ This will return true if the provider is a FunFair Wallet.
 public get isFunWallet(): boolean
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const isFunWallet = window.funwallet.sdk.ethereum.isFunWallet;
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
 
 const isFunWallet = window.funwallet.sdk.ethereum.isFunWallet;
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+const isFunWallet = window.funwallet.sdk.ethereum.isFunWallet;
+```
+
+:::
+
+::::
 
 ### initOptions
 
@@ -238,21 +333,7 @@ Returns the initialized options supplied.
 public get initOptions(): InitOptions | undefined
 ```
 
-`JavaScript`:
-
-```js
-const initOptions = window.funwallet.sdk.ethereum.initOptions;
-```
-
-`TypeScript`:
-
-```ts
-import window from '@funfair-tech/wallet-sdk/window';
-
-const initOptions = window.funwallet.sdk.ethereum.initOptions;
-```
-
-- `InitOptions` - The options supplied for the SDK
+`InitOptions` - The options supplied for the SDK
 
 ```js
 {
@@ -261,15 +342,33 @@ const initOptions = window.funwallet.sdk.ethereum.initOptions;
 }
 ```
 
-## web3
+:::: tabs :options="{ useUrlFragment: false }"
 
-`JavaScript`:
+::: tab TypeScript
 
-```js
-const web3 = new Web3(window.funwallet.sdk.ethereum);
+```ts
+import window from '@funfair-tech/wallet-sdk/window';
+
+const initOptions = window.funwallet.sdk.ethereum.initOptions;
 ```
 
-`TypeScript`:
+:::
+
+::: tab JavaScript
+
+```js
+const initOptions = window.funwallet.sdk.ethereum.initOptions;
+```
+
+:::
+
+::::
+
+## web3
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -279,17 +378,23 @@ import window from '@funfair-tech/wallet-sdk/window';
 const web3 = new Web3(window.funwallet.sdk.ethereum as any);
 ```
 
-## etherjs
+:::
 
-`JavaScript`:
+::: tab JavaScript
 
 ```js
-const provider = new ethers.providers.Web3Provider(
-  window.funwallet.sdk.ethereum
-);
+const web3 = new Web3(window.funwallet.sdk.ethereum);
 ```
 
-`TypeScript`:
+:::
+
+::::
+
+## etherjs
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -298,6 +403,20 @@ const provider = new ethers.providers.Web3Provider(
   window.funwallet.sdk.ethereum as any
 );
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+const provider = new ethers.providers.Web3Provider(
+  window.funwallet.sdk.ethereum
+);
+```
+
+:::
+
+::::
 
 <strong>All your web3 or ethers calls now will work as normal but proxy through to the Wallet. Use the library to now send transaction and do all things blockchain.</strong>
 

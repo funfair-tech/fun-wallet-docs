@@ -8,13 +8,9 @@ Returns the authenticated user's current currency.
 current(): Promise<string>
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const currentCurrency = await window.funwallet.sdk.currencies.current();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -22,7 +18,17 @@ import window from '@funfair-tech/wallet-sdk/window';
 const currentCurrency = await window.funwallet.sdk.currencies.current();
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+const currentCurrency = await window.funwallet.sdk.currencies.current();
+```
+
+:::
+
+::::
 
 ## Set currency
 
@@ -47,15 +53,9 @@ export enum FiatCurrencyType {
 }
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-import { FiatCurrencyType } from '@funfair-tech/wallet-sdk';
-
-await window.funwallet.sdk.currencies.set(FiatCurrencyType.USD);
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -64,7 +64,19 @@ import { FiatCurrencyType } from '@funfair-tech/wallet-sdk';
 await window.funwallet.sdk.currencies.set(FiatCurrencyType.USD);
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+import { FiatCurrencyType } from '@funfair-tech/wallet-sdk';
+
+await window.funwallet.sdk.currencies.set(FiatCurrencyType.USD);
+```
+
+:::
+
+::::
 
 ## Enabled currencies
 
@@ -74,16 +86,24 @@ Returns all the enabled currencies for this dApp setup.
 enabled(): Promise<FiatCurrencyType[]>
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const enabledCurrencies = await window.funwallet.sdk.currencies.enabled();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
 
 const enabledCurrencies = await window.funwallet.sdk.currencies.enabled();
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+const enabledCurrencies = await window.funwallet.sdk.currencies.enabled();
+```
+
+:::
+
+::::

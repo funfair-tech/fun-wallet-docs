@@ -8,13 +8,9 @@ Get marketing opt-in status
 get(): Promise<boolean | null>
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-const marketingOptInStatus = await window.funwallet.sdk.marketing.get();
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -22,7 +18,17 @@ import window from '@funfair-tech/wallet-sdk/window';
 const marketingOptInStatus = await window.funwallet.sdk.marketing.get();
 ```
 
----
+:::
+
+::: tab JavaScript
+
+```js
+const marketingOptInStatus = await window.funwallet.sdk.marketing.get();
+```
+
+:::
+
+::::
 
 ## Update marketing opt-in status
 
@@ -32,16 +38,24 @@ Update marketing opt-in status. Will throw if it did not update the status succe
 set(status: boolean): Promise<void>
 ```
 
-`JavaScript`:
+:::: tabs :options="{ useUrlFragment: false }"
 
-```js
-await window.funwallet.sdk.marketing.set(true);
-```
-
-`TypeScript`:
+::: tab TypeScript
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
 
 await window.funwallet.sdk.marketing.set(true);
 ```
+
+:::
+
+::: tab JavaScript
+
+```js
+await window.funwallet.sdk.marketing.set(true);
+```
+
+:::
+
+::::
