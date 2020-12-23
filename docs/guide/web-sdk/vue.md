@@ -1,5 +1,9 @@
 # Integrating with a vue app
 
+## GitHub repo
+
+A full react code integration example can be seen [here](https://github.com/funfair-tech/wallet-vue-integration-sample-js)
+
 ## HTTPS
 
 Your domain must ALWAYS run `https` when pointing to the wallet else it will be rejected. This is also required on local development.
