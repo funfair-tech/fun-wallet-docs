@@ -1195,7 +1195,7 @@ export class EthereumService {
    * @param messageText The message text
    */
   public async signAMessage(messageText: string): Promise<string> {
-    const ethereumAddress = await window.funwallet.sdk.ethereumAddress();
+    const ethereumAddress = await window.funwallet.sdk.eth.address();
 
     const result = await this.web3Instance.eth.personal.sign(
       messageText,
@@ -1211,7 +1211,7 @@ export class EthereumService {
    * @param tx The transaction
    */
   public async sendTransaction(tx: TransactionConfig): Promise<void> {
-    const ethereumAddress = await window.funwallet.sdk.ethereumAddress();
+    const ethereumAddress = await window.funwallet.sdk.eth.address();
     tx.from = ethereumAddress;
 
     this.web3Instance.eth

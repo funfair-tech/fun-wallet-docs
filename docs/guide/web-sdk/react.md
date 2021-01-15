@@ -914,7 +914,7 @@ function web3Instance() {
 }
 
 export async function signAMessage(messageText) {
-  const ethereumAddress = await window.funwallet.sdk.ethereumAddress();
+  const ethereumAddress = await window.funwallet.sdk.eth.address();
 
   const result = await web3Instance().eth.personal.sign(
     messageText,
@@ -925,7 +925,7 @@ export async function signAMessage(messageText) {
 }
 
 export async function sendTransaction(tx) {
-  const ethereumAddress = await window.funwallet.sdk.ethereumAddress();
+  const ethereumAddress = await window.funwallet.sdk.eth.address();
   tx.from = ethereumAddress;
 
   web3Instance()
