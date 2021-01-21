@@ -187,7 +187,7 @@ Usage:
 
 Type - Function
 
-This will fire when the wallet leader has loaded and this will be a function you register all your event listeners you want to attach to the wallet, list of them [here](https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#registering-an-event-listener)
+This will fire when the wallet leader has loaded and this will be a function you register all your event listeners you want to attach to the wallet, list of them [here](/guide/web-sdk/sdk-event-listeners.html#registering-an-event-listener)
 
 ```html
 <lib-wallet-leader (loaded)="walletLoaded()"></lib-wallet-leader>
@@ -838,7 +838,7 @@ export class AppComponent {
 
 ## KYC - feature request only!
 
-KYC is a billable feature due to costs we have to pay the third party KYC provider. You will have to get in contact with funfair if you want this feature turned on. - josh.stevens@funfair.io
+KYC is a billable feature due to costs we have to pay the third party KYC provider. You will have to get in contact with funfair if you want this feature turned on. To get in contact with us please join our discord by clicking [here](https://discord.com/invite/YEUQVvQrzy).
 
 If you do not want to have KYC as a feature on your dApp please ignore this section completely.
 

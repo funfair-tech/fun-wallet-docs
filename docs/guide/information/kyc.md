@@ -4,4 +4,4 @@ We supply a KYC integration which all dApps can hook on to and use. We use three
 
 We primarily use YotiDocScan, which covers over 200 countries. This integration allows the user to upload their passport, driving license or national ID, with all UI being handled for you. The beauty of our KYC integration is that the dApp can decide whether it's required or not. The Wallet has no hard constraints on certain aspects, which gives maximum flexibility.
 
-KYC is a billable feature due to costs we have to pay the third party KYC provider. You will have to get in contact with funfair if you want this feature turned on. - josh.stevens@funfair.io
+KYC is a billable feature due to costs we have to pay the third party KYC provider. You will have to get in contact with funfair if you want this feature turned on. To get in contact with us please join our discord by clicking [here](https://discord.com/invite/YEUQVvQrzy).

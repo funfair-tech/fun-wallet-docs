@@ -156,7 +156,7 @@ await window.funwallet.sdk.auth.user.active();
 
 ### Jwt token
 
-Get the dApp's JWT. This can be used to hook in your own authentication mechanism. This will be signed by your dApp unique key pair and can be validated server side by the public key which you can find on the configuration page on the dApp self service portal.
+Get the dApp's JWT. This can be used to hook in your own authentication mechanism. This will be signed by your dApp unique key pair and can be validated server side by the public key which you can find on the configuration page on the dApp self service portal. The app JWT token gets extended before it expiries, as long as the the user is passes the active checks (moving mouse, clicks etc) and when it does it fires the event listener [appJwtExtended](/guide/web-sdk/sdk-event-listeners.html#appjwtextended). You must listen to `appJwtExtended` event listener else your jwt token you send to your server will never extend when the user is being active, meaning once the first token expiries your server will return 403 on your requests.
 
 ```ts
 jwt(): Promise<string>

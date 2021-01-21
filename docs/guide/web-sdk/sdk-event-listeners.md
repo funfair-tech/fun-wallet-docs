@@ -587,6 +587,56 @@ window.funwallet.sdk.on(
 
 ---
 
+## appJwtExtended
+
+This will fire when the `appJwt` token has been extended.
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab TypeScript
+
+```ts
+import window from '@funfair-tech/wallet-sdk/window';
+import { MessageListeners, AppJwtExtended } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on<AppJwtExtended>(
+  MessageListeners.appJwtExtended,
+  (result: AppJwtExtended) => {
+    if (result.origin === 'https://wallet.funfair.io/') {
+      console.log(result.data);
+    }
+  }
+);
+```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.appJwtExtended, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    console.log(result.data);
+  }
+});
+```
+
+:::
+
+::::
+
+`result.data` returns:
+
+```ts
+{
+  jwtToken: string;
+}
+```
+
+---
+
 ## pendingTransaction
 
 This will fire when a pending transaction has occurred on the Wallet. We suggest if your dApp has sent this transaction and wants to hook onto certain notifications, e.g. the transaction hash, receipt etc just use the framework your using to get that data (ethers/web3).

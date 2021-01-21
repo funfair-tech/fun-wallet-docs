@@ -139,6 +139,7 @@ function getGuideSidebar(
         'information/fiat-gateway',
         'information/approval-modal',
         'information/auto-resizing-iframes',
+        'information/support',
       ],
     },
     {
