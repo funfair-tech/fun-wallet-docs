@@ -10,4 +10,4 @@
 
 💡 On click of the sign-in / up button, the dApp client calls the SDK to popup the authentication view. The embedded leader creates a secure encrypted communication channel with the authentication popup, passing a public RSA key to the authentication popup.
 
-💡 Sign-in / Register / Recovery actions happen, and the popup now holds all the authentication context. It then encrypts all of the authenticated data with the RSA public key the leader supplied and broadcasts it to the leader instance. At this point the leader is authenticated and can do the necessary signing.
+💡 Sign-in / register / recovery actions happen, and the popup now holds all the authentication context. It then encrypts all of the authenticated data with the RSA public key the leader supplied, and broadcasts it to the leader instance. At this point the leader is authenticated and can do the necessary signing.

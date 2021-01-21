@@ -1,16 +1,16 @@
-# Integrating with a react app
+# Integrating with a React App
 
-## GitHub repo
+## GitHub Repo
 
-A full react code integration example can be seen [here](https://github.com/funfair-tech/wallet-react-integration-sample-js)
+A full React code integration example can be seen [here](https://github.com/funfair-tech/wallet-react-integration-sample-js).
 
 ## HTTPS
 
 Your domain must ALWAYS run `https` when pointing to the wallet else it will be rejected. This is also required on local development.
 
-### Setup https on localhost
+### Set Up HTTPS on localhost
 
-Firstly please grab the `ssl` folder with all the files from [here](https://github.com/funfair-tech/wallet-react-integration-sample-js/tree/master/ssl) and drop it into the root of your project.
+First, please grab the `ssl` folder with all the files from [here](https://github.com/funfair-tech/wallet-react-integration-sample-js/tree/master/ssl) and drop it into the root of your project.
 
 You then need to create a `.env` file in the root which looks like:
 
@@ -22,7 +22,7 @@ SSL_KEY_FILE=./ssl/server.key
 
 If you already have a `.env` just add the above properties to it.
 
-When you serve this now using `react-scripts start` and it will serve it on https. You will need to install the https cert as shown below:
+When you serve this now using `react-scripts start`, it will serve it on HTTPS. You will need to install the HTTPS cert as shown below:
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -70,9 +70,9 @@ This guide will be shown in `js` but all the same rules apply for react `ts` pro
 import window from '@funfair-tech/wallet-sdk/window';
 ```
 
-## React package
+## React Package
 
-We have created a react package component library this package holds components you can use to hook the wallet into a react app easier. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-react-integration-sample-js)
+We have created a React package component library this package holds components which you can use to hook the Wallet into a React app more easily. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-react-integration-sample-js)
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -100,7 +100,7 @@ $ yarn add @funfair-tech/wallet-react
 
 ::: tab public/index.html
 
-Firstly you need to drop the wallet script into your `<head>` HTML tag within your main index.html (public > index.html). Please replace the `YOUR_APP_ID` with the your appId:
+First, you need to drop the wallet script into your `<head>` HTML tag within your main index.html (public > index.html). Please replace the `YOUR_APP_ID` with your appId:
 
 ```js
 <script
@@ -178,7 +178,7 @@ Usage:
 
 Type - Function
 
-This will fire when the wallet leader has loaded and this will be a function you register all your event listeners you want to attach to the wallet, list of them [here](https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#registering-an-event-listener)
+This will fire when the Wallet leader has loaded and this will be a function you register all your event listeners you want to attach to the Wallet. There is a list of them [here](https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#registering-an-event-listener)
 
 ```js
 import { WalletLeader } from '@funfair-tech/wallet-react';
@@ -405,11 +405,11 @@ export default App;
 
 ::: tab Authentication-Refresh
 
-As the server never sees the private key and all the decryption of it happens on the client side, once you refresh your tab, your private key is no longer in memory. We have handled a way to restore authentication on refresh and keep the user logged in. What this means for the developer is they must wait for [restoreAuthenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted) to complete before they show any UI, this is super fast but needed to avoid showing login buttons then flashing to logout buttons. Lets walk you through how you would do this.
+As the server never sees the private key and all the decryption of it happens on the client side, once you refresh your tab, your private key is no longer in memory. We have handled a way to restore authentication on refresh and keep the user logged in. What this means for the developer is they must wait for [restoreAuthenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted) to complete before they show any UI. This is super fast but needed to avoid showing login buttons then flashing to logout buttons. Let's walk you through how you would do this.
 
-If you want to read more about how this works and keeps your PK safe read [here](/guide/how-does-it-work/re-authentication.html#double-encrypted-localstorage-setup).
+If you want to read more about how this works and keeps your private key safe read [here](/guide/how-does-it-work/re-authentication.html#double-encrypted-localstorage-setup).
 
-We just add a loading state to our data which is default true, this will then turn to false once the restoreAuthenticationCompleted has completed. We then in the html just add some loading state to hide and show the buttons.
+We just add a loading state to our data which defaults to `true`. This will then turn to `false` once the restoreAuthenticationCompleted has completed. We then in the HTML just add some loading state to hide and show the buttons.
 
 src/App.js
 
@@ -494,9 +494,9 @@ Usage:
 <WalletFollower />
 ```
 
-If you want to deep link into a page on the wallet that is explained [here](./routing.html#deep-link-page-routes). By default the main `/funds` page will load.
+If you want to deep link into a page on the Wallet, please see [here](./routing.html#deep-link-page-routes). By default, the main `/funds` page will load.
 
-Please note you must only show the follower once [restoreAuthenticationTaskCompleted](./sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationCompleted](./sdk-event-listeners.html#authenticationcompleted) has fired, `authenticationCompleted` means they are have logged in.
+Please note you must only show the follower once [restoreAuthenticationTaskCompleted](./sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationCompleted](./sdk-event-listeners.html#authenticationcompleted) has fired. `authenticationCompleted` means they are have logged in.
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -575,15 +575,15 @@ export default App;
 
 ::::
 
-## KYC - feature request only!
+## KYC - Feature Request Only!
 
-KYC is a billable feature due to costs we have to pay the third party KYC provider. You will have to get in contact with funfair if you want this feature turned on. To get in contact with us please join our discord by clicking [here](https://discord.com/invite/YEUQVvQrzy).
+KYC is a billable feature due to costs we have to pay third party KYC providers. You will have to get in contact with FunFair if you want this feature turned on. To get in contact with us, please join our Discord by clicking [here](https://discord.com/invite/YEUQVvQrzy).
 
 If you do not want to have KYC as a feature on your dApp please ignore this section completely.
 
-To read more about our providers and countries we cover please read [here](../information/kyc)
+To read more about our providers and countries we cover please read [here](../information/kyc).
 
-It is up to the dApp to decide if they want to use our KYC feature or not and at what stage. The events get fired regardless but its up to the dApp to listen to them if they want to use it. The dApp needs to listen to [isKycVerified](./sdk-event-listeners.html#iskycverified) event which will fire when the user has successfully passed or failed KYC'ed, it also fires on initial login with the status of that logged in users KYC status. You can listen to [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event which will fire when the user cancels or closes the KYC modal. The reason we made the dApp handle this is to give them greater flexibility on when you show the KYC stage and what your client does after it was cancelled.
+It is up to the dApp to decide if they want to use our KYC feature or not and at which stage. The events get fired regardless but its up to the dApp to listen to them if they want to use it. The dApp needs to listen to [isKycVerified](./sdk-event-listeners.html#iskycverified) event which will fire when the user has successfully passed or failed KYC. It also fires on initial login with the value of that logged in user's KYC status. You can listen to [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event which will fire when the user cancels or closes the KYC modal. The reason we made the dApp handle this is to give them greater flexibility on when you show the KYC stage and what your client does after it was cancelled.
 
 To check if the user has KYC'ed or not you can call [isKycVerified](./sdk-methods/kyc.html#kyc-verified-status-for-the-logged-in-user)
 
@@ -591,13 +591,13 @@ To check if the user has KYC'ed or not you can call [isKycVerified](./sdk-method
 const isKycVerified = await window.funwallet.sdk.kyc.isVerified();
 ```
 
-If that returns false (aka they are not KYC'ed) you can trigger the KYC modal to open by calling [sdk.kyc.start()](./sdk-methods/kyc.html#start-kyc) SDK method:
+If that returns false (i.e. they are not KYC'd), you can trigger the KYC modal to open by calling [sdk.kyc.start()](./sdk-methods/kyc.html#start-kyc) SDK method:
 
 ```js
 await window.funwallet.sdk.kyc.start();
 ```
 
-Once completed you will get the status of the pass/fail through [isKycVerified](./sdk-event-listeners.html#iskycverified) event. Obviously if they do not complete the KYC you will see them cancel it with the [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event.
+Once completed, you will get the status of the pass/fail through [isKycVerified](./sdk-event-listeners.html#iskycverified) event. Obviously, if they do not complete the KYC you will see them cancel it with the [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event.
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -790,16 +790,16 @@ export default App;
 
 ::::
 
-## Speaking to the blockchain (web3/etherjs)
+## Speaking to the Blockchain (web3/etherjs)
 
-Now you have the wallet all hooked up you can start speaking to the blockchain. Most developers use `web3` and `etherjs` to interact with the blockchain, the SDK exposes our own [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) compatible ethereum provider.
+Now you have the Wallet all hooked up, you can start speaking to the blockchain. Most developers use `web3` and `etherjs` to interact with the blockchain. The SDK exposes our own [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) compatible Ethereum provider.
 
 ```js
 // provider lives here in the FunFair Wallet SDK object
 window.funwallet.sdk.ethereum;
 ```
 
-To read more about the ethereum provider please read [here](./ethereum-provider).
+To read more about the Ethereum provider please read [here](./ethereum-provider).
 
 This can be injected into any new `web3` or `ethers` instance. This means you can use the standard `web3` or `ethers` interface to do all your blockchain calls and our Ethereum provider makes sure all those calls go through the authenticated leader Wallet instance. This means minimal changes to your blockchain code.
 
@@ -865,9 +865,9 @@ const provider = new ethers.providers.Web3Provider(
 
 We don't support `eth_sign`, `eth_signTransaction` and `eth_sendRawTransaction` due to the security concerns with signing and not sending. You can only sign and send with our Wallet. Also `eth_newFilter`, `eth_newBlockFilter`, `eth_getFilterChanges`, `eth_getFilterLogs`, `eth_uninstallFilter` and `eth_newPendingTransactionFilter` are not supported by our nodes so will not work.
 
-### Demo using web3 in the example code above
+### Demo Using web3 in the Example Code Above
 
-First you need to make sure web3 is installed:
+First, you need to make sure web3 is installed:
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -895,9 +895,9 @@ $ yarn add web3
 
 We will create a new `js` file in the `src` which will hold our web3 logic. In this example we are going to call it `ethereum.service.js`. Please note you can structure this code as you want but for us a new `.js` file makes the code nice and clean.
 
-We have wrote common `web3` methods to send a transaction and sign a message. All the other `web3` methods work the same and you can just use the standard interface to call them.
+We have written common `web3` methods to send a transaction and sign a message. All the other `web3` methods work the same and you can just use the standard interface to call them.
 
-When you sign anything an approval modal will appear for the user automatically, read [here](../information/approval-modal) for more info about them.
+When you sign anything an approval modal will appear for the user automatically - see [here](../information/approval-modal) for more info about them.
 
 ```js
 import Web3 from 'web3';

@@ -1,6 +1,6 @@
 # SDK Methods Currencies
 
-## Currenct currency
+## Current Currency
 
 Returns the authenticated user's current currency.
 
@@ -30,9 +30,9 @@ const currentCurrency = await window.funwallet.sdk.currencies.current();
 
 ::::
 
-## Set currency
+## Set Currency
 
-Allows the dApp to set the currency for the wallet. This can be useful if you have your own currency UI and on change of that you want to make sure the wallet shows in the same currency the user has selected.
+Allows the dApp to set the currency for the Wallet. This can be useful if you have your own currency UI and on change of that you want to make sure the Wallet shows amounts in the same currency the user has selected.
 
 ```ts
 set(fiatCurrency: FiatCurrencyType): Promise<void>
@@ -78,7 +78,7 @@ await window.funwallet.sdk.currencies.set(FiatCurrencyType.USD);
 
 ::::
 
-## Enabled currencies
+## Enabled Currencies
 
 Returns all the enabled currencies for this dApp setup.
 

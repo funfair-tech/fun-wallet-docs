@@ -2,7 +2,7 @@
 
 ## setLanguage
 
-Build the language for the wallet (default is en). This needs to be called on initial page load.
+Build the language for the Wallet (default is 'en'). This needs to be called on initial page load.
 
 ```ts
 public setLanguage(lang: string): string

@@ -1,8 +1,8 @@
 # SDK Methods Marketing
 
-## Get marketing opt-in status
+## Get Marketing Opt-In Status
 
-Get marketing opt-in status
+Get marketing opt-in status.
 
 ```ts
 get(): Promise<boolean | null>
@@ -30,7 +30,7 @@ const marketingOptInStatus = await window.funwallet.sdk.marketing.get();
 
 ::::
 
-## Update marketing opt-in status
+## Update Marketing Opt-In Status
 
 Update marketing opt-in status. Will throw if it did not update the status successfully.
 

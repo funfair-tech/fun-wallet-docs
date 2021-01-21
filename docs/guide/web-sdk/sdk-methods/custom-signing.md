@@ -2,7 +2,7 @@
 
 ## signAndVerifyInterpretedBytes
 
-This method is used to call contract calls we whitelist, for example `openFateChannel`, without the need for the approval modal.
+This method is used to make whitelisted contract calls, for example `openFateChannel`, without the need for the approval modal.
 
 ```ts
  public async signAndVerifyInterpretedBytes(

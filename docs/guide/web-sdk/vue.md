@@ -1,16 +1,16 @@
-# Integrating with a vue app
+# Integrating with a Vue App
 
-## GitHub repo
+## GitHub Repo
 
-A full react code integration example can be seen [here](https://github.com/funfair-tech/wallet-vue-integration-sample-js)
+A full Vue code integration example can be seen [here](https://github.com/funfair-tech/wallet-vue-integration-sample-js)
 
 ## HTTPS
 
-Your domain must ALWAYS run `https` when pointing to the wallet else it will be rejected. This is also required on local development.
+Your domain must ALWAYS run `https` when pointing to the Wallet else it will be rejected. This is also required on local development.
 
 ### Setup https on localhost
 
-Firstly please grab the `ssl` folder with all the files from [here](https://github.com/funfair-tech/wallet-vue-integration-sample-js/tree/master/ssl) and drop it into the root of your project.
+First, please grab the `ssl` folder with all the files from [here](https://github.com/funfair-tech/wallet-vue-integration-sample-js/tree/master/ssl) and drop it into the root of your project.
 
 You then need to config the `vue.config.js` to map the `key` and `cert`. If you do not have a `vue.config.js` please create one in the main root.
 
@@ -40,7 +40,7 @@ module.exports = {
 };
 ```
 
-When you serve this now using `vue-cli-service serve` and it will serve it on https. You will need to install the https cert as shown below:
+When you serve this now using `vue-cli-service serve` and it will serve it on HTTPS. You will need to install the HTTPS cert as shown below:
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -82,15 +82,15 @@ $ yarn add @funfair-tech/wallet-sdk
 
 ## TypeScript Typings
 
-This guide will be shown in `js` but all the same rules apply for vue `ts` projects. Make sure you use all the typings supplied in the `SDK`. As the `SDK` is exposed on the window object, you should use the window object supplied by the `SDK`. This extends the `Window` object as well, so you can use it for standard window calls. This will give you full compile time errors on your wallet integration.
+This guide will be shown in `js` but all the same rules apply for vue `ts` projects. Make sure you use all the typings supplied in the `SDK`. As the `SDK` is exposed on the window object, you should use the window object supplied by the `SDK`. This extends the `Window` object as well, so you can use it for standard window calls. This will give you full compile time errors on your Wallet integration.
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
 ```
 
-## Vue package
+## Vue Package
 
-We have created a vue package component library this package holds components you can use to hook the wallet into a vue app easier. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-vue-integration-sample-js)
+We have created a Vue package component library. This package holds components you can use to hook the Wallet into a Vue app more easily. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-vue-integration-sample-js)
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -118,7 +118,7 @@ $ yarn add @funfair-tech/wallet-vue
 
 ::: tab public/index.html
 
-Firstly you need to drop the wallet script into your `<head>` HTML tag within your main index.html (public > index.html). Please replace the `YOUR_APP_ID` with the your appId:
+First, you need to drop the Wallet script into your `<head>` HTML tag within your main index.html (public > index.html). Please replace the `YOUR_APP_ID` with the your appId:
 
 ```js
 <script
@@ -173,7 +173,7 @@ Usage:
 
 Type - Function
 
-This will fire when the wallet leader has loaded and this will be a function you register all your event listeners you want to attach to the wallet, list of them [here](https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#registering-an-event-listener)
+This will fire when the Wallet leader has loaded and this will be a function you register all your event listeners you want to attach to the Wallet, list of them [here](https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#registering-an-event-listener)
 
 ```vue
 <template>
@@ -276,7 +276,7 @@ window.funwallet.sdk.auth.login();
 This will load a window popup for the user to enter their login details. Once logged in it will fire [authenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted), which you will need to have registered to so you can listen out for success. If the user closes the authentication popup it will fire [authenticationPopUpClosed](/guide/web-sdk/sdk-event-listeners.html#authenticationpopupclosed), which you can listen out for if you want to know when that happens.
 
 **NOTE**
-Chrome and other browsers can block popups if triggered without a genuine user click. Make sure whenever you pop this modal up its from a click event from the user to avoid any cross browser issues.
+Chrome and other browsers can block popups if triggered without a genuine user click. Make sure whenever you pop this modal up it's from a click event from the user to avoid any cross browser issues.
 
 src/App.vue
 
@@ -510,9 +510,9 @@ export default {
 
 As the server never sees the private key and all the decryption of it happens on the client side, once you refresh your tab, your private key is no longer in memory. We have handled a way to restore authentication on refresh and keep the user logged in. What this means for the developer is they must wait for [restoreAuthenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted) to complete before they show any UI, this is super fast but needed to avoid showing login buttons then flashing to logout buttons. Lets walk you through how you would do this.
 
-If you want to read more about how this works and keeps your PK safe read [here](/guide/how-does-it-work/re-authentication.html#double-encrypted-localstorage-setup).
+If you want to read more about how this works and keeps your private key safe read [here](/guide/how-does-it-work/re-authentication.html#double-encrypted-localstorage-setup).
 
-We just add a loading state to our data which is default true, this will then turn to false once the restoreAuthenticationCompleted has completed. We then in the template just add some loading state to hide and show the buttons.
+We just add a loading state to our data which defaults to `true`. This will then turn to `false` once the restoreAuthenticationCompleted has completed. We then in the template just add some loading state to hide and show the buttons.
 
 src/App.vue
 
@@ -638,9 +638,9 @@ export default {
 
 ::::
 
-## Show wallet UI
+## Show Wallet UI
 
-To show any wallet UI you have to import the `WalletFollower` from the sdk.
+To show any Wallet UI you have to import the `WalletFollower` from the SDK.
 
 ```js
 import { WalletFollower } from '@funfair-tech/wallet-vue';
@@ -652,9 +652,9 @@ Usage:
 <WalletFollower />
 ```
 
-If you want to deep link the into a page on the wallet it is explained how to do that [here](./routing.html#deep-link-page-routes). By default the main `/funds` page will load.
+If you want to deep link the into a page on the Wallet, we explain how to do that [here](./routing.html#deep-link-page-routes). By default, the main `/funds` page will load.
 
-Please note you must only show the follower once [restoreAuthenticationTaskCompleted](./sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationCompleted](./sdk-event-listeners.html#authenticationcompleted) has fired, `authenticationCompleted` means they are logged in.
+Please note you must only show the follower once [restoreAuthenticationTaskCompleted](./sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationCompleted](./sdk-event-listeners.html#authenticationcompleted) has fired. `authenticationCompleted` means they are logged in.
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -858,9 +858,9 @@ button {
 
 ::::
 
-## KYC - feature request only!
+## KYC - Feature Request Only!
 
-KYC is a billable feature due to costs we have to pay the third party KYC provider. You will have to get in contact with funfair if you want this feature turned on. To get in contact with us please join our discord by clicking [here](https://discord.com/invite/YEUQVvQrzy).
+KYC is a billable feature due to costs we have to pay third party KYC providers. You will have to get in contact with FunFair if you want this feature turned on. To get in contact with us please join our Discord by clicking [here](https://discord.com/invite/YEUQVvQrzy).
 
 If you do not want to have KYC as a feature on your dApp please ignore this section completely.
 
@@ -874,13 +874,13 @@ To check if the user has KYC'ed or not you can call [isKycVerified](./sdk-method
 const isKycVerified = await window.funwallet.sdk.kyc.isVerified();
 ```
 
-If that returns false (aka they are not KYC'ed) you can trigger the KYC modal to open by calling [sdk.kyc.start()](./sdk-methods/kyc.html#start-kyc) SDK method:
+If that returns false (i.e. they are not KYC'd), you can trigger the KYC modal to open by calling [sdk.kyc.start()](./sdk-methods/kyc.html#start-kyc) SDK method:
 
 ```js
 await window.funwallet.sdk.kyc.start();
 ```
 
-Once completed you will get the status of the pass/fail through [isKycVerified](./sdk-event-listeners.html#iskycverified) event. Obviously if they do not complete the KYC you will see them cancel it with the [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event.
+Once completed, you will get the status of the pass/fail through [isKycVerified](./sdk-event-listeners.html#iskycverified) event. Obviously if they do not complete the KYC you will see them cancel it with the [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event.
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -1122,16 +1122,16 @@ button {
 
 ::::
 
-## Speaking to the blockchain (web3/etherjs)
+## Speaking to the Blockchain (web3/etherjs)
 
-Now you have the wallet all hooked up you can start speaking to the blockchain. Most developers use `web3` and `etherjs` to interact with the blockchain, the SDK exposes our own [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) compatible ethereum provider.
+Now you have the Wallet all hooked up you can start speaking to the blockchain. Most developers use `web3` and `etherjs` to interact with the blockchain. The SDK exposes our own [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) compatible Ethereum provider.
 
 ```js
 // provider lives here in the FunFair Wallet SDK object
 window.funwallet.sdk.ethereum;
 ```
 
-To read more about the ethereum provider please read [here](./ethereum-provider).
+To read more about the Ethereum provider, please read [here](./ethereum-provider).
 
 This can be injected into any new `web3` or `ethers` instance. This means you can use the standard `web3` or `ethers` interface to do all your blockchain calls and our Ethereum provider makes sure all those calls go through the authenticated leader Wallet instance. This means minimal changes to your blockchain code.
 

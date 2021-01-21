@@ -1,8 +1,8 @@
-# SDK Methods Eth
+# SDK Methods ETH
 
-## Ethereum address
+## Ethereum Address
 
-Returns the authenticated users Ethereum address. If they're not authenticated it will return `null`.
+Returns the authenticated user's Ethereum address. If they're not authenticated it will return `null`.
 
 ```ts
 address(): Promise<string | null>
@@ -30,9 +30,9 @@ const ethereumAddress = await window.funwallet.sdk.eth.address();
 
 ::::
 
-## Ethereum balance
+## Ethereum Balance
 
-Returns the authenticated users Ethereum balance. This will be formatted in eth for you. You can obviously use the JSONRPC call to get the balance this is just an exposed explict call.
+Returns the authenticated user's Ethereum balance. This will be formatted in ETH for you. You can obviously use the JSON-RPC call to get the balance; this is just an exposed explicit call.
 
 ```ts
 balance(): Promise<string>
@@ -62,7 +62,7 @@ const ethereumBalance = await window.funwallet.sdk.eth.balance();
 
 ## Ethereum fiat price
 
-Returns the fiat price that eth is currently at in the users selected currency.
+Returns the fiat price that ETH is currently valued at, in the user's selected currency.
 
 ```ts
 fiatPrice(): Promise<number>

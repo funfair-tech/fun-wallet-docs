@@ -4,7 +4,7 @@ We have our own Ethereum provider which can be injected into any new `web3` or `
 
 Once you initialize the Wallet, the SDK will expose the Ethereum provider on the window, which can be used as the provider you inject when you create a new `web3` or `ethers` instance.
 
-The ethereum provider conform to the [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193).
+The Ethereum provider conform to the [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193).
 
 ```ts
 // provider lives here in the FunFair Wallet SDK object

@@ -2,7 +2,7 @@
 
 ## Login
 
-This opens the authentication pop up for you and can be called on any click event. Please note this should not be called unless its a proper user click or it could be blocked by some browsers
+This opens the authentication pop up for you and can be called on any click event. Please note this should not be called unless it's a proper user click or it could be blocked by some browsers.
 
 ```ts
 login(): void
@@ -62,7 +62,7 @@ const loggedIn = await window.funwallet.sdk.auth.authenticated();
 
 ## Logout
 
-This logs out all authenticated instances of the wallet including the leader.
+This logs out all authenticated instances of the Wallet, including the leader.
 
 ```ts
 logout(): Promise<void>
@@ -94,7 +94,7 @@ await window.funwallet.sdk.auth.logout();
 
 ### User accountId
 
-This gets the fun wallet user account id for that user. This will be the same whatever dApp they login to, it's a global ID.
+This gets the FunFair Wallet user account ID for that user. This will be the same whatever dApp they log in to - it's a global ID.
 
 ```ts
 id(): Promise<string>
@@ -122,9 +122,9 @@ const userAccountId = await window.funwallet.sdk.auth.user.id();
 
 ::::
 
-### User active
+### User Active
 
-The sdk handles all `mouse`, `clicks` and `scroll` events from the dapp window. This method is here if you have a edge case integration where you have another iframe in the dapp which the user has to use. In this case you need to emit messages back from that iframe to your dapp which then should call this sdk method to keep the JWT token refreshing to make sure it does not fire an inactivity event which logs all instances out of the Wallet. We suggest calling this every 30 seconds. If you don't have any edge cases like this in your dapp please ignore.
+The SDK handles all `mouse`, `clicks` and `scroll` events from the dApp window. This method is here if you have an edge case integration where you have another iframe in the dApp which the user has to use. In this case you need to emit messages back from that iframe to your dApp, which then should call this SDK method to keep the JWT token refreshing to make sure it does not fire an inactivity event which logs all instances out of the Wallet. We suggest calling this every 30 seconds. If you don't have any edge cases like this in your dApp, please ignore.
 
 ```ts
 active(): Promise<void>
@@ -154,9 +154,9 @@ await window.funwallet.sdk.auth.user.active();
 
 ## App
 
-### Jwt token
+### JWT Token
 
-Get the dApp's JWT. This can be used to hook in your own authentication mechanism. This will be signed by your dApp unique key pair and can be validated server side by the public key which you can find on the configuration page on the dApp self service portal. The app JWT token gets extended before it expiries, as long as the the user is passes the active checks (moving mouse, clicks etc) and when it does it fires the event listener [appJwtExtended](/guide/web-sdk/sdk-event-listeners.html#appjwtextended). You must listen to `appJwtExtended` event listener else your jwt token you send to your server will never extend when the user is being active, meaning once the first token expiries your server will return 403 on your requests.
+Get the dApp's JWT. This can be used to hook in your own authentication mechanism. This will be signed by your dApp's unique key pair and can be validated server side by the public key, which you can find on the configuration page on the dApp self-service portal. The dApp JWT gets extended before it expires, as long as the the user passes the active checks (moving mouse, clicks etc) and when it does it fires the event listener [appJwtExtended](/guide/web-sdk/sdk-event-listeners.html#appjwtextended). You must listen to `appJwtExtended` event listener, otherwise the JWT you send to your server will never extend when the user is being active, meaning once the first token expires your server will return 403s for your requests.
 
 ```ts
 jwt(): Promise<string>
