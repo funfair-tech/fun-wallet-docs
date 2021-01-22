@@ -12,7 +12,7 @@ The SDK handles all the encoding and decoding for you: the dApp just needs to ma
 window.funwallet.formatRouterToValue(YOUR_PAGE_VALUE);
 ```
 
-This will format certain stuff like replace `?` > `_` and `=` > `.` so we can preserve query string parameters for the Wallet itself whilst also keeping the query string in a valid format.
+This will format certain stuff like replace `?` > `_` and `=` > `.`, so we can preserve query string parameters for the Wallet itself whilst also keeping the query string in a valid format.
 
 ## Deep Link Page Routes
 

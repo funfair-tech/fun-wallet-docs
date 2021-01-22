@@ -1,8 +1,8 @@
 # SDK Methods Networks
 
-## Enabled networks
+## Enabled Networks
 
-Returns the enabled networks set by the wallet dApp config.
+Returns the enabled networks set by the Wallet dApp config.
 
 ```ts
 enabled(): Promise<NetworkDetails[]>
@@ -56,7 +56,7 @@ const enabledNetworks = await window.funwallet.sdk.networks.enabled();
 
 ::::
 
-## Current network
+## Current Network
 
 Returns the authenticated user's current network details.
 
@@ -112,7 +112,7 @@ const networkState = await window.funwallet.sdk.networks.current();
 
 ::::
 
-## Gas recommendations
+## Gas Recommendations
 
 Get the gas recommendations
 

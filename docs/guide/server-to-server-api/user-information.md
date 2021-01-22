@@ -1,4 +1,4 @@
-# User information
+# User Information
 
 ```js
 POST: /server/userinfo?yourAppAddress
@@ -6,7 +6,7 @@ POST: /server/userinfo?yourAppAddress
 
 The information returned by this endpoint focuses mainly around KYC verification and (for gambling dApps) self-exclusion.
 
-## Sample request
+## Sample Request
 
 ```js
 {
@@ -26,7 +26,7 @@ The userAddress field should be populated with the Ethereum account address for 
 
 You will need to populate the userLocation with the three letter ISO code corresponding to their country, and the userIpAddress field with their IP address.
 
-## Sample response
+## Sample Response
 
 ```js
 {
@@ -39,7 +39,7 @@ You will need to populate the userLocation with the three letter ISO code corres
     "excludedType": "string", // The type of exclusion: 'ON_BREAK' (user taking a break; can't play, but break will end) or 'EXCLUDED' (self-excluded, forever)
     "exclusionReactivationDate": "2020-06-02T09:11:49.817Z" // The earliest termination date/time of any break
   },
-  "optedInToMarketing": true, // Indicates whether user has opted-in to marketing communications
+  "optedInToMarketing": true, // Indicates whether user has opted in to marketing communications
   "signers": [ // The list of the user's registered signers
     "0xe4cc4A8773E029267e2876C382A54166C4BB05a5"
   ],

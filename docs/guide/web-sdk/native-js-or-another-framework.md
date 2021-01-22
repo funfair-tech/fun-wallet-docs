@@ -1,22 +1,22 @@
-# Integrating with native JS or another framework
+# Integrating with Native JS or Another Framework
 
-You may be using another JS framework or you may want to build your own package which is fine. We highly recommend using our packages for react, vue and angular but this guide shows you the raw code which those packages abstract away for you. If you have a request for any popular javascript frameworks which you would like a integrated code with reusable components packages to install built for it, please do let us know and we try our best to get it up here for you.
+You may be using another JS framework or you may want to build your own package which is fine. We highly recommend using our packages for React, Vue and Angular, but this guide shows you the raw code which those packages abstract away for you. If you have a request for any popular Javascript frameworks for which you would like integrated code with reusable components packages to install built for it, please do let us know and we'll try our best to get it up here for you.
 
-If your using plain JS full code example is [here](https://github.com/funfair-tech/wallet-vanilla-integration-sample-js) but this guide should help you as well.
+If you're using plain JS, a full code example is [here](https://github.com/funfair-tech/wallet-vanilla-integration-sample-js), but this guide should help you as well.
 
 ## HTTPS
 
-### Setup https on localhost
+### Set Up HTTPS on localhost
 
-Firstly please grab the `ssl` folder with all the files from [here](https://github.com/funfair-tech/wallet-vanilla-integration-sample-js/tree/master/ssl) and drop it into the root of your project.
+Firstly, please grab the `ssl` folder with all the files from [here](https://github.com/funfair-tech/wallet-vanilla-integration-sample-js/tree/master/ssl) and drop it into the root of your project.
 
-Using `webpack-dev-server` you can start the project using https like:
+Using `webpack-dev-server` you can start the project using HTTPS like:
 
 ```js
 webpack-dev-server --https --key ssl/server.key --cert ssl/server.crt
 ```
 
-You will need to install the https cert as shown below:
+You will need to install the HTTPS cert as shown below:
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -58,7 +58,7 @@ $ yarn add @funfair-tech/wallet-sdk
 
 ## TypeScript Typings
 
-This guide will be shown in `js` but all the same rules apply for `ts` projects. Make sure you use all the typings supplied in the `SDK`. As the `SDK` is exposed on the window object, you should use the window object supplied by the `SDK`. This extends the `Window` object as well, so you can use it for standard window calls. This will give you full compile time errors on your wallet integration.
+This guide will be shown in `js` but all the same rules apply for `ts` projects. Make sure you use all the typings supplied in the `SDK`. As the `SDK` is exposed on the window object, you should use the window object supplied by the `SDK`. This extends the `Window` object as well, so you can use it for standard window calls. This will give you full compile time errors on your Wallet integration.
 
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
@@ -66,7 +66,7 @@ import window from '@funfair-tech/wallet-sdk/window';
 
 ## Hooking up the SDK
 
-Firstly you need to drop the below script into your `<head>` HTML tag in the main index.html. Please replace the `YOUR_APP_ID` with the appId we have supplied you:
+First, you need to drop the below script into your `<head>` HTML tag in the main index.html. Please replace the `YOUR_APP_ID` with the appId we have supplied you:
 
 ```html
 <!DOCTYPE html>
@@ -90,7 +90,7 @@ Firstly you need to drop the below script into your `<head>` HTML tag in the mai
 
 We call the Wallet authentication iframe the `leader`. If you want to read more information about what a `leader` is, please go [here](/guide/how-does-it-work/leader-and-follower-communication.html#what-is-a-leader-instance).
 
-Paste this HTML snippet as close as possible to the top of the `<body>`. This should live in a place which does not get removed from the DOM. You need to allow the camera in the feature policies in order for our KYC provider to work. This example is using an `onload` event using JavaScript, just change that event accordingly for the framework you're using.
+Paste this HTML snippet as closely as possible to the top of the `<body>`. This should live in a place which does not get removed from the DOM. You need to allow the camera in the feature policies in order for our KYC provider to work. This example is using an `onload` event using JavaScript - just change that event accordingly for the framework you're using.
 
 ```html
 <div id="fun-wallet-leader">
@@ -108,7 +108,7 @@ Paste this HTML snippet as close as possible to the top of the `<body>`. This sh
 <div id="fun-wallet-darken"></div>
 ```
 
-The Wallet has certain event listeners it needs to register on load of the Wallet. To avoid any race conditions, ensure you only `init` the SDK after the leader iframe has loaded.
+The Wallet has certain event listeners it needs to register upon loading. To avoid any race conditions, ensure you only `init` the SDK after the leader iframe has loaded.
 
 Example:
 
@@ -198,7 +198,7 @@ You can find all of the available event listeners [here](/guide/web-sdk/sdk-even
 
 ## Authentication
 
-It's up to the integration to show the user the login and logout buttons, which allows flexibility on designs. This below will show you how you would hook login and logout buttons into your app.
+It's up to the integration to show the user the login and logout buttons, which allows flexibility on designs. Below, we'll show you how you would hook login and logout buttons into your app.
 
 ### Login
 
@@ -208,7 +208,7 @@ Method to pop up the authentication modal.
 window.funwallet.sdk.auth.login();
 ```
 
-This will load a window popup for the user to enter their login details. Once logged in it will fire [authenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted), which you will need to have registered to so you can listen out for success. If the user closes the authentication popup it will fire [authenticationPopUpClosed](/guide/web-sdk/sdk-event-listeners.html#authenticationpopupclosed), which you can listen out for if you want to know when that happens.
+This will load a window popup for the user to enter their login details. Once logged in, it will fire [authenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted), which you will need to have registered to so you can listen out for success. If the user closes the authentication popup it will fire [authenticationPopUpClosed](/guide/web-sdk/sdk-event-listeners.html#authenticationpopupclosed), which you can listen out for if you want to know when that happens.
 
 **NOTE**
 Chrome and other browsers can block popups if triggered without a genuine user click. Make sure whenever you pop this modal up its from a click event from the user to avoid any cross browser issues.
@@ -458,13 +458,13 @@ Example:
 </html>
 ```
 
-### Authentication refresh
+### Authentication Refresh
 
-As the server never sees the private key and all the decryption of it happens on the client side, once you refresh your tab, your private key is no longer in memory. We have handled a way to restore authentication on refresh and keep the user logged in. What this means for the developer is they must wait for [restoreAuthenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted) to complete before they show any UI, this is super fast but needed to avoid showing login buttons then flashing to logout buttons. Lets walk you through how you would do this.
+As the server never sees the private key and all the decryption of it happens on the client side, once you refresh your tab, your private key is no longer in memory. We have handled a way to restore authentication on refresh and keep the user logged in. What this means for the developer is they must wait for [restoreAuthenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted) to complete before they show any UI. This is super fast but needed to avoid showing login buttons then flashing to logout buttons. Lets walk you through how you would do this.
 
-If you want to read more about how this works and keeps your PK safe read [here](/guide/how-does-it-work/re-authentication.html#double-encrypted-localstorage-setup).
+If you want to read more about how this works and keeps your private key safe read [here](/guide/how-does-it-work/re-authentication.html#double-encrypted-localstorage-setup).
 
-We just add a loading state to our data which is default true, this will then turn to false once the restoreAuthenticationCompleted has completed. We then in the template just add some loading state to hide and show the buttons.
+We just add a loading state to our data which is by default `true` - this will then turn to `false` once the restoreAuthenticationCompleted has completed. Then in the template we just add some loading state to hide and show the buttons.
 
 Example:
 
@@ -618,9 +618,9 @@ Paste this HTML snippet where you want the Wallet UI to render on your dApp. Thi
 ></iframe>
 ```
 
-please note you must only show the follower once [restoreAuthenticationTaskCompleted](./sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationcompleted](./sdk-event-listeners.html#authenticationcompleted) has fired, `authenticationcompleted` means they are logged in.
+Please note, you must only show the follower once [restoreAuthenticationTaskCompleted](./sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationcompleted](./sdk-event-listeners.html#authenticationcompleted) has fired. `authenticationcompleted` means they are logged in.
 
-If you want to deep link the into a page on the wallet please read [here](./routing.html#deep-link-page-routes).
+If you want to deep link the into a page on the Wallet, please read [here](./routing.html#deep-link-page-routes).
 
 Example:
 
@@ -770,29 +770,29 @@ Example:
 </html>
 ```
 
-## KYC - feature request only!
+## KYC - Feature Request Only!
 
-KYC is a billable feature due to costs we have to pay the third party KYC provider. You will have to get in contact with funfair if you want this feature turned on. To get in contact with us please join our discord by clicking [here](https://discord.com/invite/YEUQVvQrzy).
+KYC is a billable feature due to costs we have to pay third party KYC providers. You will have to get in contact with FunFair if you want this feature turned on. To get in contact with us, please join our Discord by clicking [here](https://discord.com/invite/YEUQVvQrzy).
 
 If you do not want to have KYC as a feature on your dApp please ignore this section completely.
 
-To read more about our providers and countries we cover please read [here](../information/kyc)
+To read more about our providers and countries we cover, please read [here](../information/kyc)
 
-It is up to the dApp to decide if they want to use our KYC feature or not and at what stage. The events get fired regardless but its up to the dApp to listen to them if they want to use it. The dApp needs to listen to [isKycVerified](./sdk-event-listeners.html#iskycverified) event which will fire when the user has successfully passed or failed KYC'ed, it also fires on initial login with the status of that logged in users KYC status. You can listen to [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event which will fire when the user cancels or closes the KYC modal. The reason we made the dApp handle this is to give them greater flexibility on when you show the KYC stage and what your client does after it was cancelled.
+It is up to the dApp to decide if they want to use our KYC feature or not and at which stage. The events get fired regardless, but it's up to the dApp to listen to them if they want to use it. The dApp needs to listen to [isKycVerified](./sdk-event-listeners.html#iskycverified) event which will fire when the user has successfully passed or failed KYC. It also fires on initial login with the value of that logged in user's KYC status. You can listen to the [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event, which will fire when the user cancels or closes the KYC modal. The reason we made the dApp handle this is to give them greater flexibility on when you show the KYC stage and what your client does after it was cancelled.
 
-To check if the user has KYC'ed or not you can call [isKycVerified](./sdk-methods/kyc.html#kyc-verified-status-for-the-logged-in-user)
+To check if the user has KYC'd or not you can call [isKycVerified](./sdk-methods/kyc.html#kyc-verified-status-for-the-logged-in-user)
 
 ```js
 const isKycVerified = await window.funwallet.sdk.kyc.isVerified();
 ```
 
-If that returns false (aka they are not KYC'ed) you can trigger the KYC modal to open by calling [sdk.kyc.start()](./sdk-methods/kyc.html#start-kyc) SDK method:
+If that returns false (i.e. they are not KYC'd), you can trigger the KYC modal to open by calling [sdk.kyc.start()](./sdk-methods/kyc.html#start-kyc) SDK method:
 
 ```js
 await window.funwallet.sdk.kyc.start();
 ```
 
-Once completed you will get the status of the pass/fail through [isKycVerified](./sdk-event-listeners.html#iskycverified) event. Obviously if they do not complete the KYC you will see them cancel it with the [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event.
+Once completed, you will get the status of the pass/fail through the [isKycVerified](./sdk-event-listeners.html#iskycverified) event. Obviously, if they do not complete the KYC you will see them cancel it with the [kycProcessCancelled](./sdk-event-listeners.html#kycprocesscancelled) event.
 
 Example:
 
@@ -976,20 +976,20 @@ Example:
 </html>
 ```
 
-## Speaking to the blockchain (web3/etherjs)
+## Speaking to the Blockchain (web3/etherjs)
 
-Now you have the wallet all hooked up you can start speaking to the blockchain. Most developers use `web3` and `etherjs` to interact with the blockchain, the SDK exposes our own [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) compatible ethereum provider.
+Now you have the Wallet all hooked up, you can start speaking to the blockchain. Most developers use `web3` and `etherjs` to interact with the blockchain. The SDK exposes our own [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) compatible Ethereum provider.
 
 ```js
 // provider lives here in the FunFair Wallet SDK object
 window.funwallet.sdk.ethereum;
 ```
 
-To read more about the ethereum provider please read [here](./ethereum-provider).
+To read more about the Ethereum provider please read [here](./ethereum-provider).
 
 This can be injected into any new `web3` or `ethers` instance. This means you can use the standard `web3` or `ethers` interface to do all your blockchain calls and our Ethereum provider makes sure all those calls go through the authenticated leader Wallet instance. This means minimal changes to your blockchain code.
 
-Once you the leader has loaded, the SDK will expose the Ethereum provider on the window, which can be used as the provider you inject when you create a new `web3` or `ethers` instance.
+Once the leader has loaded, the SDK will expose the Ethereum provider on the window, which can be used as the provider you inject when you create a new `web3` or `ethers` instance.
 
 ### web3
 
@@ -1051,9 +1051,9 @@ const provider = new ethers.providers.Web3Provider(
 
 We don't support `eth_sign`, `eth_signTransaction` and `eth_sendRawTransaction` due to the security concerns with signing and not sending. You can only sign and send with our Wallet. Also `eth_newFilter`, `eth_newBlockFilter`, `eth_getFilterChanges`, `eth_getFilterLogs`, `eth_uninstallFilter` and `eth_newPendingTransactionFilter` are not supported by our nodes so will not work.
 
-### Demo using web3 in the example code above
+### Demo Using web3 in the Example Code Above
 
-First you need to make sure web3 is installed:
+First, you need to make sure web3 is installed:
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -1278,4 +1278,4 @@ Example:
 </html>
 ```
 
-When you sign anything an approval modal will appear for the user automatically, read [here](../information/approval-modal) for more info about them.
+When you sign anything an approval modal will appear for the user automatically - read [here](../information/approval-modal) for more info about them.

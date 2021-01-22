@@ -17,7 +17,7 @@
 
 💡 As it's embedded in the dApp it has super powers, like storage and other things.
 
-💡 The leader is exposed on the window for easy web use.
+💡 The leader is exposed on the window for easy Web use.
 
 💡 It supports full typings.
 

@@ -1,6 +1,6 @@
 # FunFair Wallet Ethereum Provider
 
-## What is an Ethereum provider ?
+## What is an Ethereum Provider?
 
 💡 Most dApps use either web3 or etherjs to read from and write to the blockchain directly from the client.
 

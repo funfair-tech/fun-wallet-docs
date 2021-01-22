@@ -4,7 +4,7 @@ Please note none of the SDK calls will work if the SDK has called this. The SDK 
 
 ## init
 
-This initializes the SDK and sets up communicate with the leader instance and the Wallet. If you're using 1 of our react, vue or angular wallet packages you do not need to worry doing this it is handled for you.
+This initializes the SDK and sets up communication between the leader instance and the Wallet. If you're using one of our React, Vue or Angular Wallet packages you don't need to worry doing this - it is handled for you.
 
 ```ts
 public init(options?: InitOptions): void

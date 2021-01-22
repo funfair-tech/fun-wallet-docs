@@ -6,7 +6,7 @@ Since the Wallet can't trust the dApp hosting the client, it can't pass sensitiv
 
 If iframes are removed from the DOM, it kills the instance and when added back to the DOM it reloads itself. Also, if you move an iframe using JavaScript it also reloads itself - so there is no such thing as `magic iframes`.
 
-As the Wallet needs to be authenticated and then never reloaded due to it holding the user's private key in memory, this causes a bit of a problem. Front-end apps of today use awesome frameworks like Angular and React, and developers want to take advantage of lazy loading and other solid approaches. If you just had one instance which never got removed from the DOM it would only work on a very basic Web app hence where the `leader` and `follower` come in.
+As the Wallet needs to be authenticated and then never reloaded due to it holding the user's private key in memory, this causes a bit of a problem. Front-end apps of today use awesome frameworks like Angular and React, and developers want to take advantage of lazy loading and other solid approaches. If you just had one instance which never got removed from the DOM it would only work on a very basic Web app, hence where the `leader` and `follower` come in.
 
 ## What is a Leader Instance?
 
@@ -24,7 +24,7 @@ You must only ever spawn a follower when the [`authenticationCompleted`](#authen
 
 ## Secure Communication Between the Leader and Follower
 
-The leader and the follower communicate using the [`Broadcast Channel Api`](https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API), or via cookies. Safari and Edge do not support the native `Broadcast Channel Api` so they communicate by saving and reading cookies.
+The leader and the follower communicate using the [`Broadcast Channel Api`](https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API), or via cookies. Safari and Edge do not support the native `Broadcast Channel API` so they communicate by saving and reading cookies.
 
 <img :src="$withBase('/leader-follower-authentication-flow.png')" >
 
@@ -34,7 +34,7 @@ As you can see in the above flow, all data passed between the instances is encry
 
 💡 Every message between leader > follower and follower > leader is encrypted.
 
-💡 Even if the dApp could snoop (which it can't), the messages will be a blob of data without the RSA private key which is held in the instances memory, which means its a useless blob of data.
+💡 Even if the dApp could snoop (which it can't), the messages will be a blob of data without the RSA private key which is held in the instance's memory, which means it's a useless blob of data.
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 💡 A dApp can't get to that as it's protected by cross-site scripting and standard Internet security.
 <br/>

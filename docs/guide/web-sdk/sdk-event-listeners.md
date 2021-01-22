@@ -11,7 +11,7 @@ The SDK exposes two different ways to register an event listener:
 
 Once the SDK is initialized, you should hook onto all the event listeners, as each one is important to the integration. We recommend that the callback you write for each message listener is just a simple state change to your Redux store, allowing that state change to be reflected in your UI components. Reactive programming (e.g. RxJS) will simplify the integration, and while it's not required (the SDK itself doesn't impose any constraints on this), it is our recommended integration approach for a clean solution.
 
-## Registering an event listener
+## Registering an Event Listener
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -55,7 +55,7 @@ window.funwallet.sdk.on(MessageListeners.TypeYouWantToUse, (result) => {
 
 ::::
 
-## Registering a one-off listener
+## Registering a One-Off Listener
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -147,7 +147,7 @@ window.funwallet.sdk.once(MessageListeners.TypeYouWantToUse, (result) => {
 
 Always specify an exact target origin, not "\*", when you use `postMessage` to send data to other windows. A malicious site can change the location of the window without your knowledge, and therefore it can intercept the data sent using `postMessage`.
 
-Please note the SDK does check this as well and only connects messages from the Wallet but as the SDK is hosted on your side and exported globally on the window we suggest you check the origin as well. The messages the Wallet sends you are just information based anyway, we never register a event which says "go and execute this script on the parent site" so this makes it a lot less to worry about but we still suggest you abide by the security concerns addressed. If you fail to check this you can not be sure that the message has came from the Wallet.
+Please note, the SDK does check this as well and only connects messages from the Wallet but as the SDK is hosted on your side and exported globally on the window we suggest you check the origin as well. The messages the Wallet sends you are just information based anyway, we never register a event which says "go and execute this script on the parent site" so this makes it a lot less to worry about but we still suggest you abide by the security concerns addressed. If you fail to check this you can not be sure that the message has came from the Wallet.
 
 ## List of All Available Listeners
 
@@ -782,7 +782,7 @@ window.funwallet.sdk.on(MessageListeners.completedTransaction, (result) => {
 
 ## transactionReplaced
 
-This will fire when the user cancels the transaction or speeds it up within the wallet itself. Most wallets do not handle this meaning your dapp polls forever but if it happens when using the funwallet we will throw an error if your waiting for the receipt, also we will emit this event which tells you the `oldHash` the `newHash` and the reason it got replaced allowing you to link the old transaction to the new one without having to monitor events.
+This will fire when the user cancels the transaction or speeds it up within the Wallet itself. Most wallets do not handle this meaning that your dApp polls forever but if it happens when using the FunFair Wallet, we will throw an error if you're waiting for the receipt. Also, we will emit this event which tells you the `oldHash` the `newHash` and the reason it got replaced allowing you to link the old transaction to the new one without having to monitor events.
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -896,7 +896,7 @@ window.funwallet.sdk.on(MessageListeners.erc20TokenBalanceChanged, (result) => {
 
 ## erc20TokenFiatPriceChanged
 
-This will fire when an ERC20 token's fiat price changes. Fiat prices are monitored by the wallet server and updated regularly. Any change will trigger this event.
+This will fire when an ERC20 token's fiat price changes. Fiat prices are monitored by the Wallet server and updated regularly. Any change will trigger this event.
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -1355,7 +1355,7 @@ window.funwallet.sdk.on(MessageListeners.websocketDisconnected, (result) => {
 
 ## newBlock
 
-This will fire when the wallet receives a new block alert through the WebSocket connection. This removes the need for any polling - the dApp can just listen for these events. You can hook onto this even if the user is not authenticated.
+This will fire when the Wallet receives a new block alert through the WebSocket connection. This removes the need for any polling - the dApp can just listen for these events. You can hook onto this even if the user is not authenticated.
 
 :::: tabs :options="{ useUrlFragment: false }"
 

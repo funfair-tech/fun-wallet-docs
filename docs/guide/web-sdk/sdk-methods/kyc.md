@@ -2,7 +2,7 @@
 
 ## Start KYC
 
-This manually starts the kyc process which pops up the kyc modal. This can be used if the initial KYC popup got closed and the account now wanted to KYC. If you call this when the account has already been KYC-verified then it will throw a error.
+This manually starts the KYC process which pops up the KYC modal. This can be used if the initial KYC popup got closed and the account now wants to KYC. If you call this when the account has already been KYC-verified, it will throw an error.
 
 ```ts
 start(): Promise<void>
@@ -30,9 +30,9 @@ await window.funwallet.sdk.kyc.start();
 
 ::::
 
-## KYC verified status for the logged in user
+## KYC-Verified Status for the Logged-In User
 
-Returns the kyc verification status of the user on the wallet. Event listeners will fire as well to keep this value updated.
+Returns the KYC verification status of the user on the Wallet. Event listeners will fire as well to keep this value updated.
 
 ```ts
 isVerified(): Promise<boolean>
