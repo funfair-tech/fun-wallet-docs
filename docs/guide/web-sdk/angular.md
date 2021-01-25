@@ -202,8 +202,6 @@ Register all the event listeners you want to listen to, The ones below are mandt
 ```ts
 import { Component } from '@angular/core';
 import { StoreService } from './store.service';
-// for this to not give compile time errors please add "./node_modules/@funfair-tech/wallet-sdk/window.ts"
-// to your files object in tsconfig.app.json
 import window from '@funfair-tech/wallet-sdk/window';
 import {
   AuthenticationCompletedResponse,
@@ -337,8 +335,6 @@ Chrome and other browsers can block popups if triggered without a genuine user c
 ```ts
 import { Component } from '@angular/core';
 import { StoreService } from './store.service';
-// for this to not give compile time errors please add "./node_modules/@funfair-tech/wallet-sdk/window.ts"
-// to your files object in tsconfig.app.json
 import window from '@funfair-tech/wallet-sdk/window';
 import {
   AuthenticationCompletedResponse,
@@ -459,8 +455,6 @@ await window.funwallet.sdk.auth.logout();
 ```ts
 import { Component } from '@angular/core';
 import { StoreService } from './store.service';
-// for this to not give compile time errors please add "./node_modules/@funfair-tech/wallet-sdk/window.ts"
-// to your files object in tsconfig.app.json
 import window from '@funfair-tech/wallet-sdk/window';
 import {
   AuthenticationCompletedResponse,
@@ -594,8 +588,6 @@ We just add a loading state to our data which is default true, this will then tu
 ```ts
 import { Component } from '@angular/core';
 import { StoreService } from './store.service';
-// for this to not give compile time errors please add "./node_modules/@funfair-tech/wallet-sdk/window.ts"
-// to your files object in tsconfig.app.json
 import window from '@funfair-tech/wallet-sdk/window';
 import {
   AuthenticationCompletedResponse,
@@ -741,8 +733,6 @@ Please note, you must only show the follower once [restoreAuthenticationTaskComp
 ```ts
 import { Component } from '@angular/core';
 import { StoreService } from './store.service';
-// for this to not give compile time errors please add "./node_modules/@funfair-tech/wallet-sdk/window.ts"
-// to your files object in tsconfig.app.json
 import window from '@funfair-tech/wallet-sdk/window';
 import {
   AuthenticationCompletedResponse,
@@ -901,8 +891,6 @@ Once completed, you will get the status of the pass/fail through the [isKycVerif
 ```ts
 import { Component } from '@angular/core';
 import { StoreService } from './store.service';
-// for this to not give compile time errors please add "./node_modules/@funfair-tech/wallet-sdk/window.ts"
-// to your files object in tsconfig.app.json
 import window from '@funfair-tech/wallet-sdk/window';
 import {
   AuthenticationCompletedResponse,
@@ -1154,8 +1142,6 @@ When you sign anything, an approval modal will appear for the user automatically
 
 ```ts
 import { Injectable } from '@angular/core';
-// for this to not give compile time errors please add "./node_modules/@funfair-tech/wallet-sdk/window.ts"
-// to your files object in tsconfig.app.json
 import window from '@funfair-tech/wallet-sdk/window';
 import Web3 from 'web3';
 import { TransactionConfig } from 'web3-core';
@@ -1260,8 +1246,6 @@ export class EthereumService {
 ```ts
 import { Component } from '@angular/core';
 import { StoreService } from './store.service';
-// for this to not give compile time errors please add "./node_modules/@funfair-tech/wallet-sdk/window.ts"
-// to your files object in tsconfig.app.json
 import window from '@funfair-tech/wallet-sdk/window';
 import {
   AuthenticationCompletedResponse,
