@@ -2,12 +2,14 @@
 
 The FunFair Wallet is the only white-label wallet service, which is secure, user-focused, and built for seamless integration into third-party apps, in any browser and on any device.
 
+Go and set up your dApp now on our dApp self service [portal](https://developers.funfairwallet.io/home)
+
 ### Features include:
 
 - A Wallet built for B2B. Keep your users in your ecosystem with no need to sign up externally to a third-party wallet.
 - A community of dApps under one Wallet through single sign-on, increasing your ROI potential.
 - Complex web 3.0 processes are provided, delivered behind recognisable web 2.0 usability.
-- Straightforward security processes through 2FA, account recovery, import, and export.
+- Straightforward security processes through 2FA, account recovery, and export.
 - Your users keep complete control of their funds. No exceptions.
   A seamless transition between your dApp and your Wallet thanks to customisable key design elements.
 - Global KYC partners provided with parameters configurable to your legal and marketing needs.

@@ -131,6 +131,7 @@ function getGuideSidebar(
       collapsable: false,
       children: [
         '',
+        'information/self-service-portal',
         'information/browser-support',
         'information/testing',
         'information/layouts',

@@ -4,6 +4,10 @@ You may be using another JS framework or you may want to build your own package 
 
 If you're using plain JS, a full code example is [here](https://github.com/funfair-tech/wallet-vanilla-integration-sample-js), but this guide should help you as well.
 
+## Creating a dApp
+
+Before you start integrating you need to go and create and config your dApp on our self service portal, which you can access through [here](https://developers.funfairwallet.io/home). Once you have created your dApp you will be given an appId which you will use in your integration.
+
 ## HTTPS
 
 ### Set Up HTTPS on localhost
