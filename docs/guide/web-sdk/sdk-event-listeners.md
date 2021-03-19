@@ -175,6 +175,7 @@ Please note, the SDK does check this as well and only connects messages from the
   walletTracking = 'walletTracking',
   authenticationPopUpClosed = 'authenticationPopUpClosed',
   transactionReplaced = 'transactionReplaced',
+  appJwtExtended = 'appJwtExtended',
 }
 ```
 
