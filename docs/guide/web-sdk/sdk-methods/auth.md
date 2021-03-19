@@ -152,6 +152,36 @@ await window.funwallet.sdk.auth.user.active();
 
 ::::
 
+### Reject approval modal
+
+This SDK method allows you to reject an approval modal on behalf of the user. A good use case for this is for example if your making a betting game which takes bets every 15 seconds, if the user has made a bet and is looking at the approval modal and doesnt accept or reject it in time before the bet starts, you can then trigger this to close it for them so the UX is nice, ready for the next bet. Obviously this is just an example and can be used in many other user cases.
+
+```ts
+rejectApprovalModal(): Promise<void>
+```
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab TypeScript
+
+```ts
+import window from '@funfair-tech/wallet-sdk/window';
+
+await window.funwallet.sdk.auth.user.rejectApprovalModal();
+```
+
+:::
+
+::: tab JavaScript
+
+```js
+await window.funwallet.sdk.auth.user.rejectApprovalModal();
+```
+
+:::
+
+::::
+
 ## App
 
 ### JWT Token
