@@ -1,6 +1,6 @@
 # SDK Methods Init
 
-Please note none of the SDK calls will work if the SDK has called this. The SDK will throw errors telling you this if you try to do so.
+Please note none of the SDK calls will work if the SDK has not called this. The SDK will throw errors telling you this if you try to do so.
 
 ## init
 
