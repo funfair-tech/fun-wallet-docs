@@ -171,7 +171,7 @@ export class AppComponent {
   // you call this method when you want to load the wallet
   // this can be on a button click or page load up to how
   // your dApp needs it to act
-  public lazyLoadFunWallet(): Promise<FunWalletSdk> {
+  public async lazyLoadFunWallet(): Promise<FunWalletSdk> {
     // it returns the fun wallet sdk but this
     // is always exposed in `window.funwallet.sdk`
     const funWalletSdk = await FunWalletEmbed.load({
@@ -296,7 +296,7 @@ Chrome and other browsers can block popups if triggered without a genuine user c
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
 <!-- this is purely for developers to understand how it comes together, the same logic would work with split components and different modules -->
 
-<button click="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
+<button (click)="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
   Load fun wallet sdk into dapp
 </button>
 
@@ -346,7 +346,7 @@ export class AppComponent {
   // you call this method when you want to load the wallet
   // this can be on a button click or page load up to how
   // your dApp needs it to act
-  public lazyLoadFunWallet(): Promise<FunWalletSdk> {
+  public async lazyLoadFunWallet(): Promise<FunWalletSdk> {
     // it returns the fun wallet sdk but this
     // is always exposed in `window.funwallet.sdk`
     const funWalletSdk = await FunWalletEmbed.load({
@@ -417,13 +417,12 @@ export class AppComponent {
     try {
       const result = await window.funwallet.sdk.auth.login();
       console.log('Authentication result', result);
+      // user all logged in
+      StoreService.isAuthenticationCompleted.next(true);
     } catch (error) {
       console.error('User did not sign in');
       return;
     }
-
-    // user all logged in
-    StoreService.isAuthenticationCompleted.next(true);
   }
 }
 ```
@@ -448,7 +447,7 @@ await window.funwallet.sdk.auth.logout();
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
 <!-- this is purely for developers to understand how it comes together, the same logic would work with split components and different modules -->
 
-<button click="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
+<button (click)="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
   Load fun wallet sdk into dapp
 </button>
 
@@ -501,7 +500,7 @@ export class AppComponent {
   // you call this method when you want to load the wallet
   // this can be on a button click or page load up to how
   // your dApp needs it to act
-  public lazyLoadFunWallet(): Promise<FunWalletSdk> {
+  public async lazyLoadFunWallet(): Promise<FunWalletSdk> {
     // it returns the fun wallet sdk but this
     // is always exposed in `window.funwallet.sdk`
     const funWalletSdk = await FunWalletEmbed.load({
@@ -572,13 +571,12 @@ export class AppComponent {
     try {
       const result = await window.funwallet.sdk.auth.login();
       console.log('Authentication result', result);
+      // user all logged in
+      StoreService.isAuthenticationCompleted.next(true);
     } catch (error) {
       console.error('User did not sign in');
       return;
     }
-
-    // user all logged in
-    StoreService.isAuthenticationCompleted.next(true);
   }
 
   /**
@@ -610,7 +608,7 @@ We just add a loading state to our data which is default `true`, this will then 
 ```html
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
 <!-- this is purely for developers to understand how it comes together, the same logic would work with split components and different modules -->
-<button click="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
+<button (click)="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
   Load fun wallet sdk into dapp
 </button>
 
@@ -672,7 +670,7 @@ export class AppComponent {
   // you call this method when you want to load the wallet
   // this can be on a button click or page load up to how
   // your dApp needs it to act
-  public lazyLoadFunWallet(): Promise<FunWalletSdk> {
+  public async lazyLoadFunWallet(): Promise<FunWalletSdk> {
     // it returns the fun wallet sdk but this
     // is always exposed in `window.funwallet.sdk`
     const funWalletSdk = await FunWalletEmbed.load({
@@ -743,13 +741,12 @@ export class AppComponent {
     try {
       const result = await window.funwallet.sdk.auth.login();
       console.log('Authentication result', result);
+      // user all logged in
+      StoreService.isAuthenticationCompleted.next(true);
     } catch (error) {
       console.error('User did not sign in');
       return;
     }
-
-    // user all logged in
-    StoreService.isAuthenticationCompleted.next(true);
   }
 
   /**
@@ -784,7 +781,7 @@ If you want to deep link into a page on the Wallet, see [here](./routing.html#de
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
 <!-- this is purely for developers to understand how it comes together, the same logic would work with split components and different modules -->
 
-<button click="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
+<button (click)="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
   Load fun wallet sdk into dapp
 </button>
 
@@ -850,7 +847,7 @@ export class AppComponent {
   // you call this method when you want to load the wallet
   // this can be on a button click or page load up to how
   // your dApp needs it to act
-  public lazyLoadFunWallet(): Promise<FunWalletSdk> {
+  public async lazyLoadFunWallet(): Promise<FunWalletSdk> {
     // it returns the fun wallet sdk but this
     // is always exposed in `window.funwallet.sdk`
     const funWalletSdk = await FunWalletEmbed.load({
@@ -931,13 +928,12 @@ export class AppComponent {
     try {
       const result = await window.funwallet.sdk.auth.login();
       console.log('Authentication result', result);
+      // user all logged in
+      StoreService.isAuthenticationCompleted.next(true);
     } catch (error) {
       console.error('User did not sign in');
       return;
     }
-
-    // user all logged in
-    StoreService.isAuthenticationCompleted.next(true);
   }
 
   /**
@@ -986,7 +982,7 @@ Once completed, you will get the status of the pass/fail through the [isKycVerif
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
 <!-- this is purely for developers to understand how it comes together, the same logic would work with split components and different modules -->
 
-<button click="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
+<button (click)="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
   Load fun wallet sdk into dapp
 </button>
 
@@ -1055,7 +1051,7 @@ export class AppComponent {
   // you call this method when you want to load the wallet
   // this can be on a button click or page load up to how
   // your dApp needs it to act
-  public lazyLoadFunWallet(): Promise<FunWalletSdk> {
+  public async lazyLoadFunWallet(): Promise<FunWalletSdk> {
     // it returns the fun wallet sdk but this
     // is always exposed in `window.funwallet.sdk`
     const funWalletSdk = await FunWalletEmbed.load({
@@ -1162,13 +1158,12 @@ export class AppComponent {
     try {
       const result = await window.funwallet.sdk.auth.login();
       console.log('Authentication result', result);
+      // user all logged in
+      StoreService.isAuthenticationCompleted.next(true);
     } catch (error) {
       console.error('User did not sign in');
       return;
     }
-
-    // user all logged in
-    StoreService.isAuthenticationCompleted.next(true);
   }
 
   /**
@@ -1371,7 +1366,7 @@ export class EthereumService {
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
 <!-- this is purely for developers to understand how it comes together, the same logic would work with split components and different modules -->
 
-<button click="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
+<button (click)="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
   Load fun wallet sdk into dapp
 </button>
 
@@ -1447,7 +1442,7 @@ export class AppComponent {
   // you call this method when you want to load the wallet
   // this can be on a button click or page load up to how
   // your dApp needs it to act
-  public lazyLoadFunWallet(): Promise<FunWalletSdk> {
+  public async lazyLoadFunWallet(): Promise<FunWalletSdk> {
     // it returns the fun wallet sdk but this
     // is always exposed in `window.funwallet.sdk`
     const funWalletSdk = await FunWalletEmbed.load({
@@ -1518,13 +1513,12 @@ export class AppComponent {
     try {
       const result = await window.funwallet.sdk.auth.login();
       console.log('Authentication result', result);
+      // user all logged in
+      StoreService.isAuthenticationCompleted.next(true);
     } catch (error) {
       console.error('User did not sign in');
       return;
     }
-
-    // user all logged in
-    StoreService.isAuthenticationCompleted.next(true);
   }
 
   /**
