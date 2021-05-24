@@ -128,7 +128,7 @@ $ yarn add @funfair-tech/wallet-vue
 </template>
 
 <script>
-import { MessageListeners } from '@funfair-tech/wallet-sdk';
+import { MessageListeners, FunWalletEmbed } from '@funfair-tech/wallet-sdk';
 // For ease of the example we have just used subjects here.
 // A bigger more complex app should probably use a store framework like redux.
 // If your hooking this into a big app you probably have your own state management anyway.
@@ -266,7 +266,7 @@ src/App.vue
 </template>
 
 <script>
-import { MessageListeners } from '@funfair-tech/wallet-sdk';
+import { MessageListeners, FunWalletEmbed } from '@funfair-tech/wallet-sdk';
 // For ease of the example we have just used subjects here.
 // A bigger more complex app should probably use a store framework like redux.
 // If your hooking this into a big app you probably have your own state management anyway.
@@ -401,7 +401,7 @@ src/App.vue
 </template>
 
 <script>
-import { MessageListeners } from '@funfair-tech/wallet-sdk';
+import { MessageListeners, FunWalletEmbed } from '@funfair-tech/wallet-sdk';
 // For ease of the example we have just used subjects here.
 // A bigger more complex app should probably use a store framework like redux.
 // If your hooking this into a big app you probably have your own state management anyway.
@@ -542,7 +542,7 @@ src/App.vue
 </template>
 
 <script>
-import { MessageListeners } from '@funfair-tech/wallet-sdk';
+import { MessageListeners, FunWalletEmbed } from '@funfair-tech/wallet-sdk';
 // For ease of the example we have just used subjects here.
 // A bigger more complex app should probably use a store framework like redux.
 // If your hooking this into a big app you probably have your own state management anyway.
@@ -714,7 +714,7 @@ If you want to deep link the into a page on the Wallet, we explain how to do tha
 
 <script>
 import { WalletFollower } from '@funfair-tech/wallet-vue';
-import { MessageListeners } from '@funfair-tech/wallet-sdk';
+import { MessageListeners, FunWalletEmbed } from '@funfair-tech/wallet-sdk';
 // For ease of the example we have just used subjects here.
 // A bigger more complex app should probably use a store framework like redux.
 // If your hooking this into a big app you probably have your own state management anyway.
@@ -961,7 +961,7 @@ Once completed, you will get the status of the pass/fail through [isKycVerified]
 
 <script>
 import { WalletFollower } from '@funfair-tech/wallet-vue';
-import { MessageListeners } from '@funfair-tech/wallet-sdk';
+import { MessageListeners, FunWalletEmbed } from '@funfair-tech/wallet-sdk';
 // For ease of the example we have just used subjects here.
 // A bigger more complex app should probably use a store framework like redux.
 // If your hooking this into a big app you probably have your own state management anyway.
@@ -1380,7 +1380,7 @@ All hooked together:
 
 <script>
 import { WalletFollower } from '@funfair-tech/wallet-vue';
-import { MessageListeners } from '@funfair-tech/wallet-sdk';
+import { MessageListeners, FunWalletEmbed } from '@funfair-tech/wallet-sdk';
 import { sendTransaction, signAMessage } from './ethereum.service';
 // For ease of the example we have just used subjects here.
 // A bigger more complex app should probably use a store framework like redux.
@@ -1588,3 +1588,13 @@ button {
 :::
 
 ::::
+
+## Destroying the fun wallet injected logic
+
+Many dApps support many wallets and you may want to destroy all trace of the fun wallet logic once the user is done using it. A destroy method is exposed on the `FunWalletEmbed` class which will remove everything the wallet injected from your dApp.
+
+```ts
+import { FunWalletEmbed } from '@funfair-tech/wallet-sdk';
+
+FunWalletEmbed.destroy();
+```

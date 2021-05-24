@@ -1341,3 +1341,13 @@ Example:
 ```
 
 When you sign anything an approval modal will appear for the user automatically - read [here](../information/approval-modal) for more info about them.
+
+## Destroying the fun wallet injected logic
+
+Many dApps support many wallets and you may want to destroy all trace of the fun wallet logic once the user is done using it. A destroy method is exposed on the `FunWalletEmbed` class which will remove everything the wallet injected from your dApp.
+
+```ts
+import { FunWalletEmbed } from '@funfair-tech/wallet-sdk';
+
+FunWalletEmbed.destroy();
+```

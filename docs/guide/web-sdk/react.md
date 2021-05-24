@@ -106,22 +106,6 @@ Most of our integrators have many wallets they support. For this case our wallet
 
 ::: tab src/index.js
 
-Then import the wallet leader react shared component into your main index.js of your react app:
-
-Usage:
-
-```js
-<WalletLeader registerEventListeners={YOUR_REGISTER_EVENT_LISTENERS_METHOD} />
-```
-
-### Parameters
-
-#### registerEventListeners
-
-Type - Function
-
-This will fire when the Wallet leader has loaded and this will be a function you register all your event listeners you want to attach to the Wallet. There is a list of them [here](https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#registering-an-event-listener)
-
 ```js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -193,6 +177,9 @@ const listenToWalletEvents = () => {
   // register all the other events your interested in here...
 };
 
+// you call this method when you want to load the wallet
+// this can be on a button click or page load up to how
+// your dApp needs it to act
 lazyLoadFunWallet();
 
 ReactDOM.render(
@@ -1058,3 +1045,13 @@ export default App;
 :::
 
 ::::
+
+## Destroying the fun wallet injected logic
+
+Many dApps support many wallets and you may want to destroy all trace of the fun wallet logic once the user is done using it. A destroy method is exposed on the `FunWalletEmbed` class which will remove everything the wallet injected from your dApp.
+
+```ts
+import { FunWalletEmbed } from '@funfair-tech/wallet-sdk';
+
+FunWalletEmbed.destroy();
+```
