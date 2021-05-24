@@ -120,74 +120,14 @@ $ yarn add @funfair-tech/wallet-vue
 
 :::: tabs :options="{ useUrlFragment: false }"
 
-::: tab public/index.html
-
-First, you need to drop the Wallet script into your `<head>` HTML tag within your main index.html (public > index.html). Please replace the `YOUR_APP_ID` with the your appId:
-
-```js
-<script
-  src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js?appId=YOUR_APP_ID"
-  type="text/JavaScript"
-></script>
-```
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-    <title><%= htmlWebpackPlugin.options.title %></title>
-    <script
-      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js?appId=YOUR_APP_ID"
-      type="text/JavaScript"
-    ></script>
-  </head>
-  <body>
-    <noscript>
-      <strong
-        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
-        properly without JavaScript enabled. Please enable it to
-        continue.</strong
-      >
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
-</html>
-```
-
-:::
-
 ::: tab src/App.vue
-
-Import the wallet leader vue shared component into your main App.vue:
-
-Usage:
-
-```js
-<WalletLeader registerEventListeners="YOUR_REGISTER_EVENT_LISTENERS_METHOD" />
-```
-
-### Parameters
-
-#### registerEventListeners
-
-Type - Function
-
-This will fire when the Wallet leader has loaded and this will be a function you register all your event listeners you want to attach to the Wallet, list of them [here](https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#registering-an-event-listener)
 
 ```vue
 <template>
-  <div id="app">
-    <WalletLeader :registerEventListeners="this.registerEventListeners" />
-  </div>
+  <div id="app"></div>
 </template>
 
 <script>
-import { WalletLeader } from '@funfair-tech/wallet-vue';
 import { MessageListeners } from '@funfair-tech/wallet-sdk';
 // For ease of the example we have just used subjects here.
 // A bigger more complex app should probably use a store framework like redux.
@@ -200,24 +140,11 @@ const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
 
 export default {
   name: 'App',
-  components: {
-    WalletLeader,
-  },
   methods: {
     registerEventListeners: function () {
       // like in our github example https://github.com/funfair-tech/wallet-vue-integration-sample-js
       // it would be nicer code if you extracted this into its own file and called in within here.
       // for ease of understanding it is all in this file.
-
-      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-      window.funwallet.sdk.on(
-        MessageListeners.authenticationCompleted,
-        (result) => {
-          if (result.origin === 'https://wallet.funfair.io/') {
-            isAuthenticated$.next(true);
-          }
-        }
-      );
 
       // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
       window.funwallet.sdk.on(
@@ -225,6 +152,13 @@ export default {
         (result) => {
           if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
+
+            // if the user has been restored authentication then your all good
+            // to go again
+            if (result.data.isAuthenticated) {
+              // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+              isAuthenticated$.next(true);
+            }
           }
         }
       );
@@ -254,6 +188,25 @@ export default {
       // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#list-of-all-available-listeners
       // register all the other events your interested in here...
     },
+  },
+  created: async function () {
+    const _this = this;
+
+    // you call this method when you want to load the wallet
+    // this can be on a button click or page load up to how
+    // your dApp needs it to act
+
+    // it returns the fun wallet sdk but this
+    // is always exposed in `window.funwallet.sdk`
+    await FunWalletEmbed.load({
+      appId: 'YOUR_APP_ID_HERE',
+      // make sure its in a arrow expression
+      // functions so it can get context to `this`
+      // when executing your wallet event listener method
+      eventListenerCallback: () => {
+        this.registerEventListeners();
+      },
+    });
   },
 };
 </script>
@@ -271,23 +224,34 @@ It's up to the integration to show the user the login and logout buttons, which 
 
 ::: tab Login
 
-Method to pop up the authentication modal.
+Method to login with the fun wallet.
 
 ```js
-window.funwallet.sdk.auth.login();
+await window.funwallet.sdk.auth.login();
 ```
 
-This will load a window popup for the user to enter their login details. Once logged in it will fire [authenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted), which you will need to have registered to so you can listen out for success. If the user closes the authentication popup it will fire [authenticationPopUpClosed](/guide/web-sdk/sdk-event-listeners.html#authenticationpopupclosed), which you can listen out for if you want to know when that happens.
+This will load a login screen for the user to enter their details. The promise will not resolve until successful or unsuccessful actions has happened on the authentication login window. If the user closes the login screen then the `login` promise will reject, if the user successfully authenticates the `login` promise will resolve successfully returning back `AuthenticationCompletedResponeData` which is exposed in our sdk typings:
+
+```ts
+export interface AuthenticationCompletedResponeData {
+  authenticationCompleted: {
+    playerProtection: ExclusionStatusResponse;
+    ethereumAddress: string;
+    currentCurrency: string;
+    currentNetwork: NetworkDetails;
+    userAccountId: string;
+  };
+}
+```
 
 **NOTE**
-Chrome and other browsers can block popups if triggered without a genuine user click. Make sure whenever you pop this modal up it's from a click event from the user to avoid any cross browser issues.
+Chrome and other browsers can block popups if triggered without a genuine user click. Make sure whenever you call the authentication method that it's from a click event from the user to avoid any cross browser issues.
 
 src/App.vue
 
 ```vue
 <template>
   <div id="app">
-    <WalletLeader :registerEventListeners="this.registerEventListeners" />
     <div class="App">
       <div class="App-container">
         <div className="action-buttons">
@@ -302,7 +266,6 @@ src/App.vue
 </template>
 
 <script>
-import { WalletLeader } from '@funfair-tech/wallet-vue';
 import { MessageListeners } from '@funfair-tech/wallet-sdk';
 // For ease of the example we have just used subjects here.
 // A bigger more complex app should probably use a store framework like redux.
@@ -315,9 +278,6 @@ const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
 
 export default {
   name: 'App',
-  components: {
-    WalletLeader,
-  },
   data: () => {
     return { isLoggedIn: false };
   },
@@ -327,22 +287,19 @@ export default {
       // it would be nicer code if you extracted this into its own file and called in within here.
       // for ease of understanding it is all in this file.
 
-      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-      window.funwallet.sdk.on(
-        MessageListeners.authenticationCompleted,
-        (result) => {
-          if (result.origin === 'https://wallet.funfair.io/') {
-            isAuthenticated$.next(true);
-          }
-        }
-      );
-
       // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
       window.funwallet.sdk.on(
         MessageListeners.restoreAuthenticationCompleted,
         (result) => {
           if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
+
+            // if the user has been restored authentication then your all good
+            // to go again
+            if (result.data.isAuthenticated) {
+              // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+              isAuthenticated$.next(true);
+            }
           }
         }
       );
@@ -372,12 +329,37 @@ export default {
       // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#list-of-all-available-listeners
       // register all the other events your interested in here...
     },
-    login: function () {
-      window.funwallet.sdk.auth.login();
+    login: async function () {
+      try {
+        const result = await window.funwallet.sdk.auth.login();
+        console.log('Authentication result', result);
+
+        isAuthenticated$.next(true);
+      } catch (error) {
+        console.error('User did not sign in');
+        return;
+      }
     },
   },
-  created: function () {
+  created: async function () {
     const _this = this;
+
+    // you call this method when you want to load the wallet
+    // this can be on a button click or page load up to how
+    // your dApp needs it to act
+
+    // it returns the fun wallet sdk but this
+    // is always exposed in `window.funwallet.sdk`
+    await FunWalletEmbed.load({
+      appId: 'YOUR_APP_ID_HERE',
+      // make sure its in a arrow expression
+      // functions so it can get context to `this`
+      // when executing your wallet event listener method
+      eventListenerCallback: () => {
+        this.registerEventListeners();
+      },
+    });
+
     isAuthenticated$.subscribe((value) => {
       _this.$data.isLoggedIn = value;
     });
@@ -401,7 +383,6 @@ src/App.vue
 ```vue
 <template>
   <div id="app">
-    <WalletLeader :registerEventListeners="this.registerEventListeners" />
     <div class="App">
       <div class="App-container">
         <div className="action-buttons">
@@ -420,7 +401,6 @@ src/App.vue
 </template>
 
 <script>
-import { WalletLeader } from '@funfair-tech/wallet-vue';
 import { MessageListeners } from '@funfair-tech/wallet-sdk';
 // For ease of the example we have just used subjects here.
 // A bigger more complex app should probably use a store framework like redux.
@@ -433,9 +413,6 @@ const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
 
 export default {
   name: 'App',
-  components: {
-    WalletLeader,
-  },
   data: () => {
     return { isLoggedIn: false };
   },
@@ -445,22 +422,19 @@ export default {
       // it would be nicer code if you extracted this into its own file and called in within here.
       // for ease of understanding it is all in this file.
 
-      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-      window.funwallet.sdk.on(
-        MessageListeners.authenticationCompleted,
-        (result) => {
-          if (result.origin === 'https://wallet.funfair.io/') {
-            isAuthenticated$.next(true);
-          }
-        }
-      );
-
       // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
       window.funwallet.sdk.on(
         MessageListeners.restoreAuthenticationCompleted,
         (result) => {
           if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
+
+            // if the user has been restored authentication then your all good
+            // to go again
+            if (result.data.isAuthenticated) {
+              // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+              isAuthenticated$.next(true);
+            }
           }
         }
       );
@@ -490,16 +464,41 @@ export default {
       // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#list-of-all-available-listeners
       // register all the other events your interested in here...
     },
-    login: function () {
-      window.funwallet.sdk.auth.login();
+    login: async function () {
+      try {
+        const result = await window.funwallet.sdk.auth.login();
+        console.log('Authentication result', result);
+
+        isAuthenticated$.next(true);
+      } catch (error) {
+        console.error('User did not sign in');
+        return;
+      }
     },
     logout: async function () {
       await window.funwallet.sdk.auth.logout();
       isAuthenticated$.next(false);
     },
   },
-  created: function () {
+  created: async function () {
     const _this = this;
+
+    // you call this method when you want to load the wallet
+    // this can be on a button click or page load up to how
+    // your dApp needs it to act
+
+    // it returns the fun wallet sdk but this
+    // is always exposed in `window.funwallet.sdk`
+    await FunWalletEmbed.load({
+      appId: 'YOUR_APP_ID_HERE',
+      // make sure its in a arrow expression
+      // functions so it can get context to `this`
+      // when executing your wallet event listener method
+      eventListenerCallback: () => {
+        this.registerEventListeners();
+      },
+    });
+
     isAuthenticated$.subscribe((value) => {
       _this.$data.isLoggedIn = value;
     });
@@ -523,7 +522,6 @@ src/App.vue
 ```vue
 <template>
   <div id="app">
-    <WalletLeader :registerEventListeners="this.registerEventListeners" />
     <div class="App">
       <div class="App-container">
         <!-- in this example we just have a simple message you can config your loading screen to whatever you want -->
@@ -544,7 +542,6 @@ src/App.vue
 </template>
 
 <script>
-import { WalletLeader } from '@funfair-tech/wallet-vue';
 import { MessageListeners } from '@funfair-tech/wallet-sdk';
 // For ease of the example we have just used subjects here.
 // A bigger more complex app should probably use a store framework like redux.
@@ -557,9 +554,6 @@ const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
 
 export default {
   name: 'App',
-  components: {
-    WalletLeader,
-  },
   data: () => {
     return { isLoggedIn: false, loading: true };
   },
@@ -569,12 +563,19 @@ export default {
       // it would be nicer code if you extracted this into its own file and called in within here.
       // for ease of understanding it is all in this file.
 
-      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
+      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
       window.funwallet.sdk.on(
-        MessageListeners.authenticationCompleted,
+        MessageListeners.restoreAuthenticationCompleted,
         (result) => {
           if (result.origin === 'https://wallet.funfair.io/') {
-            isAuthenticated$.next(true);
+            restoreAuthenticationTaskCompleted$.next(true);
+
+            // if the user has been restored authentication then your all good
+            // to go again
+            if (result.data.isAuthenticated) {
+              // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+              isAuthenticated$.next(true);
+            }
           }
         }
       );
@@ -614,16 +615,41 @@ export default {
       // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#list-of-all-available-listeners
       // register all the other events your interested in here...
     },
-    login: function () {
-      window.funwallet.sdk.auth.login();
+    login: async function () {
+      try {
+        const result = await window.funwallet.sdk.auth.login();
+        console.log('Authentication result', result);
+
+        isAuthenticated$.next(true);
+      } catch (error) {
+        console.error('User did not sign in');
+        return;
+      }
     },
     logout: async function () {
       await window.funwallet.sdk.auth.logout();
       isAuthenticated$.next(false);
     },
   },
-  created: function () {
+  created: async function () {
     const _this = this;
+
+    // you call this method when you want to load the wallet
+    // this can be on a button click or page load up to how
+    // your dApp needs it to act
+
+    // it returns the fun wallet sdk but this
+    // is always exposed in `window.funwallet.sdk`
+    await FunWalletEmbed.load({
+      appId: 'YOUR_APP_ID_HERE',
+      // make sure its in a arrow expression
+      // functions so it can get context to `this`
+      // when executing your wallet event listener method
+      eventListenerCallback: () => {
+        this.registerEventListeners();
+      },
+    });
+
     isAuthenticated$.subscribe((value) => {
       _this.$data.isLoggedIn = value;
     });
@@ -658,8 +684,6 @@ Usage:
 
 If you want to deep link the into a page on the Wallet, we explain how to do that [here](./routing.html#deep-link-page-routes). By default, the main `/funds` page will load.
 
-Please note you must only show the follower once [restoreAuthenticationTaskCompleted](./sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationCompleted](./sdk-event-listeners.html#authenticationcompleted) has fired. `authenticationCompleted` means they are logged in.
-
 :::: tabs :options="{ useUrlFragment: false }"
 
 ::: tab src/App.vue
@@ -667,7 +691,6 @@ Please note you must only show the follower once [restoreAuthenticationTaskCompl
 ```vue
 <template>
   <div id="app">
-    <WalletLeader :registerEventListeners="this.registerEventListeners" />
     <div class="App">
       <div class="App-container">
         <p v-if="loading">Loading please wait</p>
@@ -690,7 +713,7 @@ Please note you must only show the follower once [restoreAuthenticationTaskCompl
 </template>
 
 <script>
-import { WalletLeader, WalletFollower } from '@funfair-tech/wallet-vue';
+import { WalletFollower } from '@funfair-tech/wallet-vue';
 import { MessageListeners } from '@funfair-tech/wallet-sdk';
 // For ease of the example we have just used subjects here.
 // A bigger more complex app should probably use a store framework like redux.
@@ -704,7 +727,6 @@ const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
 export default {
   name: 'App',
   components: {
-    WalletLeader,
     WalletFollower,
   },
   data: () => {
@@ -716,22 +738,19 @@ export default {
       // it would be nicer code if you extracted this into its own file and called in within here.
       // for ease of understanding it is all in this file.
 
-      // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-      window.funwallet.sdk.on(
-        MessageListeners.authenticationCompleted,
-        (result) => {
-          if (result.origin === 'https://wallet.funfair.io/') {
-            isAuthenticated$.next(true);
-          }
-        }
-      );
-
       // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
       window.funwallet.sdk.on(
         MessageListeners.restoreAuthenticationCompleted,
         (result) => {
           if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
+
+            // if the user has been restored authentication then your all good
+            // to go again
+            if (result.data.isAuthenticated) {
+              // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+              isAuthenticated$.next(true);
+            }
           }
         }
       );
@@ -761,16 +780,41 @@ export default {
       // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#list-of-all-available-listeners
       // register all the other events your interested in here...
     },
-    login: function () {
-      window.funwallet.sdk.auth.login();
+    login: async function () {
+      try {
+        const result = await window.funwallet.sdk.auth.login();
+        console.log('Authentication result', result);
+
+        isAuthenticated$.next(true);
+      } catch (error) {
+        console.error('User did not sign in');
+        return;
+      }
     },
     logout: async function () {
       await window.funwallet.sdk.auth.logout();
       isAuthenticated$.next(false);
     },
   },
-  created: function () {
+  created: async function () {
     const _this = this;
+
+    // you call this method when you want to load the wallet
+    // this can be on a button click or page load up to how
+    // your dApp needs it to act
+
+    // it returns the fun wallet sdk but this
+    // is always exposed in `window.funwallet.sdk`
+    await FunWalletEmbed.load({
+      appId: 'YOUR_APP_ID_HERE',
+      // make sure its in a arrow expression
+      // functions so it can get context to `this`
+      // when executing your wallet event listener method
+      eventListenerCallback: () => {
+        this.registerEventListeners();
+      },
+    });
+
     isAuthenticated$.subscribe((value) => {
       _this.$data.isLoggedIn = value;
     });
@@ -893,7 +937,6 @@ Once completed, you will get the status of the pass/fail through [isKycVerified]
 ```vue
 <template>
   <div id="app">
-    <WalletLeader :registerEventListeners="this.registerEventListeners" />
     <div class="App">
       <div class="App-container">
         <p v-if="loading">Loading please wait</p>
@@ -917,7 +960,7 @@ Once completed, you will get the status of the pass/fail through [isKycVerified]
 </template>
 
 <script>
-import { WalletLeader, WalletFollower } from '@funfair-tech/wallet-vue';
+import { WalletFollower } from '@funfair-tech/wallet-vue';
 import { MessageListeners } from '@funfair-tech/wallet-sdk';
 // For ease of the example we have just used subjects here.
 // A bigger more complex app should probably use a store framework like redux.
@@ -931,7 +974,6 @@ const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
 export default {
   name: 'App',
   components: {
-    WalletLeader,
     WalletFollower,
   },
   data: () => {
@@ -1022,8 +1064,16 @@ export default {
       // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#list-of-all-available-listeners
       // register all the other events your interested in here...
     },
-    login: function () {
-      window.funwallet.sdk.auth.login();
+    login: async function () {
+      try {
+        const result = await window.funwallet.sdk.auth.login();
+        console.log('Authentication result', result);
+
+        isAuthenticated$.next(true);
+      } catch (error) {
+        console.error('User did not sign in');
+        return;
+      }
     },
     logout: async function () {
       await window.funwallet.sdk.auth.logout();
@@ -1033,8 +1083,25 @@ export default {
       await window.funwallet.sdk.kyc.start();
     },
   },
-  created: function () {
+  created: async function () {
     const _this = this;
+
+    // you call this method when you want to load the wallet
+    // this can be on a button click or page load up to how
+    // your dApp needs it to act
+
+    // it returns the fun wallet sdk but this
+    // is always exposed in `window.funwallet.sdk`
+    await FunWalletEmbed.load({
+      appId: 'YOUR_APP_ID_HERE',
+      // make sure its in a arrow expression
+      // functions so it can get context to `this`
+      // when executing your wallet event listener method
+      eventListenerCallback: () => {
+        this.registerEventListeners();
+      },
+    });
+
     isAuthenticated$.subscribe((value) => {
       _this.$data.isLoggedIn = value;
     });
@@ -1286,7 +1353,6 @@ All hooked together:
 ```vue
 <template>
   <div id="app">
-    <WalletLeader :registerEventListeners="this.registerEventListeners" />
     <div class="App">
       <div class="App-container">
         <p v-if="loading">Loading please wait</p>
@@ -1313,7 +1379,7 @@ All hooked together:
 </template>
 
 <script>
-import { WalletLeader, WalletFollower } from '@funfair-tech/wallet-vue';
+import { WalletFollower } from '@funfair-tech/wallet-vue';
 import { MessageListeners } from '@funfair-tech/wallet-sdk';
 import { sendTransaction, signAMessage } from './ethereum.service';
 // For ease of the example we have just used subjects here.
@@ -1328,7 +1394,6 @@ const restoreAuthenticationTaskCompleted$ = new BehaviorSubject(false);
 export default {
   name: 'App',
   components: {
-    WalletLeader,
     WalletFollower,
   },
   data: () => {
@@ -1385,8 +1450,16 @@ export default {
       // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#list-of-all-available-listeners
       // register all the other events your interested in here...
     },
-    login: function () {
-      window.funwallet.sdk.auth.login();
+    login: async function () {
+      try {
+        const result = await window.funwallet.sdk.auth.login();
+        console.log('Authentication result', result);
+
+        isAuthenticated$.next(true);
+      } catch (error) {
+        console.error('User did not sign in');
+        return;
+      }
     },
     logout: async function () {
       await window.funwallet.sdk.auth.logout();
@@ -1406,8 +1479,25 @@ export default {
       console.log('Send signed transaction complete. sig -', signature);
     },
   },
-  created: function () {
+  created: async function () {
     const _this = this;
+
+    // you call this method when you want to load the wallet
+    // this can be on a button click or page load up to how
+    // your dApp needs it to act
+
+    // it returns the fun wallet sdk but this
+    // is always exposed in `window.funwallet.sdk`
+    await FunWalletEmbed.load({
+      appId: 'YOUR_APP_ID_HERE',
+      // make sure its in a arrow expression
+      // functions so it can get context to `this`
+      // when executing your wallet event listener method
+      eventListenerCallback: () => {
+        this.registerEventListeners();
+      },
+    });
+
     isAuthenticated$.subscribe((value) => {
       _this.$data.isLoggedIn = value;
     });

@@ -100,71 +100,9 @@ $ yarn add @funfair-tech/wallet-react
 
 ## Hooking up the SDK
 
+Most of our integrators have many wallets they support. For this case our wallet is lazy loaded aka only loaded when you need it.
+
 :::: tabs :options="{ useUrlFragment: false }"
-
-::: tab public/index.html
-
-First, you need to drop the wallet script into your `<head>` HTML tag within your main index.html (public > index.html). Please replace the `YOUR_APP_ID` with your appId:
-
-```js
-<script
-  src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js?appId=YOUR_APP_ID"
-  type="text/JavaScript"
-></script>
-```
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>Fun Wallet Integration demo</title>
-    <script
-      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js?appId=YOUR_APP_ID"
-      type="text/JavaScript"
-    ></script>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
-</html>
-```
-
-:::
 
 ::: tab src/index.js
 
@@ -185,35 +123,46 @@ Type - Function
 This will fire when the Wallet leader has loaded and this will be a function you register all your event listeners you want to attach to the Wallet. There is a list of them [here](https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#registering-an-event-listener)
 
 ```js
-import { WalletLeader } from '@funfair-tech/wallet-react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { isAuthenticated$, restoreAuthenticationTaskCompleted$ } from './store';
-import { MessageListeners } from '@funfair-tech/wallet-sdk';
+import { MessageListeners, FunWalletEmbed } from '@funfair-tech/wallet-sdk';
+
+// you call this method when you want to load the wallet
+// this can be on a button click or page load up to how
+// your dApp needs it to act
+const lazyLoadFunWallet = async () => {
+  // it returns the fun wallet sdk but this
+  // is always exposed in `window.funwallet.sdk`
+  await FunWalletEmbed.load({
+    appId: 'YOUR_APP_ID_HERE',
+    // make sure its in a arrow expression
+    // functions so it can get context to `this`
+    // when executing your wallet event listener method
+    eventListenerCallback: () => {
+      this.listenToWalletEvents();
+    },
+  });
+};
 
 // like in our github example https://github.com/funfair-tech/wallet-react-integration-sample-js
 // it would be nicer code if you extracted this into its own file and called in within here.
 // for ease of understanding it is all in this file.
-const registerEventListeners = () => {
-  // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-  window.funwallet.sdk.on(
-    MessageListeners.authenticationCompleted,
-    (result) => {
-      if (result.origin === 'https://wallet.funfair.io/') {
-        isAuthenticated$.next(true);
-      }
-    }
-  );
-
+const listenToWalletEvents = () => {
   // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
   window.funwallet.sdk.on(
     MessageListeners.restoreAuthenticationCompleted,
     (result) => {
       if (result.origin === 'https://wallet.funfair.io/') {
         restoreAuthenticationTaskCompleted$.next(true);
+
+        if (result.data.isAuthenticated) {
+          // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+          isAuthenticated$.next(true);
+        }
       }
     }
   );
@@ -244,9 +193,10 @@ const registerEventListeners = () => {
   // register all the other events your interested in here...
 };
 
+lazyLoadFunWallet();
+
 ReactDOM.render(
   <React.StrictMode>
-    <WalletLeader registerEventListeners={registerEventListeners} />
     <App />
   </React.StrictMode>,
   document.getElementById('root')
@@ -285,13 +235,25 @@ It's up to the integration to show the user the login and logout buttons, which 
 Method to pop up the authentication modal.
 
 ```js
-window.funwallet.sdk.auth.login();
+await window.funwallet.sdk.auth.login();
 ```
 
-This will load a window popup for the user to enter their login details. Once logged in it will fire [authenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted), which you will need to have registered to so you can listen out for success. If the user closes the authentication popup it will fire [authenticationPopUpClosed](/guide/web-sdk/sdk-event-listeners.html#authenticationpopupclosed), which you can listen out for if you want to know when that happens.
+This will load a login screen for the user to enter their details. The promise will not resolve until successful or unsuccessful actions has happened on the authentication login window. If the user closes the login screen then the `login` promise will reject, if the user successfully authenticates the `login` promise will resolve successfully returning back `AuthenticationCompletedResponeData` which is exposed in our sdk typings:
+
+```ts
+export interface AuthenticationCompletedResponeData {
+  authenticationCompleted: {
+    playerProtection: ExclusionStatusResponse;
+    ethereumAddress: string;
+    currentCurrency: string;
+    currentNetwork: NetworkDetails;
+    userAccountId: string;
+  };
+}
+```
 
 **NOTE**
-Chrome and other browsers can block popups if triggered without a genuine user click. Make sure whenever you pop this modal up its from a click event from the user to avoid any cross browser issues.
+Chrome and other browsers can block popups if triggered without a genuine user click. Make sure whenever you call the authentication method that it's from a click event from the user to avoid any cross browser issues.
 
 src/App.js
 
@@ -315,8 +277,16 @@ class App extends Component {
     });
   }
 
-  login() {
-    window.funwallet.sdk.auth.login();
+  async login() {
+    try {
+      const result = await window.funwallet.sdk.auth.login();
+      console.log('Authentication result', result);
+      // user all logged in
+      isAuthenticated$.next(true);
+    } catch (error) {
+      console.error('User did not sign in');
+      return;
+    }
   }
 
   render() {
@@ -371,8 +341,16 @@ class App extends Component {
     });
   }
 
-  login() {
-    window.funwallet.sdk.auth.login();
+  async login() {
+    try {
+      const result = await window.funwallet.sdk.auth.login();
+      console.log('Authentication result', result);
+      // user all logged in
+      isAuthenticated$.next(true);
+    } catch (error) {
+      console.error('User did not sign in');
+      return;
+    }
   }
 
   async logout() {
@@ -409,11 +387,11 @@ export default App;
 
 ::: tab Authentication-Refresh
 
-As the server never sees the private key and all the decryption of it happens on the client side, once you refresh your tab, your private key is no longer in memory. We have handled a way to restore authentication on refresh and keep the user logged in. What this means for the developer is they must wait for [restoreAuthenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted) to complete before they show any UI. This is super fast but needed to avoid showing login buttons then flashing to logout buttons. Let's walk you through how you would do this.
+As the server never sees the private key and all the decryption of it happens on the client side, once you refresh your tab, your private key is no longer in memory. We have handled a way to restore authentication on refresh and keep the user logged in. What this means for the developer is they must wait for [restoreAuthenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted) to complete before they show any UI, this is super fast, but needed to avoid showing login buttons then flashing to logout buttons. Let's walk you through how you would do this.
 
 If you want to read more about how this works and keeps your private key safe read [here](/guide/how-does-it-work/re-authentication.html#double-encrypted-localstorage-setup).
 
-We just add a loading state to our data which defaults to `true`. This will then turn to `false` once the restoreAuthenticationCompleted has completed. We then in the HTML just add some loading state to hide and show the buttons.
+We just add a loading state to our data which is default true, this will then turn to false once the restoreAuthenticationCompleted has completed. We then in the template just add some loading state to hide and show the buttons.
 
 src/App.js
 
@@ -445,8 +423,16 @@ class App extends Component {
     });
   }
 
-  login() {
-    window.funwallet.sdk.auth.login();
+  async login() {
+    try {
+      const result = await window.funwallet.sdk.auth.login();
+      console.log('Authentication result', result);
+      // user all logged in
+      isAuthenticated$.next(true);
+    } catch (error) {
+      console.error('User did not sign in');
+      return;
+    }
   }
 
   async logout() {
@@ -498,9 +484,7 @@ Usage:
 <WalletFollower />
 ```
 
-If you want to deep link into a page on the Wallet, please see [here](./routing.html#deep-link-page-routes). By default, the main `/funds` page will load.
-
-Please note you must only show the follower once [restoreAuthenticationTaskCompleted](./sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationCompleted](./sdk-event-listeners.html#authenticationcompleted) has fired. `authenticationCompleted` means they are have logged in.
+If you want to deep link into a page on the Wallet, see [here](./routing.html#deep-link-page-routes). By default the main `/funds` page will load. Please note, you must only show if the user is authenticated.
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -535,8 +519,16 @@ class App extends Component {
     });
   }
 
-  login() {
-    window.funwallet.sdk.auth.login();
+  async login() {
+    try {
+      const result = await window.funwallet.sdk.auth.login();
+      console.log('Authentication result', result);
+      // user all logged in
+      isAuthenticated$.next(true);
+    } catch (error) {
+      console.error('User did not sign in');
+      return;
+    }
   }
 
   async logout() {
@@ -608,29 +600,35 @@ Once completed, you will get the status of the pass/fail through [isKycVerified]
 ::: tab src/index.js
 
 ```js
-import { WalletLeader } from '@funfair-tech/wallet-react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import { isAuthenticated$, restoreAuthenticationTaskCompleted$ } from './store';
-import { MessageListeners } from '@funfair-tech/wallet-sdk';
+import { MessageListeners, FunWalletEmbed } from '@funfair-tech/wallet-sdk';
+
+// you call this method when you want to load the wallet
+// this can be on a button click or page load up to how
+// your dApp needs it to act
+const lazyLoadFunWallet = async () => {
+  // it returns the fun wallet sdk but this
+  // is always exposed in `window.funwallet.sdk`
+  await FunWalletEmbed.load({
+    appId: 'YOUR_APP_ID_HERE',
+    // make sure its in a arrow expression
+    // functions so it can get context to `this`
+    // when executing your wallet event listener method
+    eventListenerCallback: () => {
+      this.listenToWalletEvents();
+    },
+  });
+};
 
 // like in our github example https://github.com/funfair-tech/wallet-react-integration-sample-js
 // it would be nicer code if you extracted this into its own file and called in within here.
 // for ease of understanding it is all in this file.
-const registerEventListeners = () => {
-  // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-  window.funwallet.sdk.on(
-    MessageListeners.authenticationCompleted,
-    (result) => {
-      if (result.origin === 'https://wallet.funfair.io/') {
-        isAuthenticated$.next(true);
-      }
-    }
-  );
-
+const listenToWalletEvents = () => {
   // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
   window.funwallet.sdk.on(
     MessageListeners.restoreAuthenticationCompleted,
@@ -698,9 +696,10 @@ const registerEventListeners = () => {
   // register all the other events your interested in here...
 };
 
+lazyLoadFunWallet();
+
 ReactDOM.render(
   <React.StrictMode>
-    <WalletLeader registerEventListeners={registerEventListeners} />
     <App />
   </React.StrictMode>,
   document.getElementById('root')
@@ -745,8 +744,16 @@ class App extends Component {
     });
   }
 
-  login() {
-    window.funwallet.sdk.auth.login();
+  async login() {
+    try {
+      const result = await window.funwallet.sdk.auth.login();
+      console.log('Authentication result', result);
+      // user all logged in
+      isAuthenticated$.next(true);
+    } catch (error) {
+      console.error('User did not sign in');
+      return;
+    }
   }
 
   async logout() {
@@ -979,8 +986,16 @@ class App extends Component {
     });
   }
 
-  login() {
-    window.funwallet.sdk.auth.login();
+  async login() {
+    try {
+      const result = await window.funwallet.sdk.auth.login();
+      console.log('Authentication result', result);
+      // user all logged in
+      isAuthenticated$.next(true);
+    } catch (error) {
+      console.error('User did not sign in');
+      return;
+    }
   }
 
   async logout() {

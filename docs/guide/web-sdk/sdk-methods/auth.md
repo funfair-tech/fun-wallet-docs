@@ -2,10 +2,39 @@
 
 ## Login
 
-This opens the authentication pop up for you and can be called on any click event. Please note this should not be called unless it's a proper user click or it could be blocked by some browsers.
+This will load a login screen for the user to enter their details. The promise will not resolve until successful or unsuccessful actions has happened on the authentication login window. If the user closes the login screen then the `login` promise will reject, if the user successfully authenticates the `login` promise will resolve successfully returning back `AuthenticationCompletedResponeData` which is exposed in our sdk typings and shown below.
+
+**NOTE**
+Chrome and other browsers can block popups if triggered without a genuine user click. Make sure whenever you call the authentication method that it's from a click event from the user to avoid any cross-browser issues.
 
 ```ts
-login(): void
+login(): Promise<AuthenticationCompletedResponeData>
+```
+
+```ts
+export interface AuthenticationCompletedResponeData {
+  authenticationCompleted: {
+    playerProtection: ExclusionStatusResponse;
+    ethereumAddress: string;
+    currentCurrency: string;
+    currentNetwork: NetworkDetails;
+    userAccountId: string;
+  };
+}
+
+export interface ExclusionStatusResponse {
+  status: ExclusionStatusType;
+  startTimestamp?: number | undefined;
+  durationDays?: number | undefined;
+  activeTimestamp?: number | undefined;
+}
+
+export interface NetworkDetails {
+  name: string;
+  id: Networks;
+  providerUrl: string;
+  enabled: boolean;
+}
 ```
 
 :::: tabs :options="{ useUrlFragment: false }"
@@ -15,7 +44,12 @@ login(): void
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
 
-window.funwallet.sdk.auth.login();
+try {
+  const authenticationCompletedResponseData = await window.funwallet.sdk.auth.login();
+  console.log(authenticationCompletedResponseData);
+} catch (error) {
+  console.error('Unauthentication failed!');
+}
 ```
 
 :::
@@ -23,7 +57,12 @@ window.funwallet.sdk.auth.login();
 ::: tab JavaScript
 
 ```js
-window.funwallet.sdk.auth.login();
+try {
+  const authenticationCompletedResponseData = await window.funwallet.sdk.auth.login();
+  console.log(authenticationCompletedResponseData);
+} catch (error) {
+  console.error('Unauthentication failed!');
+}
 ```
 
 :::

@@ -154,9 +154,10 @@ Please note, the SDK does check this as well and only connects messages from the
 ```ts
 {
   restoreAuthenticationCompleted = 'restoreAuthenticationCompleted',
-  changeNetwork = 'changeNetwork',
+  // @deprecated Please use `window.funwallet.sdk.login` promise instead.
   authenticationCompleted = 'authenticationCompleted',
   followerAuthenticationCompleted = 'followerAuthenticationCompleted',
+  changeNetwork = 'changeNetwork',
   walletInactivityLoggedOut = 'walletInactivityLoggedOut',
   walletDeviceDeletedLoggedOut = 'walletDeviceDeletedLoggedOut',
   pendingTransaction = 'pendingTransaction',
@@ -183,7 +184,7 @@ All the examples of code here will use the `on` but in all of these cases, you c
 
 ## restoreAuthenticationCompleted
 
-To allow restoring someone to be logged in after they refresh on initial load the Wallet tries to restore a session. Upon success, it will emit `restoreAuthenticationCompleted` telling you if it's restored a user's session or not. You should disable any sign-in/up click button until you get this event (it should happen very fast).
+To allow restoring someone to be logged in after they refresh on initial load the Wallet tries to restore a session. Upon success, it will emit `restoreAuthenticationCompleted` telling you if it's restored a user's session or not with any authentication data. You should disable any sign-in/up click button until you get this event.
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -231,60 +232,43 @@ window.funwallet.sdk.on(
 
 ```ts
 {
+  // this will be defined if `isAuthenticated` is true
+  result?: AuthenticationCompletedResponeData | undefined,
   isAuthenticated: boolean,
 }
 ```
 
----
-
-## changeNetwork
-
-This will fire when the Wallet network has been changed. _Note: this will always fire upon initial authentication of the leader as networks will update as a result of authentication._
-
-:::: tabs :options="{ useUrlFragment: false }"
-
-::: tab TypeScript
-
 ```ts
-import window from '@funfair-tech/wallet-sdk/window';
-import {
-  MessageListeners,
-  ChangeNetworkResponse,
-} from '@funfair-tech/wallet-sdk';
-
-window.funwallet.sdk.on<ChangeNetworkResponse>(
-  MessageListeners.changeNetwork,
-  (result: ChangeNetworkResponse) => {
-    if (result.origin === 'https://wallet.funfair.io/') {
-      console.log(result.data);
-    }
-  }
-);
+export interface AuthenticationCompletedResponeData {
+  authenticationCompleted: {
+    playerProtection: ExclusionStatusResponse;
+    ethereumAddress: string;
+    currentCurrency: string;
+    // details of this interface is just below in `changeNetwork` response data
+    currentNetwork: NetworkDetails;
+    userAccountId: string;
+  };
+}
 ```
 
-:::
-
-::: tab JavaScript
-
-```js
-import { MessageListeners } from '@funfair-tech/wallet-sdk';
-
-window.funwallet.sdk.on(MessageListeners.changeNetwork, (result) => {
-  if (result.origin === 'https://wallet.funfair.io/') {
-    console.log(result.data);
-  }
-});
-```
-
-:::
-
-::::
-
-`result.data` returns:
+`ExclusionStatusResponse`:
 
 ```ts
 {
-  network: NetworkDetails,
+    status: ExclusionStatusType;
+    startTimestamp?: number | undefined;
+    durationDays?: number | undefined;
+    activeTimestamp?: number | undefined;
+}
+```
+
+`ExclusionStatusType`:
+
+```ts
+export enum ExclusionStatusType {
+  ACTIVE = 'ACTIVE',
+  ON_BREAK = 'ON_BREAK',
+  EXCLUDED = 'EXCLUDED',
 }
 ```
 
@@ -318,7 +302,11 @@ export enum Networks {
 
 ## authenticationCompleted
 
-This will fire when the leader instance has been authenticated by a user. Once (and not until) this event has been received, you can go ahead and inject follower instances to show the UI to the authenticated user.
+<strong>DEPRECATED</strong>
+
+Please use `window.funwallet.sdk.login` promise instead.
+
+This will fire when the leader instance has been authenticated by a user. It is a much better flow in your dApp to use the `login` async method now so we do not recommend using this approach.
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -473,6 +461,85 @@ window.funwallet.sdk.on(
 ```ts
 {
   followerAuthenticationCompleted: boolean,
+}
+```
+
+---
+
+## changeNetwork
+
+This will fire when the Wallet network has been changed. _Note: this will always fire upon initial authentication of the leader as networks will update as a result of authentication._
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab TypeScript
+
+```ts
+import window from '@funfair-tech/wallet-sdk/window';
+import {
+  MessageListeners,
+  ChangeNetworkResponse,
+} from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on<ChangeNetworkResponse>(
+  MessageListeners.changeNetwork,
+  (result: ChangeNetworkResponse) => {
+    if (result.origin === 'https://wallet.funfair.io/') {
+      console.log(result.data);
+    }
+  }
+);
+```
+
+:::
+
+::: tab JavaScript
+
+```js
+import { MessageListeners } from '@funfair-tech/wallet-sdk';
+
+window.funwallet.sdk.on(MessageListeners.changeNetwork, (result) => {
+  if (result.origin === 'https://wallet.funfair.io/') {
+    console.log(result.data);
+  }
+});
+```
+
+:::
+
+::::
+
+`result.data` returns:
+
+```ts
+{
+  network: NetworkDetails,
+}
+```
+
+`NetworkDetails`:
+
+```ts
+{
+  name: string;
+  id: Networks;
+  providerUrl: string;
+  enabled: boolean;
+}
+```
+
+`Networks`:
+
+```ts
+export enum Networks {
+  mainnet = 1,
+  ropsten = 3,
+  rinkeby = 4,
+  kovan = 42,
+  xdai = 100,
+  novichok = 1984,
+  bracknell = 1999,
+  unknown = -1,
 }
 ```
 

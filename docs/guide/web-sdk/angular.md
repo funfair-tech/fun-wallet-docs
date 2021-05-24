@@ -116,40 +116,9 @@ $ yarn add @funfair-tech/wallet-angular
 
 ## Hooking up the SDK
 
+Most of our integrators have many wallets they support. For this case our wallet is lazy loaded aka only loaded when you need it.
+
 :::: tabs :options="{ useUrlFragment: false }"
-
-::: tab src/index.html
-
-Firstly, you need to drop the Wallet script into your `<head>` HTML tag within your main index.html (public > index.html). Please replace the `YOUR_APP_ID` with the your appId:
-
-```js
-<script
-  src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js?appId=YOUR_APP_ID"
-  type="text/JavaScript"
-></script>
-```
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Fun Wallet integration demo</title>
-    <base href="/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <script
-      src="https://wallet.funfair.io/assets/sdk/fun-wallet-sdk.js?appId=YOUR_APP_ID"
-      type="text/JavaScript"
-    ></script>
-  </head>
-  <body>
-    <app-root></app-root>
-  </body>
-</html>
-```
-
-:::
 
 ::: tab src/app.module.ts
 
@@ -173,46 +142,21 @@ export class AppModule {}
 
 :::
 
-::: tab src/app.component.html
-
-Insert the Wallet leader at the top of the `app.component.html`:
-
-Usage:
-
-```html
-<lib-wallet-leader
-  (loaded)="YOUR_REGISTER_EVENT_LISTENERS_METHOD()"
-></lib-wallet-leader>
-```
-
-### Parameters
-
-#### loaded
-
-Type - Function
-
-This will fire when the Wallet leader has loaded and this will be a function you register all your event listeners you want to attach to the Wallet, list of them [here](/guide/web-sdk/sdk-event-listeners.html#registering-an-event-listener)
-
-```html
-<lib-wallet-leader (loaded)="walletLoaded()"></lib-wallet-leader>
-```
-
-:::
-
 ::: tab src/app.component.ts
 
 Register all the event listeners you want to listen to, The ones below are mandtory for the integration to work properly.
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { StoreService } from './store.service';
 import window from '@funfair-tech/wallet-sdk/window';
 import {
-  AuthenticationCompletedResponse,
   MessageListeners,
   RestoreAuthenticationCompletedResponse,
   WalletDeviceDeletedLoggedOutResponse,
   WalletInactivityLoggedOutResponse,
+  FunWalletEmbed,
+  FunWalletSdk,
 } from '@funfair-tech/wallet-sdk';
 
 @Component({
@@ -221,25 +165,46 @@ import {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  public injectedFunWallet = false;
+  constructor(private _zone: NgZone) {}
 
-  public walletLoaded(): void {
-    // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-    window.funwallet.sdk.on<AuthenticationCompletedResponse>(
-      MessageListeners.authenticationCompleted,
-      (result: AuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io/') {
-          StoreService.isAuthenticationCompleted.next(true);
-        }
-      }
-    );
+  // you call this method when you want to load the wallet
+  // this can be on a button click or page load up to how
+  // your dApp needs it to act
+  public lazyLoadFunWallet(): Promise<FunWalletSdk> {
+    // it returns the fun wallet sdk but this
+    // is always exposed in `window.funwallet.sdk`
+    const funWalletSdk = await FunWalletEmbed.load({
+      initOptions: {
+        ngZone: this._zone,
+      },
+      appId: 'YOUR_APP_ID_HERE',
+      // make sure its in a arrow expression
+      // functions so it can get context to `this`
+      // when executing your wallet event listener method
+      eventListenerCallback: () => {
+        this.listenToWalletEvents();
+      },
+    });
 
+    this.injectedFunWallet = true;
+    return funWalletSdk;
+  }
+
+  private listenToWalletEvents(): void {
     // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
     window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
       MessageListeners.restoreAuthenticationCompleted,
       (result: RestoreAuthenticationCompletedResponse) => {
         if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.restoreAuthenticationTaskCompleted.next(true);
+
+          // if the user has been restored authentication then your all good
+          // to go again
+          if (result.data.isAuthenticated) {
+            // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+            StoreService.isAuthenticationCompleted.next(true);
+          }
         }
       }
     );
@@ -300,16 +265,28 @@ It's up to the integration to show the user the login and logout buttons, which 
 
 ### Login
 
-Method to pop up the authentication modal.
+Method to login with the fun wallet.
 
 ```js
-window.funwallet.sdk.auth.login();
+await window.funwallet.sdk.auth.login();
 ```
 
-This will load a window popup for the user to enter their login details. Once logged in it will fire [authenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted), which you will need to have registered to so you can listen out for success. If the user closes the authentication popup it will fire [authenticationPopUpClosed](/guide/web-sdk/sdk-event-listeners.html#authenticationpopupclosed), which you can listen out for if you want to know when that happens.
+This will load a login screen for the user to enter their details. The promise will not resolve until successful or unsuccessful actions has happened on the authentication login window. If the user closes the login screen then the `login` promise will reject, if the user successfully authenticates the `login` promise will resolve successfully returning back `AuthenticationCompletedResponeData` which is exposed in our sdk typings:
+
+```ts
+export interface AuthenticationCompletedResponeData {
+  authenticationCompleted: {
+    playerProtection: ExclusionStatusResponse;
+    ethereumAddress: string;
+    currentCurrency: string;
+    currentNetwork: NetworkDetails;
+    userAccountId: string;
+  };
+}
+```
 
 **NOTE**
-Chrome and other browsers can block popups if triggered without a genuine user click. Make sure whenever you pop this modal up it's from a click event from the user to avoid any cross-browser issues.
+Chrome and other browsers can block popups if triggered without a genuine user click. Make sure whenever you call the authentication method that it's from a click event from the user to avoid any cross-browser issues.
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -318,9 +295,12 @@ Chrome and other browsers can block popups if triggered without a genuine user c
 ```html
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
 <!-- this is purely for developers to understand how it comes together, the same logic would work with split components and different modules -->
-<lib-wallet-leader (loaded)="walletLoaded()"></lib-wallet-leader>
 
-<div class="app">
+<button click="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
+  Load fun wallet sdk into dapp
+</button>
+
+<div class="app" *ngIf="injectedFunWallet">
   <div class="app-container">
     <div class="action-buttons">
       <!-- should only show this if the user is NOT logged in -->
@@ -341,11 +321,12 @@ import { Component } from '@angular/core';
 import { StoreService } from './store.service';
 import window from '@funfair-tech/wallet-sdk/window';
 import {
-  AuthenticationCompletedResponse,
   MessageListeners,
   RestoreAuthenticationCompletedResponse,
   WalletDeviceDeletedLoggedOutResponse,
   WalletInactivityLoggedOutResponse,
+  FunWalletEmbed,
+  FunWalletSdk,
 } from '@funfair-tech/wallet-sdk';
 
 @Component({
@@ -354,29 +335,51 @@ import {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  public injectedFunWallet = false;
+
   public isAuthenticationCompleted$: Observable<
     boolean
   > = StoreService.isAuthenticationCompleted.pipe();
 
-  constructor() {}
+  constructor(private _zone: NgZone) {}
 
-  public walletLoaded(): void {
-    // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-    window.funwallet.sdk.on<AuthenticationCompletedResponse>(
-      MessageListeners.authenticationCompleted,
-      (result: AuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io/') {
-          StoreService.isAuthenticationCompleted.next(true);
-        }
-      }
-    );
+  // you call this method when you want to load the wallet
+  // this can be on a button click or page load up to how
+  // your dApp needs it to act
+  public lazyLoadFunWallet(): Promise<FunWalletSdk> {
+    // it returns the fun wallet sdk but this
+    // is always exposed in `window.funwallet.sdk`
+    const funWalletSdk = await FunWalletEmbed.load({
+      initOptions: {
+        ngZone: this._zone,
+      },
+      appId: 'YOUR_APP_ID_HERE',
+      // make sure its in a arrow expression
+      // functions so it can get context to `this`
+      // when executing your wallet event listener method
+      eventListenerCallback: () => {
+        this.listenToWalletEvents();
+      },
+    });
 
+    this.injectedFunWallet = true;
+    return funWalletSdk;
+  }
+
+  public listenToWalletEvents(): void {
     // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
     window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
       MessageListeners.restoreAuthenticationCompleted,
       (result: RestoreAuthenticationCompletedResponse) => {
         if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.restoreAuthenticationTaskCompleted.next(true);
+
+          // if the user has been restored authentication then your all good
+          // to go again
+          if (result.data.isAuthenticated) {
+            // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+            StoreService.isAuthenticationCompleted.next(true);
+          }
         }
       }
     );
@@ -408,10 +411,19 @@ export class AppComponent {
   }
 
   /**
-   * Login
+   * Login to the fun wallet
    */
-  public login(): void {
-    window.funwallet.sdk.auth.login();
+  public async login(): Promise<void> {
+    try {
+      const result = await window.funwallet.sdk.auth.login();
+      console.log('Authentication result', result);
+    } catch (error) {
+      console.error('User did not sign in');
+      return;
+    }
+
+    // user all logged in
+    StoreService.isAuthenticationCompleted.next(true);
   }
 }
 ```
@@ -435,9 +447,12 @@ await window.funwallet.sdk.auth.logout();
 ```html
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
 <!-- this is purely for developers to understand how it comes together, the same logic would work with split components and different modules -->
-<lib-wallet-leader (loaded)="walletLoaded()"></lib-wallet-leader>
 
-<div class="app">
+<button click="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
+  Load fun wallet sdk into dapp
+</button>
+
+<div class="app" *ngIf="injectedFunWallet">
   <div class="app-container">
     <div class="action-buttons">
       <!-- should only show this if the user is NOT logged in -->
@@ -461,11 +476,12 @@ import { Component } from '@angular/core';
 import { StoreService } from './store.service';
 import window from '@funfair-tech/wallet-sdk/window';
 import {
-  AuthenticationCompletedResponse,
   MessageListeners,
   RestoreAuthenticationCompletedResponse,
   WalletDeviceDeletedLoggedOutResponse,
   WalletInactivityLoggedOutResponse,
+  FunWalletEmbed,
+  FunWalletSdk,
 } from '@funfair-tech/wallet-sdk';
 
 @Component({
@@ -474,29 +490,51 @@ import {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  public injectedFunWallet = false;
+
   public isAuthenticationCompleted$: Observable<
     boolean
   > = StoreService.isAuthenticationCompleted.pipe();
 
-  constructor() {}
+  constructor(private _zone: NgZone) {}
 
-  public walletLoaded(): void {
-    // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-    window.funwallet.sdk.on<AuthenticationCompletedResponse>(
-      MessageListeners.authenticationCompleted,
-      (result: AuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io/') {
-          StoreService.isAuthenticationCompleted.next(true);
-        }
-      }
-    );
+  // you call this method when you want to load the wallet
+  // this can be on a button click or page load up to how
+  // your dApp needs it to act
+  public lazyLoadFunWallet(): Promise<FunWalletSdk> {
+    // it returns the fun wallet sdk but this
+    // is always exposed in `window.funwallet.sdk`
+    const funWalletSdk = await FunWalletEmbed.load({
+      initOptions: {
+        ngZone: this._zone,
+      },
+      appId: 'YOUR_APP_ID_HERE',
+      // make sure its in a arrow expression
+      // functions so it can get context to `this`
+      // when executing your wallet event listener method
+      eventListenerCallback: () => {
+        this.listenToWalletEvents();
+      },
+    });
 
+    this.injectedFunWallet = true;
+    return funWalletSdk;
+  }
+
+  public listenToWalletEvents(): void {
     // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
     window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
       MessageListeners.restoreAuthenticationCompleted,
       (result: RestoreAuthenticationCompletedResponse) => {
         if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.restoreAuthenticationTaskCompleted.next(true);
+
+          // if the user has been restored authentication then your all good
+          // to go again
+          if (result.data.isAuthenticated) {
+            // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+            StoreService.isAuthenticationCompleted.next(true);
+          }
         }
       }
     );
@@ -528,10 +566,19 @@ export class AppComponent {
   }
 
   /**
-   * Login
+   * Login to the fun wallet
    */
-  public login(): void {
-    window.funwallet.sdk.auth.login();
+  public async login(): Promise<void> {
+    try {
+      const result = await window.funwallet.sdk.auth.login();
+      console.log('Authentication result', result);
+    } catch (error) {
+      console.error('User did not sign in');
+      return;
+    }
+
+    // user all logged in
+    StoreService.isAuthenticationCompleted.next(true);
   }
 
   /**
@@ -554,7 +601,7 @@ As the server never sees the private key and all the decryption of it happens on
 
 If you want to read more about how this works and keeps your private key safe read [here](/guide/how-does-it-work/re-authentication.html#double-encrypted-localstorage-setup).
 
-We just add a loading state to our data which is default true, this will then turn to false once the restoreAuthenticationCompleted has completed. We then in the template just add some loading state to hide and show the buttons.
+We just add a loading state to our data which is default `true`, this will then turn to `false` once the restoreAuthenticationCompleted has completed. We then in the template just add some loading state to hide and show the buttons.
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -563,9 +610,11 @@ We just add a loading state to our data which is default true, this will then tu
 ```html
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
 <!-- this is purely for developers to understand how it comes together, the same logic would work with split components and different modules -->
-<lib-wallet-leader (loaded)="walletLoaded()"></lib-wallet-leader>
+<button click="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
+  Load fun wallet sdk into dapp
+</button>
 
-<div class="app">
+<div class="app" *ngIf="injectedFunWallet">
   <div class="app-container">
     <p *ngIf="!(restoreAuthenticationTaskCompleted$ | async)">
       Loading please wait
@@ -594,11 +643,12 @@ import { Component } from '@angular/core';
 import { StoreService } from './store.service';
 import window from '@funfair-tech/wallet-sdk/window';
 import {
-  AuthenticationCompletedResponse,
   MessageListeners,
   RestoreAuthenticationCompletedResponse,
   WalletDeviceDeletedLoggedOutResponse,
   WalletInactivityLoggedOutResponse,
+  FunWalletEmbed,
+  FunWalletSdk,
 } from '@funfair-tech/wallet-sdk';
 
 @Component({
@@ -607,6 +657,8 @@ import {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  public injectedFunWallet = false;
+
   public restoreAuthenticationTaskCompleted$: Observable<
     boolean
   > = StoreService.restoreAuthenticationTaskCompleted.pipe();
@@ -615,25 +667,45 @@ export class AppComponent {
     boolean
   > = StoreService.isAuthenticationCompleted.pipe();
 
-  constructor() {}
+  constructor(private _zone: NgZone) {}
 
-  public walletLoaded(): void {
-    // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-    window.funwallet.sdk.on<AuthenticationCompletedResponse>(
-      MessageListeners.authenticationCompleted,
-      (result: AuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io/') {
-          StoreService.isAuthenticationCompleted.next(true);
-        }
-      }
-    );
+  // you call this method when you want to load the wallet
+  // this can be on a button click or page load up to how
+  // your dApp needs it to act
+  public lazyLoadFunWallet(): Promise<FunWalletSdk> {
+    // it returns the fun wallet sdk but this
+    // is always exposed in `window.funwallet.sdk`
+    const funWalletSdk = await FunWalletEmbed.load({
+      initOptions: {
+        ngZone: this._zone,
+      },
+      appId: 'YOUR_APP_ID_HERE',
+      // make sure its in a arrow expression
+      // functions so it can get context to `this`
+      // when executing your wallet event listener method
+      eventListenerCallback: () => {
+        this.listenToWalletEvents();
+      },
+    });
 
+    this.injectedFunWallet = true;
+    return funWalletSdk;
+  }
+
+  public listenToWalletEvents(): void {
     // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
     window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
       MessageListeners.restoreAuthenticationCompleted,
       (result: RestoreAuthenticationCompletedResponse) => {
         if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.restoreAuthenticationTaskCompleted.next(true);
+
+          // if the user has been restored authentication then your all good
+          // to go again
+          if (result.data.isAuthenticated) {
+            // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+            StoreService.isAuthenticationCompleted.next(true);
+          }
         }
       }
     );
@@ -665,10 +737,19 @@ export class AppComponent {
   }
 
   /**
-   * Login
+   * Login to the fun wallet
    */
-  public login(): void {
-    window.funwallet.sdk.auth.login();
+  public async login(): Promise<void> {
+    try {
+      const result = await window.funwallet.sdk.auth.login();
+      console.log('Authentication result', result);
+    } catch (error) {
+      console.error('User did not sign in');
+      return;
+    }
+
+    // user all logged in
+    StoreService.isAuthenticationCompleted.next(true);
   }
 
   /**
@@ -693,9 +774,7 @@ Usage:
 <lib-wallet-follower></lib-wallet-follower>
 ```
 
-If you want to deep link into a page on the Wallet, see [here](./routing.html#deep-link-page-routes). By default the main `/funds` page will load.
-
-Please note, you must only show the follower once [restoreAuthenticationTaskCompleted](./sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationCompleted](./sdk-event-listeners.html#authenticationcompleted) has fired. `authenticationCompleted` means they are logged in.
+If you want to deep link into a page on the Wallet, see [here](./routing.html#deep-link-page-routes). By default the main `/funds` page will load. Please note, you must only show if the user is authenticated.
 
 :::: tabs :options="{ useUrlFragment: false }"
 
@@ -704,9 +783,12 @@ Please note, you must only show the follower once [restoreAuthenticationTaskComp
 ```html
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
 <!-- this is purely for developers to understand how it comes together, the same logic would work with split components and different modules -->
-<lib-wallet-leader (loaded)="walletLoaded()"></lib-wallet-leader>
 
-<div class="app">
+<button click="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
+  Load fun wallet sdk into dapp
+</button>
+
+<div class="app" *ngIf="injectedFunWallet">
   <div class="app-container">
     <p *ngIf="!(restoreAuthenticationTaskCompleted$ | async)">
       Loading please wait
@@ -739,11 +821,12 @@ import { Component } from '@angular/core';
 import { StoreService } from './store.service';
 import window from '@funfair-tech/wallet-sdk/window';
 import {
-  AuthenticationCompletedResponse,
   MessageListeners,
   RestoreAuthenticationCompletedResponse,
   WalletDeviceDeletedLoggedOutResponse,
   WalletInactivityLoggedOutResponse,
+  FunWalletEmbed,
+  FunWalletSdk,
 } from '@funfair-tech/wallet-sdk';
 
 @Component({
@@ -752,6 +835,8 @@ import {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  public injectedFunWallet = false;
+
   public restoreAuthenticationTaskCompleted$: Observable<
     boolean
   > = StoreService.restoreAuthenticationTaskCompleted.pipe();
@@ -760,15 +845,45 @@ export class AppComponent {
     boolean
   > = StoreService.isAuthenticationCompleted.pipe();
 
-  constructor() {}
+  constructor(private _zone: NgZone) {}
 
-  public walletLoaded(): void {
-    // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-    window.funwallet.sdk.on<AuthenticationCompletedResponse>(
-      MessageListeners.authenticationCompleted,
-      (result: AuthenticationCompletedResponse) => {
+  // you call this method when you want to load the wallet
+  // this can be on a button click or page load up to how
+  // your dApp needs it to act
+  public lazyLoadFunWallet(): Promise<FunWalletSdk> {
+    // it returns the fun wallet sdk but this
+    // is always exposed in `window.funwallet.sdk`
+    const funWalletSdk = await FunWalletEmbed.load({
+      initOptions: {
+        ngZone: this._zone,
+      },
+      appId: 'YOUR_APP_ID_HERE',
+      // make sure its in a arrow expression
+      // functions so it can get context to `this`
+      // when executing your wallet event listener method
+      eventListenerCallback: () => {
+        this.listenToWalletEvents();
+      },
+    });
+
+    this.injectedFunWallet = true;
+    return funWalletSdk;
+  }
+
+  public listenToWalletEvents(): void {
+    // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
+    window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
+      MessageListeners.restoreAuthenticationCompleted,
+      (result: RestoreAuthenticationCompletedResponse) => {
         if (result.origin === 'https://wallet.funfair.io/') {
-          StoreService.isAuthenticationCompleted.next(true);
+          StoreService.restoreAuthenticationTaskCompleted.next(true);
+
+          // if the user has been restored authentication then your all good
+          // to go again
+          if (result.data.isAuthenticated) {
+            // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+            StoreService.isAuthenticationCompleted.next(true);
+          }
         }
       }
     );
@@ -810,10 +925,19 @@ export class AppComponent {
   }
 
   /**
-   * Login
+   * Login to the fun wallet
    */
-  public login(): void {
-    window.funwallet.sdk.auth.login();
+  public async login(): Promise<void> {
+    try {
+      const result = await window.funwallet.sdk.auth.login();
+      console.log('Authentication result', result);
+    } catch (error) {
+      console.error('User did not sign in');
+      return;
+    }
+
+    // user all logged in
+    StoreService.isAuthenticationCompleted.next(true);
   }
 
   /**
@@ -861,9 +985,12 @@ Once completed, you will get the status of the pass/fail through the [isKycVerif
 ```html
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
 <!-- this is purely for developers to understand how it comes together, the same logic would work with split components and different modules -->
-<lib-wallet-leader (loaded)="walletLoaded()"></lib-wallet-leader>
 
-<div class="app">
+<button click="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
+  Load fun wallet sdk into dapp
+</button>
+
+<div class="app" *ngIf="injectedFunWallet">
   <div class="app-container">
     <p *ngIf="!(restoreAuthenticationTaskCompleted$ | async)">
       Loading please wait
@@ -897,13 +1024,14 @@ import { Component } from '@angular/core';
 import { StoreService } from './store.service';
 import window from '@funfair-tech/wallet-sdk/window';
 import {
-  AuthenticationCompletedResponse,
   IsKycVerifiedResponse,
   KycProcessCancelledResponse,
   MessageListeners,
   RestoreAuthenticationCompletedResponse,
   WalletDeviceDeletedLoggedOutResponse,
   WalletInactivityLoggedOutResponse,
+  FunWalletEmbed,
+  FunWalletSdk,
 } from '@funfair-tech/wallet-sdk';
 
 @Component({
@@ -912,6 +1040,8 @@ import {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  public injectedFunWallet = false;
+
   public restoreAuthenticationTaskCompleted$: Observable<
     boolean
   > = StoreService.restoreAuthenticationTaskCompleted.pipe();
@@ -920,25 +1050,45 @@ export class AppComponent {
     boolean
   > = StoreService.isAuthenticationCompleted.pipe();
 
-  constructor() {}
+  constructor(private _zone: NgZone) {}
 
-  public walletLoaded(): void {
-    // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-    window.funwallet.sdk.on<AuthenticationCompletedResponse>(
-      MessageListeners.authenticationCompleted,
-      (result: AuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io/') {
-          StoreService.isAuthenticationCompleted.next(true);
-        }
-      }
-    );
+  // you call this method when you want to load the wallet
+  // this can be on a button click or page load up to how
+  // your dApp needs it to act
+  public lazyLoadFunWallet(): Promise<FunWalletSdk> {
+    // it returns the fun wallet sdk but this
+    // is always exposed in `window.funwallet.sdk`
+    const funWalletSdk = await FunWalletEmbed.load({
+      initOptions: {
+        ngZone: this._zone,
+      },
+      appId: 'YOUR_APP_ID_HERE',
+      // make sure its in a arrow expression
+      // functions so it can get context to `this`
+      // when executing your wallet event listener method
+      eventListenerCallback: () => {
+        this.listenToWalletEvents();
+      },
+    });
 
+    this.injectedFunWallet = true;
+    return funWalletSdk;
+  }
+
+  public listenToWalletEvents(): void {
     // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
     window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
       MessageListeners.restoreAuthenticationCompleted,
       (result: RestoreAuthenticationCompletedResponse) => {
         if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.restoreAuthenticationTaskCompleted.next(true);
+
+          // if the user has been restored authentication then your all good
+          // to go again
+          if (result.data.isAuthenticated) {
+            // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+            StoreService.isAuthenticationCompleted.next(true);
+          }
         }
       }
     );
@@ -1006,10 +1156,19 @@ export class AppComponent {
   }
 
   /**
-   * Login
+   * Login to the fun wallet
    */
-  public login(): void {
-    window.funwallet.sdk.auth.login();
+  public async login(): Promise<void> {
+    try {
+      const result = await window.funwallet.sdk.auth.login();
+      console.log('Authentication result', result);
+    } catch (error) {
+      console.error('User did not sign in');
+      return;
+    }
+
+    // user all logged in
+    StoreService.isAuthenticationCompleted.next(true);
   }
 
   /**
@@ -1211,9 +1370,12 @@ export class EthereumService {
 ```html
 <!-- Very simple example of it working in 1 app.component.html we suggest splitting into components to make this nicer as a big app would -->
 <!-- this is purely for developers to understand how it comes together, the same logic would work with split components and different modules -->
-<lib-wallet-leader (loaded)="walletLoaded()"></lib-wallet-leader>
 
-<div class="app">
+<button click="lazyLoadFunWallet()" *ngIf="!injectedFunWallet">
+  Load fun wallet sdk into dapp
+</button>
+
+<div class="app" *ngIf="injectedFunWallet">
   <div class="app-container">
     <p *ngIf="!(restoreAuthenticationTaskCompleted$ | async)">
       Loading please wait
@@ -1252,11 +1414,12 @@ import { Component } from '@angular/core';
 import { StoreService } from './store.service';
 import window from '@funfair-tech/wallet-sdk/window';
 import {
-  AuthenticationCompletedResponse,
   MessageListeners,
   RestoreAuthenticationCompletedResponse,
   WalletDeviceDeletedLoggedOutResponse,
   WalletInactivityLoggedOutResponse,
+  FunWalletEmbed,
+  FunWalletSdk,
 } from '@funfair-tech/wallet-sdk';
 import { EthereumService } from './services/ethereum.service';
 
@@ -1266,6 +1429,8 @@ import { EthereumService } from './services/ethereum.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  public injectedFunWallet = false;
+
   public restoreAuthenticationTaskCompleted$: Observable<
     boolean
   > = StoreService.restoreAuthenticationTaskCompleted.pipe();
@@ -1274,25 +1439,48 @@ export class AppComponent {
     boolean
   > = StoreService.isAuthenticationCompleted.pipe();
 
-  constructor(private _ethereumService: EthereumService) {}
+  constructor(
+    private _ethereumService: EthereumService,
+    private _zone: NgZone
+  ) {}
 
-  public walletLoaded(): void {
-    // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-    window.funwallet.sdk.on<AuthenticationCompletedResponse>(
-      MessageListeners.authenticationCompleted,
-      (result: AuthenticationCompletedResponse) => {
-        if (result.origin === 'https://wallet.funfair.io/') {
-          StoreService.isAuthenticationCompleted.next(true);
-        }
-      }
-    );
+  // you call this method when you want to load the wallet
+  // this can be on a button click or page load up to how
+  // your dApp needs it to act
+  public lazyLoadFunWallet(): Promise<FunWalletSdk> {
+    // it returns the fun wallet sdk but this
+    // is always exposed in `window.funwallet.sdk`
+    const funWalletSdk = await FunWalletEmbed.load({
+      initOptions: {
+        ngZone: this._zone,
+      },
+      appId: 'YOUR_APP_ID_HERE',
+      // make sure its in a arrow expression
+      // functions so it can get context to `this`
+      // when executing your wallet event listener method
+      eventListenerCallback: () => {
+        this.listenToWalletEvents();
+      },
+    });
 
+    this.injectedFunWallet = true;
+    return funWalletSdk;
+  }
+
+  public listenToWalletEvents(): void {
     // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
     window.funwallet.sdk.on<RestoreAuthenticationCompletedResponse>(
       MessageListeners.restoreAuthenticationCompleted,
       (result: RestoreAuthenticationCompletedResponse) => {
         if (result.origin === 'https://wallet.funfair.io/') {
           StoreService.restoreAuthenticationTaskCompleted.next(true);
+
+          // if the user has been restored authentication then your all good
+          // to go again
+          if (result.data.isAuthenticated) {
+            // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+            StoreService.isAuthenticationCompleted.next(true);
+          }
         }
       }
     );
@@ -1324,10 +1512,19 @@ export class AppComponent {
   }
 
   /**
-   * Login
+   * Login to the fun wallet
    */
-  public login(): void {
-    window.funwallet.sdk.auth.login();
+  public async login(): Promise<void> {
+    try {
+      const result = await window.funwallet.sdk.auth.login();
+      console.log('Authentication result', result);
+    } catch (error) {
+      console.error('User did not sign in');
+      return;
+    }
+
+    // user all logged in
+    StoreService.isAuthenticationCompleted.next(true);
   }
 
   /**
