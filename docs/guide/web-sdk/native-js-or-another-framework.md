@@ -143,17 +143,17 @@ Example:
 
         // REGISTER EVENT LISTENERS HERE (IDEALLY IN A NEW METHOD).
 
-        // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-        window.funwallet.sdk.on('authenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io/') {
-            isAuthenticated$.next(true);
-          }
-        });
-
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
         window.funwallet.sdk.on('restoreAuthenticationCompleted', (result) => {
           if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
+
+            // if the user has been restored authentication then your all good
+            // to go again
+            if (result.data.isAuthenticated) {
+              // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+              isAuthenticated$.next(true);
+            }
           }
         });
 
@@ -206,16 +206,28 @@ It's up to the integration to show the user the login and logout buttons, which 
 
 ### Login
 
-Method to pop up the authentication modal.
+Method to login with the fun wallet.
 
 ```js
-window.funwallet.sdk.auth.login();
+await window.funwallet.sdk.auth.login();
 ```
 
-This will load a window popup for the user to enter their login details. Once logged in, it will fire [authenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted), which you will need to have registered to so you can listen out for success. If the user closes the authentication popup it will fire [authenticationPopUpClosed](/guide/web-sdk/sdk-event-listeners.html#authenticationpopupclosed), which you can listen out for if you want to know when that happens.
+This will load a login screen for the user to enter their details. The promise will not resolve until successful or unsuccessful actions has happened on the authentication login window. If the user closes the login screen then the `login` promise will reject, if the user successfully authenticates the `login` promise will resolve successfully returning back `AuthenticationCompletedResponeData` which is exposed in our sdk typings:
+
+```ts
+export interface AuthenticationCompletedResponeData {
+  authenticationCompleted: {
+    playerProtection: ExclusionStatusResponse;
+    ethereumAddress: string;
+    currentCurrency: string;
+    currentNetwork: NetworkDetails;
+    userAccountId: string;
+  };
+}
+```
 
 **NOTE**
-Chrome and other browsers can block popups if triggered without a genuine user click. Make sure whenever you pop this modal up its from a click event from the user to avoid any cross browser issues.
+Chrome and other browsers can block popups if triggered without a genuine user click. Make sure whenever you call the authentication method that it's from a click event from the user to avoid any cross browser issues.
 
 Example:
 
@@ -267,17 +279,17 @@ Example:
 
         // REGISTER EVENT LISTENERS HERE (IDEALLY IN A NEW METHOD).
 
-        // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-        window.funwallet.sdk.on('authenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io/') {
-            isAuthenticated$.next(true);
-          }
-        });
-
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
         window.funwallet.sdk.on('restoreAuthenticationCompleted', (result) => {
           if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
+
+            // if the user has been restored authentication then your all good
+            // to go again
+            if (result.data.isAuthenticated) {
+              // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+              isAuthenticated$.next(true);
+            }
           }
         });
 
@@ -301,8 +313,16 @@ Example:
         // register all the other events your interested in here...
       }
 
-      function login() {
-        window.funwallet.sdk.auth.login();
+      async function login() {
+        try {
+          const result = await window.funwallet.sdk.auth.login();
+          console.log('Authentication result', result);
+
+          isAuthenticated$.next(true);
+        } catch (error) {
+          console.error('User did not sign in');
+          return;
+        }
       }
     </script>
   </head>
@@ -388,17 +408,17 @@ Example:
 
         // REGISTER EVENT LISTENERS HERE (IDEALLY IN A NEW METHOD).
 
-        // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-        window.funwallet.sdk.on('authenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io/') {
-            isAuthenticated$.next(true);
-          }
-        });
-
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
         window.funwallet.sdk.on('restoreAuthenticationCompleted', (result) => {
           if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
+
+            // if the user has been restored authentication then your all good
+            // to go again
+            if (result.data.isAuthenticated) {
+              // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+              isAuthenticated$.next(true);
+            }
           }
         });
 
@@ -422,12 +442,20 @@ Example:
         // register all the other events your interested in here...
       }
 
-      function login() {
-        window.funwallet.sdk.auth.login();
+      async function login() {
+        try {
+          const result = await window.funwallet.sdk.auth.login();
+          console.log('Authentication result', result);
+
+          isAuthenticated$.next(true);
+        } catch (error) {
+          console.error('User did not sign in');
+          return;
+        }
       }
 
-      function logout() {
-        window.funwallet.sdk.auth.logout();
+      async function logout() {
+        await window.funwallet.sdk.auth.logout();
         isAuthenticated$.next(false);
       }
     </script>
@@ -532,17 +560,17 @@ Example:
 
         // REGISTER EVENT LISTENERS HERE (IDEALLY IN A NEW METHOD).
 
-        // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-        window.funwallet.sdk.on('authenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io/') {
-            isAuthenticated$.next(true);
-          }
-        });
-
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
         window.funwallet.sdk.on('restoreAuthenticationCompleted', (result) => {
           if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
+
+            // if the user has been restored authentication then your all good
+            // to go again
+            if (result.data.isAuthenticated) {
+              // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+              isAuthenticated$.next(true);
+            }
           }
         });
 
@@ -566,12 +594,20 @@ Example:
         // register all the other events your interested in here...
       }
 
-      function login() {
-        window.funwallet.sdk.auth.login();
+      async function login() {
+        try {
+          const result = await window.funwallet.sdk.auth.login();
+          console.log('Authentication result', result);
+
+          isAuthenticated$.next(true);
+        } catch (error) {
+          console.error('User did not sign in');
+          return;
+        }
       }
 
-      function logout() {
-        window.funwallet.sdk.auth.logout();
+      async function logout() {
+        await window.funwallet.sdk.auth.logout();
         isAuthenticated$.next(false);
       }
     </script>
@@ -621,8 +657,6 @@ Paste this HTML snippet where you want the Wallet UI to render on your dApp. Thi
   frameborder="0"
 ></iframe>
 ```
-
-Please note, you must only show the follower once [restoreAuthenticationTaskCompleted](./sdk-event-listeners.html#restoreauthenticationcompleted) has fired and [authenticationcompleted](./sdk-event-listeners.html#authenticationcompleted) has fired. `authenticationcompleted` means they are logged in.
 
 If you want to deep link the into a page on the Wallet, please read [here](./routing.html#deep-link-page-routes).
 
@@ -688,17 +722,17 @@ Example:
 
         // REGISTER EVENT LISTENERS HERE (IDEALLY IN A NEW METHOD).
 
-        // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-        window.funwallet.sdk.on('authenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io/') {
-            isAuthenticated$.next(true);
-          }
-        });
-
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
         window.funwallet.sdk.on('restoreAuthenticationCompleted', (result) => {
           if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
+
+            // if the user has been restored authentication then your all good
+            // to go again
+            if (result.data.isAuthenticated) {
+              // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+              isAuthenticated$.next(true);
+            }
           }
         });
 
@@ -726,12 +760,20 @@ Example:
         await window.funwallet.sdk.registerFollowerInstance();
       }
 
-      function login() {
-        window.funwallet.sdk.auth.login();
+      async function login() {
+        try {
+          const result = await window.funwallet.sdk.auth.login();
+          console.log('Authentication result', result);
+
+          isAuthenticated$.next(true);
+        } catch (error) {
+          console.error('User did not sign in');
+          return;
+        }
       }
 
-      function logout() {
-        window.funwallet.sdk.auth.logout();
+      async function logout() {
+        await window.funwallet.sdk.auth.logout();
         isAuthenticated$.next(false);
       }
     </script>
@@ -860,17 +902,17 @@ Example:
 
         // REGISTER EVENT LISTENERS HERE (IDEALLY IN A NEW METHOD).
 
-        // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-        window.funwallet.sdk.on('authenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io/') {
-            isAuthenticated$.next(true);
-          }
-        });
-
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
         window.funwallet.sdk.on('restoreAuthenticationCompleted', (result) => {
           if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
+
+            // if the user has been restored authentication then your all good
+            // to go again
+            if (result.data.isAuthenticated) {
+              // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+              isAuthenticated$.next(true);
+            }
           }
         });
 
@@ -927,12 +969,20 @@ Example:
         await window.funwallet.sdk.registerFollowerInstance();
       }
 
-      function login() {
-        window.funwallet.sdk.auth.login();
+      async function login() {
+        try {
+          const result = await window.funwallet.sdk.auth.login();
+          console.log('Authentication result', result);
+
+          isAuthenticated$.next(true);
+        } catch (error) {
+          console.error('User did not sign in');
+          return;
+        }
       }
 
-      function logout() {
-        window.funwallet.sdk.auth.logout();
+      async function logout() {
+        await window.funwallet.sdk.auth.logout();
         isAuthenticated$.next(false);
       }
 
@@ -1143,17 +1193,17 @@ Example:
 
         // REGISTER EVENT LISTENERS HERE (IDEALLY IN A NEW METHOD).
 
-        // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#authenticationcompleted
-        window.funwallet.sdk.on('authenticationCompleted', (result) => {
-          if (result.origin === 'https://wallet.funfair.io/') {
-            isAuthenticated$.next(true);
-          }
-        });
-
         // https://funfair-tech.github.io/fun-wallet-docs/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted
         window.funwallet.sdk.on('restoreAuthenticationCompleted', (result) => {
           if (result.origin === 'https://wallet.funfair.io/') {
             restoreAuthenticationTaskCompleted$.next(true);
+
+            // if the user has been restored authentication then your all good
+            // to go again
+            if (result.data.isAuthenticated) {
+              // result.data.result holds `AuthenticationCompletedResponeData` in for you.
+              isAuthenticated$.next(true);
+            }
           }
         });
 
@@ -1181,12 +1231,20 @@ Example:
         await window.funwallet.sdk.registerFollowerInstance();
       }
 
-      function login() {
-        window.funwallet.sdk.auth.login();
+      async function login() {
+        try {
+          const result = await window.funwallet.sdk.auth.login();
+          console.log('Authentication result', result);
+
+          isAuthenticated$.next(true);
+        } catch (error) {
+          console.error('User did not sign in');
+          return;
+        }
       }
 
-      function logout() {
-        window.funwallet.sdk.auth.logout();
+      async function logout() {
+        await window.funwallet.sdk.auth.logout();
         isAuthenticated$.next(false);
       }
 
@@ -1283,3 +1341,13 @@ Example:
 ```
 
 When you sign anything an approval modal will appear for the user automatically - read [here](../information/approval-modal) for more info about them.
+
+## Destroying the fun wallet injected logic
+
+Many dApps support many wallets and you may want to destroy all trace of the fun wallet logic once the user is done using it. A destroy method is exposed on the `FunWalletEmbed` class which will remove everything the wallet injected from your dApp.
+
+```ts
+import { FunWalletEmbed } from '@funfair-tech/wallet-sdk';
+
+FunWalletEmbed.destroy();
+```

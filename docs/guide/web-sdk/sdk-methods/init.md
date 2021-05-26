@@ -1,6 +1,6 @@
 # SDK Methods Init
 
-Please note none of the SDK calls will work if the SDK has called this. The SDK will throw errors telling you this if you try to do so.
+Please note none of the SDK calls will work if the SDK has not called this. The SDK will throw errors telling you this if you try to do so.
 
 ## init
 
@@ -17,6 +17,7 @@ public init(options?: InitOptions): void
 ```js
 {
   // the `NgZone` class angular allows you to inject
+  // do pass anything in here if you are not using angular
   ngZone?: NgZone | undefined;
   // The sdk will inject the mobile nav bar at the bottom of the body automatically for you.
   // Now this should be fine for most dapps we give the flexibility to specify which class you
@@ -35,7 +36,7 @@ public init(options?: InitOptions): void
 ```ts
 import window from '@funfair-tech/wallet-sdk/window';
 
-window.funwallet.sdk.init({ ngZone: this._zone });
+window.funwallet.sdk.init();
 ```
 
 :::
