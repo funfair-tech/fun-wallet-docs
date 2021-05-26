@@ -92,30 +92,6 @@ This guide will be shown in `js` but all the same rules apply for vue `ts` proje
 import window from '@funfair-tech/wallet-sdk/window';
 ```
 
-## Vue Package
-
-We have created a Vue package component library. This package holds components you can use to hook the Wallet into a Vue app more easily. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-vue-integration-sample-js)
-
-:::: tabs :options="{ useUrlFragment: false }"
-
-::: tab NPM
-
-```bash
-$ npm install @funfair-tech/wallet-vue
-```
-
-:::
-
-::: tab YARN
-
-```bash
-$ yarn add @funfair-tech/wallet-vue
-```
-
-:::
-
-::::
-
 ## Hooking up the SDK
 
 :::: tabs :options="{ useUrlFragment: false }"
@@ -669,6 +645,32 @@ export default {
 ::::
 
 ## Show Wallet UI
+
+### Vue Package
+
+You only need to install this package if you want to show the UI.
+
+We have created a Vue package component library. This package holds components you can use to hook the Wallet into a Vue app more easily. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-vue-integration-sample-js).
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab NPM
+
+```bash
+$ npm install @funfair-tech/wallet-vue
+```
+
+:::
+
+::: tab YARN
+
+```bash
+$ yarn add @funfair-tech/wallet-vue
+```
+
+:::
+
+::::
 
 To show any Wallet UI you have to import the `WalletFollower` from the SDK.
 

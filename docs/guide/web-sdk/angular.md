@@ -90,30 +90,6 @@ import {
 
 If you find anything without a type, or any issues with it, please raise a GitHub issue for us to triage.
 
-## Angular Package
-
-We have created an Angular package component library this package holds components you can use to hook the Wallet into an Angular app easier. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-angular-integration-sample)
-
-:::: tabs :options="{ useUrlFragment: false }"
-
-::: tab NPM
-
-```bash
-$ npm install @funfair-tech/wallet-angular
-```
-
-:::
-
-::: tab YARN
-
-```bash
-$ yarn add @funfair-tech/wallet-angular
-```
-
-:::
-
-::::
-
 ## Hooking up the SDK
 
 Most of our integrators have many wallets they support. For this case our wallet is lazy loaded aka only loaded when you need it.
@@ -764,6 +740,32 @@ export class AppComponent {
 ::::
 
 ## Show Wallet UI
+
+### Angular Package
+
+You only need to install this package if you want to show the UI.
+
+We have created an Angular package component library this package holds components allowing you to hook the UI for the wallet into an Angular app easier. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-angular-integration-sample)
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab NPM
+
+```bash
+$ npm install @funfair-tech/wallet-angular
+```
+
+:::
+
+::: tab YARN
+
+```bash
+$ yarn add @funfair-tech/wallet-angular
+```
+
+:::
+
+::::
 
 Usage:
 

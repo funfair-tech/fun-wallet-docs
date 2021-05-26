@@ -74,30 +74,6 @@ This guide will be shown in `js` but all the same rules apply for react `ts` pro
 import window from '@funfair-tech/wallet-sdk/window';
 ```
 
-## React Package
-
-We have created a React package component library this package holds components which you can use to hook the Wallet into a React app more easily. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-react-integration-sample-js)
-
-:::: tabs :options="{ useUrlFragment: false }"
-
-::: tab NPM
-
-```bash
-$ npm install @funfair-tech/wallet-react
-```
-
-:::
-
-::: tab YARN
-
-```bash
-$ yarn add @funfair-tech/wallet-react
-```
-
-:::
-
-::::
-
 ## Hooking up the SDK
 
 Most of our integrators have many wallets they support. For this case our wallet is lazy loaded aka only loaded when you need it.
@@ -458,6 +434,32 @@ export default App;
 ::::
 
 ## Show wallet UI
+
+### React Package
+
+You only need to install this package if you want to show the UI.
+
+We have created a React package component library this package holds components allowing you to hook the UI for the wallet into an Angular app easier. A full code integration example can be seen [here](https://github.com/funfair-tech/wallet-react-integration-sample-js)
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab NPM
+
+```bash
+$ npm install @funfair-tech/wallet-react
+```
+
+:::
+
+::: tab YARN
+
+```bash
+$ yarn add @funfair-tech/wallet-react
+```
+
+:::
+
+::::
 
 To show any wallet UI you have to import the `WalletFollower` from the sdk.
 
