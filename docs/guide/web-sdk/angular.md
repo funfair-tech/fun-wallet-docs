@@ -96,28 +96,6 @@ Most of our integrators have many wallets they support. For this case our wallet
 
 :::: tabs :options="{ useUrlFragment: false }"
 
-::: tab src/app.module.ts
-
-Next, import the `WalletModule` into your `app.module` or in another module you will be using the Wallet components. This should be imported in the `imports` array.
-
-```ts
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { WalletModule } from '@funfair-tech/wallet-angular';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-
-@NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, WalletModule],
-  providers: [],
-  bootstrap: [AppComponent],
-})
-export class AppModule {}
-```
-
-:::
-
 ::: tab src/app.component.ts
 
 Register all the event listeners you want to listen to, The ones below are mandtory for the integration to work properly.
@@ -776,6 +754,28 @@ Usage:
 If you want to deep link into a page on the Wallet, see [here](./routing.html#deep-link-page-routes). By default the main `/funds` page will load. Please note, you must only show if the user is authenticated.
 
 :::: tabs :options="{ useUrlFragment: false }"
+
+::: tab src/app.module.ts
+
+Next, import the `WalletModule` into your `app.module` or in another module you will be using the Wallet components. This should be imported in the `imports` array.
+
+```ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { WalletModule } from '@funfair-tech/wallet-angular';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, WalletModule],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
+:::
 
 ::: tab src/app.component.html
 
