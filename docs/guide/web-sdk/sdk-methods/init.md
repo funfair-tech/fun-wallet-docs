@@ -26,6 +26,37 @@ public init(options?: InitOptions): void
   // may want to handle some css yourself for it and this gives you full flexibility.
   // Do not need to worry about this if you are happy with how it injects by default.
   mobileNavInjectToClass?: string | undefined;
+  // The sdk can override the toaster notification settings. 
+  // If not supplied default settings will be applied as outlined below.
+  toasterNotificationSettings?: ToasterNotificationSettings | undefined;
+}
+
+export enum ToasterNotificationState {
+  on = 'on',
+  off = 'off',
+}
+
+export enum ToasterNoticationPositions {
+  toaster_top_left = 'toaster_top_left',
+  toaster_top_center = 'toaster_top_center',
+  toaster_top_right = 'toaster_top_right',
+  toaster_bottom_right = 'toaster_bottom_right',
+  toaster_bottom_center = 'toaster_bottom_center',
+  toaster_bottom_left = 'toaster_bottom_left',
+}
+
+export interface ToasterNotificationSettings {
+  // The toaster notifications state can be switched on or off. 
+  // If not supplied the state will default to on.
+  state?: ToasterNotificationState | undefined;
+
+  // The position of the toaster notifications can be changed by setting the position.
+  // If not supplied the position will default to toaster_bottom_right.
+  position?: ToasterNoticationPositions | undefined;
+
+  // The toaster notification timeout can be changed by passing in a value in ms.
+  // If not supplied the timeout will default to 5000ms.
+  timeout?: number | undefined;
 }
 ```
 
