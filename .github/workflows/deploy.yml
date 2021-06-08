@@ -18,6 +18,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.SOURCE_PUSH_TOKEN }}
 
       - name: Install
         run: npm install
