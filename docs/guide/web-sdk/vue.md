@@ -200,6 +200,8 @@ It's up to the integration to show the user the login and logout buttons, which 
 
 ::: tab Login
 
+**You should not call this until [restoreAuthenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted) event has emitted, at that point the wallet is ready.**
+
 Method to login with the fun wallet.
 
 ```js
@@ -230,9 +232,10 @@ src/App.vue
   <div id="app">
     <div class="App">
       <div class="App-container">
+        <p v-if="loading">Loading please wait</p>
         <div className="action-buttons">
           <!-- should only show this if the user is NOT logged in -->
-          <div v-if="!isLoggedIn" className="logged-out">
+          <div v-if="!loading && !isLoggedIn" className="logged-out">
             <button @click="login">Login</button>
           </div>
         </div>
@@ -361,13 +364,14 @@ src/App.vue
   <div id="app">
     <div class="App">
       <div class="App-container">
+        <p v-if="loading">Loading please wait</p>
         <div className="action-buttons">
           <!-- should only show this if the user is NOT logged in -->
-          <div v-if="!isLoggedIn" className="logged-out">
+          <div v-if="!loading && !isLoggedIn" className="logged-out">
             <button @click="login">Login</button>
           </div>
           <!-- should only show this if the user is logged in -->
-          <div v-if="isLoggedIn" className="logged-in">
+          <div v-if="!loading && isLoggedIn" className="logged-in">
             <button @click="logout">Logout</button>
           </div>
         </div>

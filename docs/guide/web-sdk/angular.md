@@ -219,6 +219,8 @@ It's up to the integration to show the user the login and logout buttons, which 
 
 ### Login
 
+**You should not call this until [restoreAuthenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted) event has emitted, at that point the wallet is ready.**
+
 Method to login with the fun wallet.
 
 ```js
@@ -256,7 +258,13 @@ Chrome and other browsers can block popups if triggered without a genuine user c
 
 <div class="app" *ngIf="injectedFunWallet">
   <div class="app-container">
-    <div class="action-buttons">
+    <p *ngIf="!(restoreAuthenticationTaskCompleted$ | async)">
+      Loading please wait
+    </p>
+    <div
+      class="action-buttons"
+      *ngIf="restoreAuthenticationTaskCompleted$ | async"
+    >
       <!-- should only show this if the user is NOT logged in -->
       <div class="logged-out" *ngIf="!(isAuthenticationCompleted$ | async)">
         <button (click)="login()">Login</button>
@@ -294,6 +302,9 @@ export class AppComponent {
   public isAuthenticationCompleted$: Observable<
     boolean
   > = StoreService.isAuthenticationCompleted.pipe();
+  public restoreAuthenticationTaskCompleted$: Observable<
+    boolean
+  > = StoreService.restoreAuthenticationTaskCompleted.pipe();
 
   constructor(private _zone: NgZone) {}
 
@@ -407,7 +418,14 @@ await window.funwallet.sdk.auth.logout();
 
 <div class="app" *ngIf="injectedFunWallet">
   <div class="app-container">
-    <div class="action-buttons">
+    <p *ngIf="!(restoreAuthenticationTaskCompleted$ | async)">
+      Loading please wait
+    </p>
+
+    <div
+      class="action-buttons"
+      *ngIf="restoreAuthenticationTaskCompleted$ | async"
+    >
       <!-- should only show this if the user is NOT logged in -->
       <div class="logged-out" *ngIf="!(isAuthenticationCompleted$ | async)">
         <button (click)="login()">Login</button>
@@ -448,6 +466,9 @@ export class AppComponent {
   public isAuthenticationCompleted$: Observable<
     boolean
   > = StoreService.isAuthenticationCompleted.pipe();
+  public restoreAuthenticationTaskCompleted$: Observable<
+    boolean
+  > = StoreService.restoreAuthenticationTaskCompleted.pipe();
 
   constructor(private _zone: NgZone) {}
 

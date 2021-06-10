@@ -195,6 +195,8 @@ It's up to the integration to show the user the login and logout buttons, which 
 
 ::: tab Login
 
+**You should not call this until [restoreAuthenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted) event has emitted, at that point the wallet is ready.**
+
 Method to pop up the authentication modal.
 
 ```js
@@ -228,15 +230,23 @@ import { isAuthenticated$ } from './store';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { isLoggedIn: false };
+    this.state = { isLoggedIn: false, loading: true };
   }
 
   componentDidMount() {
     isAuthenticated$.subscribe((value) => {
       this.setState({
         isLoggedIn: value,
+        loading: !restoreAuthenticationTaskCompleted$.value,
       });
       this.forceUpdate();
+
+      restoreAuthenticationTaskCompleted$.subscribe((value) => {
+        if (value) {
+          this.setState({ isLoggedIn: isAuthenticated$.value, loading: false });
+          this.forceUpdate();
+        }
+      });
     });
   }
 
@@ -256,8 +266,9 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-container">
+          {this.state.loading ? <p>Loading please wait</p> : null}
           <div className="action-buttons">
-            {!this.state.isLoggedIn ? (
+            {!this.state.isLoggedIn && !this.state.loading ? (
               <div className="logged-out">
                 <button onClick={this.login}>Login</button>
               </div>
@@ -292,15 +303,23 @@ import { isAuthenticated$ } from './store';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { isLoggedIn: false };
+    this.state = { isLoggedIn: false, loading: true };
   }
 
   componentDidMount() {
     isAuthenticated$.subscribe((value) => {
       this.setState({
         isLoggedIn: value,
+        loading: !restoreAuthenticationTaskCompleted$.value,
       });
       this.forceUpdate();
+
+      restoreAuthenticationTaskCompleted$.subscribe((value) => {
+        if (value) {
+          this.setState({ isLoggedIn: isAuthenticated$.value, loading: false });
+          this.forceUpdate();
+        }
+      });
     });
   }
 
@@ -325,13 +344,14 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-container">
+          {this.state.loading ? <p>Loading please wait</p> : null}
           <div className="action-buttons">
-            {!this.state.isLoggedIn ? (
+            {!this.state.isLoggedIn && !this.state.loading ? (
               <div className="logged-out">
                 <button onClick={this.login}>Login</button>
               </div>
             ) : null}
-            {this.state.isLoggedIn ? (
+            {this.state.isLoggedIn && !this.state.loading ? (
               <div className="logged-in">
                 <button onClick={this.logout}>Logout</button>
               </div>

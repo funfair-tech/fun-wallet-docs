@@ -206,6 +206,8 @@ It's up to the integration to show the user the login and logout buttons, which 
 
 ### Login
 
+**You should not call this until [restoreAuthenticationCompleted](/guide/web-sdk/sdk-event-listeners.html#restoreauthenticationcompleted) event has emitted, at that point the wallet is ready.**
+
 Method to login with the fun wallet.
 
 ```js
