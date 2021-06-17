@@ -12,25 +12,19 @@ enabled(): Promise<NetworkDetails[]>
 
 ```ts
 {
-  name: string;
-  id: Networks;
-  providerUrl: string;
+  selectedNode: string;
+  backupNodes: string[];
   enabled: boolean;
-}
-```
-
-`Networks`:
-
-```ts
-{
-  mainnet = 1,
-  ropsten = 3,
-  rinkeby = 4,
-  kovan = 42,
-  xdai = 100,
-  novichok = 1984,
-  bracknell = 1999,
-  unknown = -1,
+  name: string;
+  id: number;
+  chainId: number;
+  nativeCurrency: string;
+  networkBlockExplorer?: NetworkBlockExplorer | undefined;
+  feeWarningThreshold: BigNumber;
+  supportsFiatPrices: boolean;
+  supportsWalletConnect: boolean;
+  isProductionNetwork: boolean;
+  fixedGasPrice?: string | undefined;
 }
 ```
 
@@ -68,25 +62,19 @@ current(): Promise<NetworkDetails>
 
 ```ts
 {
-  name: string;
-  id: Networks;
-  providerUrl: string;
+  selectedNode: string;
+  backupNodes: string[];
   enabled: boolean;
-}
-```
-
-`Networks`:
-
-```ts
-{
-  mainnet = 1,
-  ropsten = 3,
-  rinkeby = 4,
-  kovan = 42,
-  xdai = 100,
-  novichok = 1984,
-  bracknell = 1999,
-  unknown = -1,
+  name: string;
+  id: number;
+  chainId: number;
+  nativeCurrency: string;
+  networkBlockExplorer?: NetworkBlockExplorer | undefined;
+  feeWarningThreshold: BigNumber;
+  supportsFiatPrices: boolean;
+  supportsWalletConnect: boolean;
+  isProductionNetwork: boolean;
+  fixedGasPrice?: string | undefined;
 }
 ```
 

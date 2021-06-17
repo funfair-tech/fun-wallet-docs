@@ -30,10 +30,19 @@ export interface ExclusionStatusResponse {
 }
 
 export interface NetworkDetails {
-  name: string;
-  id: Networks;
-  providerUrl: string;
+  selectedNode: string;
+  backupNodes: string[];
   enabled: boolean;
+  name: string;
+  id: number;
+  chainId: number;
+  nativeCurrency: string;
+  networkBlockExplorer?: NetworkBlockExplorer | undefined;
+  feeWarningThreshold: BigNumber;
+  supportsFiatPrices: boolean;
+  supportsWalletConnect: boolean;
+  isProductionNetwork: boolean;
+  fixedGasPrice?: string | undefined;
 }
 ```
 
