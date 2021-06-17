@@ -155,3 +155,37 @@ const gasRecommendations = await window.funwallet.sdk.networks.gasRecommendation
 :::
 
 ::::
+
+## Switch ethereum chain
+
+Switch the users ethereum chain. This will show an approval network change modal to the user and the promise will be resolved once they have accepted or rejected. The JSONRPC call `wallet_switchEthereumChain` is supported and can be called from our ethereum provider as well.
+
+```ts
+switchEthereumChain(chainId: string): Promise<null>
+```
+
+:::: tabs :options="{ useUrlFragment: false }"
+
+::: tab TypeScript
+
+```ts
+import window from '@funfair-tech/wallet-sdk/window';
+
+// chainId has to be the hex of the chainId any number or invalid chainId
+// will be rejected
+await window.funwallet.sdk.networks.switchEthereumChain('0x01');
+```
+
+:::
+
+::: tab JavaScript
+
+```js
+// chainId has to be the hex of the chainId any number or invalid chainId
+// will be rejected
+await window.funwallet.sdk.networks.switchEthereumChain('0x01');
+```
+
+:::
+
+::::
